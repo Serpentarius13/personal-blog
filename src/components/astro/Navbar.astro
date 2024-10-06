@@ -1,0 +1,76 @@
+---
+import { ThemeDropdown } from "@/components/react/ThemeDropdown";
+import { Icon } from "astro-icon/components";
+import { CONFIG } from "config";
+---
+
+<div
+  class="navbar dark:shadow-none shadow-md bg-base-100 max-w-xl mx-auto sticky top-4 bg-base-100/60 backdrop-blur-lg px-2 md:px-4 rounded-xl"
+>
+  <div class="navbar-start">
+    <div class="dropdown md:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <Icon name="line-md:menu-fold-left" class="size-8" />
+      </div>
+      <ul
+        tabindex="0"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+      >
+        {
+          CONFIG.NAV_LINKS.map((link) => {
+            return (
+              <li>
+                <a class="py-4" href={link.href}>
+                  {link.title}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+    <a class="items-center gap-1 hidden md:flex" href="/">
+      <img src="/logo.webp" class="size-6" alt="Logo" />
+      <span class="hover:underline ml-2 text-xl">
+        {CONFIG.SITE_TITLE}
+      </span>
+    </a>
+  </div>
+  <div class="navbar-end">
+    <ul class="menu menu-horizontal px-1 hidden md:flex">
+      {
+        CONFIG.NAV_LINKS.map((link) => {
+          return (
+            <li>
+              <a href={link.href}>{link.title}</a>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <ThemeDropdown client:load>
+      <Icon
+        name="game-icons:dandelion-flower"
+        class="icon-flower"
+      /></ThemeDropdown
+    >
+  </div>
+</div>
+
+<style>
+  .icon-flower {
+    animation: rotate 10s linear infinite;
+    height: 32px;
+    width: 32px;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>

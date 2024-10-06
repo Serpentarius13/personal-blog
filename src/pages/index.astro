@@ -11,14 +11,19 @@ const posts = await getCollection("posts");
   <div class="m-8">
     <ThemeDropdown client:load />
   </div>
-  <!-- {
-    posts.map((post) => (
+  <div class="h-[100000px] w-[1px]"></div>
+  <!--
+    {posts.map((post) => (
       <article>
         <h2>
           <a href={`/blog/${post.slug}`}>{post.data.title}</a>
         </h2>
         <p>{post.data.description}</p>
       </article>
-    ))
-  } -->
+    ))}
+    --
+  >
+  </div>
 </Layout>
+--></Layout
+>

@@ -1,7 +1,8 @@
 ---
+import Navbar from "@/components/astro/Navbar.astro";
 import "@/styles/global.css";
 import "@fontsource/jetbrains-mono";
-import { THEMES } from "config";
+import { CONFIG } from "config";
 
 interface Props {
   title: string;
@@ -15,18 +16,19 @@ const { title, description } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
   </head>
   <body>
+    <Navbar />
     <slot />
   </body>
 </html>
 
-<script is:inline define:vars={{ THEMES }}>
+<script is:inline define:vars={{ THEMES: CONFIG.THEMES }}>
   const THEME_KEY = "theme";
 
   const getThemePreference = () => {

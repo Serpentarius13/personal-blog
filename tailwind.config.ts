@@ -1,6 +1,6 @@
 import daisyui, { type Config as DaisyConfig } from "daisyui";
 import { type Config } from "tailwindcss";
-import { THEMES } from "./config.ts";
+import { CONFIG } from "./config";
 
 const config: Config = {
   darkMode: ["variant", ["[data-theme='dark'] &", "[data-theme='aqua'] &"]],
@@ -11,7 +11,7 @@ const config: Config = {
   plugins: [daisyui],
 
   daisyui: {
-    themes: Object.values(THEMES),
+    themes: Object.values(CONFIG.THEMES),
     logs: false,
   } satisfies DaisyConfig,
 };

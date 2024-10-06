@@ -5,6 +5,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
+import icon from "astro-icon";
 
 // rehype
 import { transformerNotationHighlight } from "@shikijs/transformers";
@@ -20,21 +21,26 @@ const prettyCodeOptions: Options = {
 };
 
 // adapter
-
 import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
-  devToolbar: {
-    enabled: false,
-  },
+  integrations: [mdx(), react(), tailwind(), icon()],
+
   markdown: {
     syntaxHighlight: false,
     remarkPlugins: [],
     rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
   },
 
-  integrations: [mdx(), react(), tailwind()],
   adapter: vercel(),
   output: "hybrid",
+
+  prefetch: {
+    prefetchAll: false,
+  },
+
+  devToolbar: {
+    enabled: false,
+  },
 });
