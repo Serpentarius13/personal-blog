@@ -1,4 +1,4 @@
-import { CONFIG } from "config";
+import { THEMES } from "config";
 import { type FC, type ReactNode } from "react";
 
 interface Props {
@@ -15,7 +15,7 @@ export const ThemeDropdown: FC<Props> = ({ children }) => {
   };
 
   return (
-    <div className="dropdown dropdown-bottom ">
+    <div className="dropdown dropdown-bottom">
       <div
         tabIndex={0}
         role="button"
@@ -27,18 +27,18 @@ export const ThemeDropdown: FC<Props> = ({ children }) => {
         tabIndex={0}
         className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 mt-2 ring-2 ring-primary max-h-[200px] flex-nowrap overflow-auto"
       >
-        {Object.values(CONFIG.THEMES).map((theme) => {
+        {Object.values(THEMES).map((theme) => {
           return (
             <li
               key={theme}
               data-theme={theme}
-              className="!bg-base-100 p-4 rounded-box border-2 border-secondary mb-2 [&:last-child]:mb-0"
+              className="rounded-box mb-2 [&:last-child]:mb-0"
             >
               <div
                 role="button"
                 tabIndex={0}
                 onClick={() => handleSwitchTheme(theme)}
-                className="btn btn-primary"
+                className="btn btn-primary rounded-box"
               >
                 {toTitleCase(theme)}
               </div>

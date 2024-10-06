@@ -1,0 +1,46 @@
+---
+import AppIcon from "@/components/astro/AppIcon.astro";
+import SocialLinks from "@/components/astro/index/SocialLinks.astro";
+import { IconSet } from "config";
+import Flower from "./flower.svg?raw";
+---
+
+<section class="card box">
+  <div class="card-content flex items-start gap-2">
+    <div class="flex flex-col gap-2">
+      <h2 class="text-3xl">Welcome to my place 🛋️</h2>
+      <p>
+        <span>
+          Here I write about my favorite programming language <span
+            title="TypeScript"
+          >
+            <AppIcon
+              set={IconSet.CATPPUCCIN}
+              name="typescript"
+              class="text-lg inline-block"
+            />
+          </span> TypeScript, drop some bedtime thoughts on life, and sometimes make
+          educative content.
+        </span>
+        <div class="flex items-center gap-2">
+          You can find me here: <SocialLinks />
+        </div>
+
+        <span class="pt-2">Hope you will rest well 😼</span>
+      </p>
+    </div>
+    <div class="h-full">
+      <Fragment set:html={Flower} />
+    </div>
+  </div>
+</section>
+
+<style is:global lang="postcss">
+    #flower g {
+      @apply dark:fill-primary;
+    }
+
+  #flower {
+    @apply w-[120px] md:min-w-[220px] h-[200px] md:h-[320px]
+  }
+</style>

@@ -1,0 +1,15 @@
+---
+import { IconSet } from "config";
+import AppIcon from "./AppIcon.astro";
+---
+
+<footer class="flex items-center justify-between mt-9 p-3 box w-full">
+  <aside>
+    <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
+  </aside>
+  <nav>
+    <a class="btn btn-sm btn-primary btn-outline">
+      <AppIcon set={IconSet.LINE_MD} name="rss" class="size-6" />
+    </a>
+  </nav>
+</footer>

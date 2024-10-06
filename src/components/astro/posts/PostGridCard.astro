@@ -1,0 +1,50 @@
+---
+import { formatDate } from "@/lib/date";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+---
+
+<a
+  class="card shadow-2xl hover:shadow-md hover:scale-[1.05] transition-all h-fit relative group"
+  href={`/blog/${post.slug}`}
+>
+  <div
+    class="badge rounded-tl-none rounded-bl-none rounded-tr-none rounded-lg badge-md absolute left-0 top-0"
+  >
+    {formatDate(post.data.date)}
+  </div>
+
+  <figure>
+    <Image
+      src={post.data.image}
+      alt={post.data.imageAlt}
+      width={260}
+      class="object-cover"
+    />
+  </figure>
+  <div class="card-body pt-2 pb-4 gap-0.5">
+    <h2 class="card-title">
+      {post.data.title}
+    </h2>
+    <p>
+      {post.data.description}
+    </p>
+    {
+      post.data.tags && (
+        <div class="card-actions justify-end mt-2">
+          {post.data.tags.map((tag) => (
+            <div class="badge  badge-sm group-hover:badge-primary duration-500">
+              {tag}
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</a>

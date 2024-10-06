@@ -20,27 +20,52 @@ const prettyCodeOptions: Options = {
   transformers: [transformerNotationHighlight()],
 };
 
+// remark
+
+import type { Root } from "mdast";
+import { toString } from "mdast-util-to-string";
+import getReadingTime from "reading-time";
+
 // adapter
 import vercel from "@astrojs/vercel/serverless";
+import { ICONS } from "./config";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [mdx(), react(), tailwind(), icon()],
+  integrations: [
+    mdx(),
+    react(),
+    tailwind(),
+    icon({
+      include: Object.fromEntries(
+        Object.entries(ICONS).map(([key, value]) => [
+          key,
+          Object.values(value),
+        ]),
+      ),
+    }),
+  ],
 
   markdown: {
     syntaxHighlight: false,
-    remarkPlugins: [],
+    remarkPlugins: [remarkReadingTime],
     rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
   },
 
   adapter: vercel(),
   output: "hybrid",
 
-  prefetch: {
-    prefetchAll: false,
-  },
-
   devToolbar: {
     enabled: false,
   },
 });
+
+function remarkReadingTime() {
+  return function (tree: Root, { data }: any) {
+    const textOnPage = toString(tree);
+    const readingTime = getReadingTime(textOnPage);
+    // readingTime.text will give us minutes read as a friendly string,
+    // i.e. "3 min read"
+    data.astro.frontmatter.readingTime = readingTime.text;
+  };
+}

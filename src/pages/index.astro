@@ -1,29 +1,25 @@
 ---
-import { ThemeDropdown } from "@/components/react/ThemeDropdown";
+import IndexHeader from "@/components/astro/index/IndexHeader.astro";
+import PostCard from "@/components/astro/posts/PostCard.astro";
 import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("posts");
+posts.sort(
+  (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
+);
+const latestPost = posts[0];
 ---
 
 <Layout title="Welcome to Astro." description="Welcome to the Astro blog.">
-  <div class="dark:bg-red-500">123</div>
-  <div class="m-8">
-    <ThemeDropdown client:load />
-  </div>
-  <div class="h-[100000px] w-[1px]"></div>
-  <!--
-    {posts.map((post) => (
-      <article>
-        <h2>
-          <a href={`/blog/${post.slug}`}>{post.data.title}</a>
-        </h2>
-        <p>{post.data.description}</p>
-      </article>
-    ))}
-    --
-  >
-  </div>
+  <IndexHeader />
+  <section class="flex flex-1 flex-col gap-4 box mt-4">
+    <h2 class="text-2xl font-bold">My latest post</h2>
+    <PostCard entry={latestPost} />
+    <a href="/blog" class="btn btn-primary w-fit mx-auto btn-outline"
+      >Read more
+    </a>
+  </section>
 </Layout>
---></Layout
->
+
+<style

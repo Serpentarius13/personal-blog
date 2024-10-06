@@ -1,0 +1,18 @@
+---
+import { Icon } from "astro-icon/components";
+import { type ComponentProps } from "astro/types";
+import { ICONS, type IconSet } from "config";
+
+interface Props<S extends IconSet> extends ComponentProps<typeof Icon> {
+  set: S;
+  name: keyof (typeof ICONS)[S];
+}
+
+const getIcon = <S extends IconSet>(set: S, name: keyof (typeof ICONS)[S]) => {
+  return `${set}:${ICONS[set][name]}`;
+};
+
+const { set, name, ...rest } = Astro.props;
+---
+
+<Icon name={getIcon(set, name)} {...rest} />

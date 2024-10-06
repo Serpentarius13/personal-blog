@@ -1,0 +1,72 @@
+---
+import AppIcon from "@/components/astro/AppIcon.astro";
+import { formatDate } from "@/lib/date";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { IconSet } from "config";
+
+type Props = {
+  entry: CollectionEntry<"posts">;
+};
+
+const { entry } = Astro.props as {
+  entry: CollectionEntry<"posts">;
+};
+
+const formattedDate = formatDate(entry.data.date);
+const {
+  remarkPluginFrontmatter: { readingTime },
+} = await entry.render();
+---
+
+<div
+  class="not-prose group card relative rounded-xl border transition-all ease-in-out hover:shadow-xl dark:hover:ring-4 dark:hover:ring-primary"
+>
+  <a
+    href={`/${entry.collection}/${entry.slug}`}
+    class="card-body flex flex-col gap-4 sm:flex-row"
+  >
+    {
+      entry.data.image && (
+        <div class="max-w-[200px] sm:flex-shrink-0">
+          <Image
+            src={entry.data.image}
+            alt={entry.data.title}
+            width={1200}
+            height={630}
+            class="object-cover"
+          />
+        </div>
+      )
+    }
+    <div class="flex flex-grow flex-col gap-1">
+      <h3 class="text-lg">
+        {entry.data.title}
+      </h3>
+      <p class="mb-2 pb-1 text-sm">{entry.data.description}</p>
+      <div
+        class="mb-2 flex flex-wrap items-center gap-x-2 text-sm text-neutral-content"
+      >
+        <span>{formattedDate}</span> |
+        <span>{readingTime}</span>
+      </div>
+      {
+        entry.data.tags && (
+          <div class="flex flex-wrap gap-2">
+            {entry.data.tags.map((tag) => (
+              <span class="badge flex items-center duration-300 group-hover:bg-secondary group-hover:text-secondary-content ">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </a>
+
+  <AppIcon
+    set={IconSet.LINE_AWESOME}
+    name="chevron-right"
+    class="absolute -right-32 bottom-4 flex size-12 h-12 w-12 items-c2enter justify-center opacity-0 transition-all duration-500 ease-in-out group-hover:-translate-x-36 group-hover:opacity-100"
+  />
+</div>

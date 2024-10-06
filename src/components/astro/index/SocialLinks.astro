@@ -1,0 +1,31 @@
+---
+import AppIcon from "@/components/astro/AppIcon.astro";
+import { cn } from "@/lib/cn";
+import { CONFIG } from "config";
+
+interface Props {
+  className?: string;
+}
+
+const { className } = Astro.props;
+---
+
+<ul class={cn("not-prose flex flex-wrap gap-2", className)} role="list">
+  {
+    Object.entries(CONFIG.SOCIAL_LINKS).map(([, { label, icon, url }]) => {
+      return (
+        <li>
+          <a
+            href={url}
+            aria-label={label}
+            title={label}
+            class="btn btn-outline btn-sm flex items-center justify-center"
+            target="_blank"
+          >
+            <AppIcon set={icon.set} name={icon.name} class="size-6" />
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>

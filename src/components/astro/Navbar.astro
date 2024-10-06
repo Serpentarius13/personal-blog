@@ -1,16 +1,16 @@
 ---
+import AppIcon from "@/components/astro/AppIcon.astro";
 import { ThemeDropdown } from "@/components/react/ThemeDropdown";
-import { Icon } from "astro-icon/components";
-import { CONFIG } from "config";
+import { CONFIG, IconSet } from "config";
 ---
 
-<div
-  class="navbar dark:shadow-none shadow-md bg-base-100 max-w-xl mx-auto sticky top-4 bg-base-100/60 backdrop-blur-lg px-2 md:px-4 rounded-xl"
+<header
+  class="navbar z-50 box shadow-md bg-base-100 mx-auto sticky top-4 mt-4 mb-6 bg-base-100/60 backdrop-blur-lg px-2 md:px-4 rounded-xl"
 >
   <div class="navbar-start">
-    <div class="dropdown md:hidden">
+    <!-- <div class="dropdown md:hidden">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-        <Icon name="line-md:menu-fold-left" class="size-8" />
+        <AppIcon set={IconSet.LINE_MD} name="menu-fold-left" class="size-8" />
       </div>
       <ul
         tabindex="0"
@@ -28,8 +28,8 @@ import { CONFIG } from "config";
           })
         }
       </ul>
-    </div>
-    <a class="items-center gap-1 hidden md:flex" href="/">
+    </div> -->
+    <a class="items-center gap-1 flex" href="/">
       <img src="/logo.webp" class="size-6" alt="Logo" />
       <span class="hover:underline ml-2 text-xl">
         {CONFIG.SITE_TITLE}
@@ -50,13 +50,14 @@ import { CONFIG } from "config";
     </ul>
 
     <ThemeDropdown client:load>
-      <Icon
-        name="game-icons:dandelion-flower"
+      <AppIcon
+        set={IconSet.GAME_ICONS}
+        name="dandelion-flower"
         class="icon-flower"
       /></ThemeDropdown
     >
   </div>
-</div>
+</header>
 
 <style>
   .icon-flower {

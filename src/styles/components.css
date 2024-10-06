@@ -1,0 +1,3 @@
+.box {
+  @apply mx-auto md:max-w-xl max-w-full;
+}

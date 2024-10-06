@@ -1,15 +1,20 @@
 ---
 import Navbar from "@/components/astro/Navbar.astro";
 import "@/styles/global.css";
+import "@/styles/components.css";
 import "@fontsource/jetbrains-mono";
-import { CONFIG } from "config";
+import { THEMES } from "config";
+import Footer from "@/components/astro/Footer.astro";
+import { ViewTransitions } from "astro:transitions";
+import { cn } from "@/lib/cn";
 
 interface Props {
   title: string;
   description: string;
+  mainClassname?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, mainClassname } = Astro.props;
 ---
 
 <!doctype html>
@@ -21,14 +26,20 @@ const { title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <ViewTransitions />
   </head>
-  <body>
-    <Navbar />
-    <slot />
+  <body class="min-h-full">
+    <div class="max-w-screen overflow-x-hidden min-h-full flex flex-col">
+      <Navbar />
+      <main class={cn("flex-1 h-0", mainClassname)}>
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>
 
-<script is:inline define:vars={{ THEMES: CONFIG.THEMES }}>
+<script is:inline define:vars={{ THEMES }}>
   const THEME_KEY = "theme";
 
   const getThemePreference = () => {
@@ -49,10 +60,20 @@ const { title, description } = Astro.props;
     return document.documentElement.dataset.theme;
   };
 
-  document.documentElement.dataset.theme = getThemePreference();
+  const setDarkMode = (document) => {
+    document.documentElement.dataset.theme = getThemePreference();
+  };
+
+  setDarkMode(document);
+
+  document.addEventListener("astro:before-swap", (event) => {
+    setDarkMode(event.newDocument);
+  });
 
   if (typeof localStorage !== "undefined") {
     const observer = new MutationObserver(() => {
+      const theme = getDocumentTheme();
+      if (!theme) return;
       localStorage.setItem(THEME_KEY, getDocumentTheme());
     });
     observer.observe(document.documentElement, {

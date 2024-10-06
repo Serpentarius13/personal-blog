@@ -11,10 +11,10 @@ pre {
 
 html,
 body {
-  height: 100%;
   width: 100%;
 }
 
 body {
   min-height: 100%;
+  @apply px-3 md:px-0;
 }
