@@ -9,5 +9,6 @@
     "jsxImportSource": "react",
     "traceResolution": false
   },
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules"],
+  "include": ["src/**/*", "config.ts", "astro.config.ts", "tailwind.config.ts"]
 }

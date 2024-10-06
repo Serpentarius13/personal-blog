@@ -1,4 +1,4 @@
-import { THEMES } from "@/config/themes";
+import { THEMES } from "config";
 import { type FC, type ReactNode } from "react";
 
 interface Props {
