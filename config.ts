@@ -11,6 +11,7 @@ export enum IconSet {
   LINE_MD = "line-md",
   CATPPUCCIN = "catppuccin",
   LINE_AWESOME = "la",
+  LOGOS = "logos",
 }
 
 export const ICONS = {
@@ -29,6 +30,9 @@ export const ICONS = {
   },
   [IconSet.LINE_AWESOME]: {
     "chevron-right": "chevron-right",
+  },
+  [IconSet.LOGOS]: {
+    typescript: "typescript-icon",
   },
 } as const satisfies Record<IconSet, Record<string, string>>;
 

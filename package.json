@@ -7,8 +7,7 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "postinstall": "astro sync"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -21,6 +20,7 @@
     "@iconify-json/game-icons": "^1.2.0",
     "@iconify-json/la": "^1.2.0",
     "@iconify-json/line-md": "^1.2.1",
+    "@iconify-json/logos": "^1.2.2",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "astro": "^4.15.11",
@@ -42,6 +42,7 @@
     "@types/mdast": "^4.0.4",
     "daisyui": "^4.12.12",
     "prettier": "^3.3.3",
-    "prettier-plugin-astro": "^0.14.1"
+    "prettier-plugin-astro": "^0.14.1",
+    "sharp": "^0.33.5"
   }
 }
