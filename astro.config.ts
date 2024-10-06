@@ -1,37 +1,14 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 
+// integrations
 import mdx from "@astrojs/mdx";
+import react from "@astrojs/react";
+import tailwind from "@astrojs/tailwind";
 
 // rehype
-import rehypePrettyCode, { type Options } from "rehype-pretty-code";
-
-import react from "@astrojs/react";
-import type { ShikiTransformer } from "shiki";
-
-import { visit } from "unist-util-visit";
-
 import { transformerNotationHighlight } from "@shikijs/transformers";
-
-const shikiTransformer: ShikiTransformer = {
-  name: "shiki-transformer",
-  code(node) {
-    node.children.push({
-      type: "element",
-      tagName: "button",
-      properties: {
-        type: "button",
-      },
-      children: [
-        {
-          type: "text",
-          value: "Copy",
-        },
-      ],
-    });
-  },
-};
-
+import rehypePrettyCode, { type Options } from "rehype-pretty-code";
 const prettyCodeOptions: Options = {
   theme: {
     aurora: "aurora-x",
@@ -39,17 +16,7 @@ const prettyCodeOptions: Options = {
     light: "catppuccin-frappe",
   },
 
-  transformers: [shikiTransformer, transformerNotationHighlight()],
-};
-
-import type { Root } from "mdast";
-
-import tailwind from "@astrojs/tailwind";
-
-const remarkPlugin = () => {
-  return function (tree: Root) {
-    visit(tree, "code", (node, index, parent) => {});
-  };
+  transformers: [transformerNotationHighlight()],
 };
 
 // https://astro.build/config
@@ -59,7 +26,7 @@ export default defineConfig({
   },
   markdown: {
     syntaxHighlight: false,
-    remarkPlugins: [remarkPlugin],
+    remarkPlugins: [],
     rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
   },
 
