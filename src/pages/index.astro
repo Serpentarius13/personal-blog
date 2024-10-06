@@ -1,16 +1,24 @@
 ---
+import { ThemeDropdown } from "@/components/react/ThemeDropdown";
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
 
+const posts = await getCollection("posts");
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Welcome to Astro." description="Welcome to the Astro blog.">
+  <div class="dark:bg-red-500">123</div>
+  <div class="m-8">
+    <ThemeDropdown client:load />
+  </div>
+  <!-- {
+    posts.map((post) => (
+      <article>
+        <h2>
+          <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+        </h2>
+        <p>{post.data.description}</p>
+      </article>
+    ))
+  } -->
+</Layout>

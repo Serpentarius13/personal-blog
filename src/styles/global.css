@@ -1,0 +1,10 @@
+pre {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 12px;
+
+  .highlighted {
+    background-color: red;
+  }
+}

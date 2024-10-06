@@ -1,0 +1,61 @@
+---
+import "@/styles/global.css";
+import "@fontsource/jetbrains-mono";
+import { THEMES } from "@/config/themes";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<script is:inline define:vars={{ THEMES }}>
+  const THEME_KEY = "theme";
+
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined") {
+      const theme = localStorage.getItem(THEME_KEY);
+
+      if (theme) {
+        return theme;
+      }
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? THEMES.dark
+      : THEMES.bumblebee;
+  };
+
+  const getDocumentTheme = () => {
+    return document.documentElement.dataset.theme;
+  };
+
+  document.documentElement.dataset.theme = getThemePreference();
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      localStorage.setItem(THEME_KEY, getDocumentTheme());
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+  }
+</script>
