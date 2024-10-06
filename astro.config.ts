@@ -19,6 +19,10 @@ const prettyCodeOptions: Options = {
   transformers: [transformerNotationHighlight()],
 };
 
+// adapter
+
+import vercel from "@astrojs/vercel/serverless";
+
 // https://astro.build/config
 export default defineConfig({
   devToolbar: {
@@ -31,4 +35,5 @@ export default defineConfig({
   },
 
   integrations: [mdx(), react(), tailwind()],
+  adapter: vercel(),
 });
