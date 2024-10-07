@@ -8,6 +8,14 @@ import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 
 // rehype
+
+import rehypeSlug, { type Options as SlugOptions } from "rehype-slug";
+const rehypeSlugOptions: SlugOptions = {
+  prefix: "bh-",
+};
+
+import rehypeSectionize from "@hbsnow/rehype-sectionize";
+
 import { transformerNotationHighlight } from "@shikijs/transformers";
 import rehypePrettyCode, { type Options } from "rehype-pretty-code";
 const prettyCodeOptions: Options = {
@@ -49,7 +57,11 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: false,
     remarkPlugins: [remarkReadingTime],
-    rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
+    rehypePlugins: [
+      [rehypePrettyCode, prettyCodeOptions],
+      [rehypeSlug, rehypeSlugOptions],
+      rehypeSectionize,
+    ],
   },
 
   adapter: vercel(),

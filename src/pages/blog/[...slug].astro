@@ -1,10 +1,13 @@
 ---
+import TableOfContents from "@/components/astro/posts/toc/TableOfContents.astro";
+import { Renderer } from "@/components/astro/posts/toc/toc.types";
 import Layout from "@/layouts/Layout.astro";
 import type {
   GetStaticPaths,
   InferGetStaticParamsType,
   InferGetStaticPropsType,
 } from "astro";
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 
@@ -25,9 +28,43 @@ interface Params extends InferGetStaticParamsType<typeof getStaticPaths> {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
-  <Content />
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  mainClassname=" px-4 gap-12 "
+>
+  <header class="box mt-8">
+    <h1 class="text-4xl mb-12">
+      {post.data.title}
+    </h1>
+
+    <Image
+      src={post.data.image}
+      alt={post.data.imageAlt}
+      width={600}
+      height={300}
+      class="rounded-xl"
+    />
+  </header>
+
+  <TableOfContents
+    headings={headings}
+    class="lg:-z-[0] hidden lg:block lg:w-[210px] xl:w-[260px] relative lg:left-4 lg:top-24 h-fit lg:fixed"
+  />
+
+  <section class="card prose box lg:hidden">
+    <span class="text-2xl font-bold"> In this article: </span>
+    <ul class="list-disc">
+      {headings.filter((h) => h.depth === 2).map((h) => <li>{h.text}</li>)}
+    </ul>
+  </section>
+
+  <div class="p-4 box mx-auto">
+    <div class="prose">
+      <Content components={{ h1: Renderer }} />
+    </div>
+  </div>
 </Layout>

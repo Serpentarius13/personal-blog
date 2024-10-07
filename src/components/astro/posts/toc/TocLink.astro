@@ -1,0 +1,15 @@
+---
+interface Props {
+  slug: string;
+  text: string;
+}
+
+const { slug, text } = Astro.props;
+---
+
+<a
+  href={`#${slug}`}
+  id={`toc-link-${slug}`}
+  class="text-md hover:bg-primary [&.active]:!bg-base-100 [&.seeing]:text-primary [&.seeing.active]:text-primary-content [&.seeing]:hover:bg-base-100 [&.seeing]:cursor-default [&.seeing]:pointer-events-none"
+  >{text}</a
+>

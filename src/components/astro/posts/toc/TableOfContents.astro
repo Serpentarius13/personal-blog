@@ -1,0 +1,100 @@
+---
+import type { MarkdownHeading } from "astro";
+import TocItem from "./TocItem.astro";
+import { cn } from "@/lib/cn";
+import { type TocHeading } from "./toc.types";
+import { custom } from "astro:schema";
+
+interface Props {
+  headings: MarkdownHeading[];
+  class?: string;
+}
+
+const { headings, class: className } = Astro.props;
+
+function buildToc(headings: MarkdownHeading[]): TocHeading[] {
+  const toc: TocHeading[] = [];
+  const stack: TocHeading[] = [];
+
+  headings.forEach((h) => {
+    const heading = { ...h, children: [] } satisfies TocHeading;
+
+    while (stack.length > 0 && stack[stack.length - 1].depth >= heading.depth) {
+      stack.pop();
+    }
+
+    if (stack.length === 0) {
+      toc.push(heading);
+    } else {
+      stack[stack.length - 1].children?.push(heading);
+    }
+
+    stack.push(heading);
+  });
+
+  return toc;
+}
+
+const toc = buildToc(headings.filter((h) => h.depth !== 1));
+
+console.log(JSON.stringify(toc, null, 2));
+---
+
+<aside
+  class={cn(
+    "p-2 shadow-md shadow-primary max-w-xs rounded-lg bg-base-100 backdrop-blur-xl z-[10]",
+    className,
+  )}
+  id="toc"
+>
+  <ul class="menu menu-xs w-full">
+    {toc.map((heading) => <TocItem heading={heading} />)}
+  </ul>
+</aside>
+
+<script is:inline>
+  const getParentSectionRecursive = (element) => {
+    let currentElement = element;
+
+    while (
+      currentElement.parentElement?.tagName.toLowerCase() === "section" &&
+      !!currentElement.parentElement?.dataset.headingRank
+    ) {
+      currentElement = currentElement.parentElement;
+    }
+
+    return currentElement;
+  };
+  const setupToc = () => {
+    const header = document.querySelector("header");
+    const headerHeight = header ? header.offsetHeight : 0;
+
+    const observer = new IntersectionObserver(
+      (sections) => {
+        sections.forEach((section) => {
+          const heading = section.target.querySelector("h2, h3, h4, h5, h6");
+          if (!heading) return;
+
+          const id = heading.getAttribute("id");
+          const link = document.querySelector(`#toc li a[href="#${id}"]`);
+          if (!link) return;
+
+          const addRemove = section.isIntersecting ? "add" : "remove";
+          link.classList[addRemove]("seeing");
+        });
+      },
+      {
+        threshold: 0.8,
+        rootMargin: `-${headerHeight}px 0px 0px 0px`,
+      },
+    );
+
+    const sections = document.querySelectorAll(".prose section");
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  };
+
+  document.addEventListener("astro:page-load", setupToc);
+  document.addEventListener("astro:after-swap", setupToc);
+</script>

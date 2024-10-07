@@ -1,3 +1,4 @@
+import typography from "@tailwindcss/typography";
 import daisyui, { type Config as DaisyConfig } from "daisyui";
 import { type Config } from "tailwindcss";
 import { THEMES } from "./config";
@@ -8,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {},
   },
-  plugins: [daisyui],
+  plugins: [daisyui, typography],
 
   daisyui: {
     themes: Object.values(THEMES),
