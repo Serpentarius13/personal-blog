@@ -55,7 +55,7 @@ const { Content, headings } = await post.render();
     class="lg:-z-[0] hidden lg:block lg:w-[210px] xl:w-[260px] relative lg:left-4 lg:top-24 h-fit lg:fixed"
   />
 
-  <section class="card prose box lg:hidden">
+  <section class="card prose box lg:hidden lg:mt-0 mt-12">
     <span class="text-2xl font-bold"> In this article: </span>
     <ul class="list-disc">
       {headings.filter((h) => h.depth === 2).map((h) => <li>{h.text}</li>)}
