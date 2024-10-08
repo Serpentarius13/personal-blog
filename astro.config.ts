@@ -8,6 +8,11 @@ import tailwind from "@astrojs/tailwind";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 
+// expressive code
+
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+import { pluginBlurLines } from "./plugins/expressive-code-blur";
+
 // rehype
 
 import rehypeSlug, { type Options as SlugOptions } from "rehype-slug";
@@ -44,7 +49,7 @@ import getReadingTime from "reading-time";
 // adapter
 import node from "@astrojs/node";
 import vercel from "@astrojs/vercel/serverless";
-import { CODE_THEMES, ICONS } from "./config";
+import { ICONS } from "./config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -59,9 +64,9 @@ export default defineConfig({
   },
   integrations: [
     expressiveCode({
-      shiki: {},
-      themes: Object.values(CODE_THEMES),
+      themes: ["ayu-dark", "rose-pine-dawn"],
       themeCssSelector: (theme) => `[data-code-theme="${theme.name}"]`,
+      plugins: [pluginLineNumbers(), pluginBlurLines()],
     }),
     mdx(),
     react(),

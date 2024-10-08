@@ -23,6 +23,9 @@ importers:
       '@astrojs/vercel':
         specifier: ^7.8.1
         version: 7.8.1(astro@4.15.11(@types/node@22.7.4)(rollup@4.24.0)(sass@1.79.4)(typescript@5.6.2))(react@18.3.1)
+      '@expressive-code/plugin-line-numbers':
+        specifier: ^0.37.0
+        version: 0.37.0
       '@fontsource/jetbrains-mono':
         specifier: ^5.1.1
         version: 5.1.1
@@ -93,6 +96,9 @@ importers:
       '@astrojs/node':
         specifier: ^8.3.4
         version: 8.3.4(astro@4.15.11(@types/node@22.7.4)(rollup@4.24.0)(sass@1.79.4)(typescript@5.6.2))
+      '@expressive-code/core':
+        specifier: ^0.37.0
+        version: 0.37.0
       '@rehype-pretty/transformers':
         specifier: ^0.13.2
         version: 0.13.2
@@ -486,6 +492,9 @@ packages:
 
   '@expressive-code/plugin-frames@0.37.0':
     resolution: {integrity: sha512-jqlds/LptU8+FYxD1Uiu1vULvC904TlcOote8wCgn4gdae2qmCj67G9C1b1j3MAaerblRQg4uNbUxeitRFYs6A==}
+
+  '@expressive-code/plugin-line-numbers@0.37.0':
+    resolution: {integrity: sha512-np3Z51zYycO9zYaiqH51LPsn7PFGIcENhD5l0iAy+RrJNK4b213VvydVWgqLq87efZtCXg+lMuY/U8P4lCAPMw==}
 
   '@expressive-code/plugin-shiki@0.37.0':
     resolution: {integrity: sha512-0g9v7OBu3rNS7EOyam1G6+WE1siWBKteagV0917yooIFlOlcJ/pvV/nClSEwJgFdumwHK4sDj4ov4Y4p0tDn1w==}
@@ -3592,6 +3601,10 @@ snapshots:
       unist-util-visit-parents: 6.0.1
 
   '@expressive-code/plugin-frames@0.37.0':
+    dependencies:
+      '@expressive-code/core': 0.37.0
+
+  '@expressive-code/plugin-line-numbers@0.37.0':
     dependencies:
       '@expressive-code/core': 0.37.0
 

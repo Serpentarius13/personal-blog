@@ -6,9 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
-    "build:local": "IS_LOCAL=true astro build",
     "preview": "astro preview",
-    "preview:local": "IS_LOCAL=true astro preview",
+    "preview:local": "IS_LOCAL=true astro build && IS_LOCAL=true astro preview",
     "astro": "astro"
   },
   "dependencies": {
@@ -17,6 +16,7 @@
     "@astrojs/react": "^3.6.2",
     "@astrojs/tailwind": "^5.1.1",
     "@astrojs/vercel": "^7.8.1",
+    "@expressive-code/plugin-line-numbers": "^0.37.0",
     "@fontsource/jetbrains-mono": "^5.1.1",
     "@hbsnow/rehype-sectionize": "^1.0.7",
     "@iconify-json/catppuccin": "^1.2.4",
@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@astrojs/node": "^8.3.4",
+    "@expressive-code/core": "^0.37.0",
     "@rehype-pretty/transformers": "^0.13.2",
     "@shikijs/transformers": "^1.21.1",
     "@tailwindcss/typography": "^0.5.15",
