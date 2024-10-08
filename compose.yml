@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:15.1
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
+
+volumes:
+  db_data:

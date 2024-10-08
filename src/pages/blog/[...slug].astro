@@ -2,7 +2,9 @@
 import AppIcon from "@/components/astro/AppIcon.astro";
 import TableOfContents from "@/components/astro/posts/toc/TableOfContents.astro";
 import { H1Renderer } from "@/components/solid/H1Renderer";
+import { PostInfo } from "@/components/solid/PostInfo";
 import Layout from "@/layouts/Layout.astro";
+import { formatDate } from "@/lib/date";
 import type {
   GetStaticPaths,
   InferGetStaticParamsType,
@@ -50,6 +52,14 @@ const { Content, headings } = await post.render();
       height={300}
       class="rounded-xl"
     />
+
+    <div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6">
+      <PostInfo
+        client:only="solid"
+        postId={post.slug}
+        date={formatDate(post.data.date)}
+      />
+    </div>
   </header>
 
   <TableOfContents
@@ -77,6 +87,45 @@ const { Content, headings } = await post.render();
     <AppIcon set={IconSet.LINE_MD} name="arrow-up" />
   </button>
 </Layout>
+
+<script>
+  import { actions } from "astro:actions";
+
+  const attachListeners = () => {
+    const postSlug = window.location.pathname.split("/").pop()!;
+    let hasViewed = !!localStorage.getItem(`view-post-${postSlug}`);
+    let hasRead = !!localStorage.getItem(`read-post-${postSlug}`);
+
+    if (!hasRead) {
+      const footer = document.querySelector("#footer");
+      if (!footer) return;
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(async (entry) => {
+            if (entry.isIntersecting && !hasRead) {
+              await actions.readPost({ postId: postSlug });
+              localStorage.setItem(`read-post-${postSlug}`, "true");
+              hasRead = true;
+              observer.disconnect();
+            }
+          });
+        },
+        { rootMargin: "200px" },
+      );
+      observer.observe(footer);
+    }
+
+    if (!hasViewed) {
+      actions.viewPost({ postId: postSlug }).then(() => {
+        localStorage.setItem(`view-post-${postSlug}`, "true");
+        hasViewed = true;
+      });
+    }
+  };
+
+  document.addEventListener("astro:page-load", attachListeners);
+  document.addEventListener("astro:after-swap", attachListeners);
+</script>
 
 <script>
   const attachListeners = () => {
@@ -107,12 +156,3 @@ const { Content, headings } = await post.render();
   document.addEventListener("astro:page-load", attachListeners);
   document.addEventListener("astro:after-swap", attachListeners);
 </script>
-
-<!-- <script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
-    const code = document.querySelectorAll(".expressive-code");
-    code.forEach((block) => {
-      block.dataset.theme = "everforest-light";
-    });
-  });
-</script> -->
