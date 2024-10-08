@@ -5,6 +5,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
+import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 
 // rehype
@@ -41,8 +42,9 @@ import { toString } from "mdast-util-to-string";
 import getReadingTime from "reading-time";
 
 // adapter
+import node from "@astrojs/node";
 import vercel from "@astrojs/vercel/serverless";
-import { ICONS } from "./config";
+import { CODE_THEMES, ICONS } from "./config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -56,21 +58,11 @@ export default defineConfig({
     },
   },
   integrations: [
-    // expressiveCode({
-    //   themes: Object.values(CODE_THEMES),
-    //   shiki: {},
-
-    //   plugins: [
-    //     definePlugin({
-    //       name: "a",
-    //       hooks: {
-    //         preprocessCode: (context) => {
-    //           console.log(context.codeBlock.props);
-    //         },
-    //       },
-    //     }),
-    //   ],
-    // }),
+    expressiveCode({
+      shiki: {},
+      themes: Object.values(CODE_THEMES),
+      themeCssSelector: (theme) => `[data-code-theme="${theme.name}"]`,
+    }),
     mdx(),
     react(),
     tailwind(),
@@ -94,7 +86,11 @@ export default defineConfig({
     ],
   },
 
-  adapter: vercel(),
+  adapter: process.env.IS_LOCAL
+    ? node({
+        mode: "standalone",
+      })
+    : vercel(),
   output: "hybrid",
 
   devToolbar: {

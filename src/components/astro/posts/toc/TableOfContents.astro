@@ -51,13 +51,9 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
 </aside>
 
 <script is:inline>
-  let isTocEnabled = false;
+  var isTocEnabled = false;
 
-  const setEnabled = () => (isTocEnabled = true);
-  const setDisabled = () => (isTocEnabled = false);
-
-  const setupToc = () => {
-    console.log(isTocEnabled);
+  var setupToc = () => {
     if (isTocEnabled) return;
 
     if (!window.matchMedia("(min-width: 1024px)").matches) return;
@@ -99,40 +95,43 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
       observer.observe(section);
     });
 
-    console.log("pog");
-
-    setEnabled();
+    isTocEnabled = true;
   };
 
   document.addEventListener("astro:page-load", setupToc);
-  document.addEventListener("astro:before-swap", setDisabled);
+
   document.addEventListener("astro:after-swap", setupToc);
 
-  function debounce(func, ms) {
-    let timeout;
-    return function () {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, arguments), ms);
-    };
-  }
+  var setupTocResizeObserver = () => {
+    function debounce(func, ms) {
+      let timeout;
+      return function () {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, arguments), ms);
+      };
+    }
 
-  const checkToc = debounce(() => {
-    console.log("check");
-    if (isTocEnabled) return;
+    const checkToc = debounce(() => {
+      if (isTocEnabled) return;
 
-    setupToc();
-  }, 300);
+      setupToc();
+    }, 300);
 
-  setTimeout(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (entry) {
-        if (entry.contentRect.width >= 1024) {
+    setTimeout(() => {
+      const resizeObserver = new ResizeObserver((entries) => {
+        const entry = entries[0];
+        if (entry && entry.contentRect.width >= 1024) {
           checkToc();
         }
-      }
-    });
+      });
 
-    resizeObserver.observe(document.body);
-  }, 1000);
+      resizeObserver.observe(document.body);
+    }, 1000);
+  };
+
+  document.addEventListener("astro:page-load", setupTocResizeObserver);
+  document.addEventListener("astro:before-swap", () => {
+    isTocEnabled = false;
+  });
+  document.addEventListener("astro:after-swap", setupTocResizeObserver);
 </script>

@@ -2,23 +2,23 @@ import type { Theme } from "daisyui";
 import type { BundledTheme } from "shiki";
 
 export const CODE_THEMES = {
-  "ayu-dark": "ayu-dark",
-  "everforest-light": "everforest-light",
-} as const satisfies Partial<Record<BundledTheme, BundledTheme>>;
+  dark: "ayu-dark",
+  light: "rose-pine-dawn",
+} as const satisfies Record<string, BundledTheme>;
 
 export const DARK_THEMES = {
   aqua: "aqua",
   dark: "dark",
-} as const satisfies Partial<Record<Theme, Theme>>;
+} as const satisfies Record<string, Theme>;
 
 export const LIGHT_THEMES = {
   bumblebee: "bumblebee",
-} as const satisfies Partial<Record<Theme, Theme>>;
+} as const satisfies Record<string, Theme>;
 
 export const THEMES = {
   ...DARK_THEMES,
   ...LIGHT_THEMES,
-} as const satisfies Partial<Record<Theme, Theme>>;
+} as const satisfies Record<string, Theme>;
 
 export enum IconSet {
   GAME_ICONS = "game-icons",

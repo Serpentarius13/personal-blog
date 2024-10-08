@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "build:local": "IS_LOCAL=true astro build",
     "preview": "astro preview",
+    "preview:local": "IS_LOCAL=true astro preview",
     "astro": "astro"
   },
   "dependencies": {
@@ -39,6 +41,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "@astrojs/node": "^8.3.4",
     "@rehype-pretty/transformers": "^0.13.2",
     "@shikijs/transformers": "^1.21.1",
     "@tailwindcss/typography": "^0.5.15",

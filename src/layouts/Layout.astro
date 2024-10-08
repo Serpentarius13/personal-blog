@@ -4,7 +4,7 @@ import "@/styles/global.scss";
 import "@/styles/components.scss";
 import "@/styles/code.scss";
 import "@fontsource/jetbrains-mono";
-import { THEMES, CODE_THEMES, LIGHT_THEMES, DARK_THEMES } from "config";
+import { THEMES, DARK_THEMES, LIGHT_THEMES, CODE_THEMES } from "config";
 import Footer from "@/components/astro/Footer.astro";
 import { ViewTransitions } from "astro:transitions";
 import { cn } from "@/lib/cn";
@@ -28,6 +28,64 @@ const { title, description, mainClassname } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
     <ViewTransitions />
+
+    <script
+      is:inline
+      define:vars={{ THEMES, DARK_THEMES, LIGHT_THEMES, CODE_THEMES }}
+    >
+      const THEME_KEY = "theme";
+      const getThemePreference = () => {
+        if (typeof localStorage !== "undefined") {
+          const theme = localStorage.getItem(THEME_KEY);
+
+          if (theme) {
+            return theme;
+          }
+        }
+
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? DARK_THEMES.dark
+          : LIGHT_THEMES.bumblebee;
+      };
+
+      const getCodeTheme = (theme) => {
+        const codeTheme =
+          theme in DARK_THEMES ? CODE_THEMES.dark : CODE_THEMES.light;
+        return codeTheme;
+      };
+
+      const getDocumentTheme = () => {
+        return document.documentElement.dataset.theme;
+      };
+
+      const setDarkMode = (document) => {
+        const theme = getThemePreference();
+        const codeTheme = getCodeTheme(theme);
+
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.codeTheme = codeTheme;
+      };
+
+      setDarkMode(document);
+
+      document.addEventListener("astro:before-swap", (event) => {
+        setDarkMode(event.newDocument);
+      });
+
+      if (typeof localStorage !== "undefined") {
+        const observer = new MutationObserver(() => {
+          const theme = getDocumentTheme();
+          if (!theme) return;
+          const codeTheme = getCodeTheme(theme);
+          document.documentElement.dataset.codeTheme = codeTheme;
+          localStorage.setItem(THEME_KEY, theme);
+        });
+        observer.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["data-theme"],
+        });
+      }
+    </script>
   </head>
   <body class="min-h-full h-full">
     <div class="max-w-screen overflow-x-hidden min-h-full flex flex-col">
@@ -39,62 +97,3 @@ const { title, description, mainClassname } = Astro.props;
     </div>
   </body>
 </html>
-
-<script
-  is:inline
-  define:vars={{ THEMES, CODE_THEMES, LIGHT_THEMES, DARK_THEMES }}
->
-  const THEME_KEY = "theme";
-
-  const getThemePreference = () => {
-    if (typeof localStorage !== "undefined") {
-      const theme = localStorage.getItem(THEME_KEY);
-
-      if (theme) {
-        return theme;
-      }
-    }
-
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? DARK_THEMES.dark
-      : LIGHT_THEMES.bumblebee;
-  };
-
-  const getDocumentTheme = () => {
-    return document.documentElement.dataset.theme;
-  };
-
-  const getCodeTheme = (theme) => {
-    const codeTheme =
-      theme in DARK_THEMES
-        ? CODE_THEMES["ayu-dark"]
-        : CODE_THEMES["everforest-light"];
-    return codeTheme;
-  };
-
-  const setDarkMode = (document) => {
-    const theme = getThemePreference();
-    const codeTheme = getCodeTheme(theme);
-
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.dataset.codeTheme = codeTheme;
-  };
-
-  setDarkMode(document);
-
-  document.addEventListener("astro:before-swap", (event) => {
-    setDarkMode(event.newDocument);
-  });
-
-  if (typeof localStorage !== "undefined") {
-    const observer = new MutationObserver(() => {
-      const theme = getDocumentTheme();
-      if (!theme) return;
-      localStorage.setItem(THEME_KEY, theme);
-    });
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-  }
-</script>
