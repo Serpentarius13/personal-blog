@@ -1,26 +1,29 @@
 ---
 import TocLink from "./TocLink.astro";
-import type { GroupedHeading } from "./toc.types";
+import type { TocHeading } from "./toc.types";
 interface Props {
-  heading: GroupedHeading;
+  heading: TocHeading;
+  index: number;
 }
 
-const { heading } = Astro.props;
+const { heading, index } = Astro.props;
 ---
 
 {
   heading.children?.length ? (
     <li>
-      <TocLink slug={heading.slug} text={heading.text} />
+      <TocLink slug={heading.slug} text={heading.text} index={index + 1} />
       <ul style={{}} class="list-none">
-        {heading.children.map((child) => (
-          <Astro.self heading={child} />
-        ))}
+        {heading.children.map((child, innerIndex) => {
+          return (
+            <Astro.self heading={child} index={index + (innerIndex + 1) / 10} />
+          );
+        })}
       </ul>
     </li>
   ) : (
     <li>
-      <TocLink slug={heading.slug} text={heading.text} />
+      <TocLink index={index + 1} slug={heading.slug} text={heading.text} />
     </li>
   )
 }

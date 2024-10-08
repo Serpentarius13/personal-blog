@@ -36,15 +36,15 @@ const { Content, headings } = await post.render();
   description={post.data.description}
   mainClassname=" px-4 gap-12 "
 >
-  <header class="box mt-8">
-    <h1 class="text-4xl mb-12">
+  <header class="mx-auto w-fit mt-8 mb-8">
+    <h1 class="text-6xl font-extrabold mb-12">
       {post.data.title}
     </h1>
 
     <Image
       src={post.data.image}
       alt={post.data.imageAlt}
-      width={600}
+      width={700}
       height={300}
       class="rounded-xl"
     />
@@ -52,7 +52,7 @@ const { Content, headings } = await post.render();
 
   <TableOfContents
     headings={headings}
-    class="lg:-z-[0] hidden lg:block lg:w-[210px] xl:w-[260px] relative lg:left-4 lg:top-24 h-fit lg:fixed"
+    class="lg:-z-[0] hidden lg:block lg:w-[210px] xl:w-[260px] relative lg:left-4 lg:bottom-12 h-fit lg:fixed"
   />
 
   <section class="card prose box lg:hidden lg:mt-0 mt-12">

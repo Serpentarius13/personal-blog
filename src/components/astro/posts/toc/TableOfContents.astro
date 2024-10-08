@@ -46,12 +46,22 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
   id="toc"
 >
   <ul class="menu menu-xs w-full">
-    {toc.map((heading) => <TocItem heading={heading} />)}
+    {toc.map((heading, index) => <TocItem heading={heading} index={index} />)}
   </ul>
 </aside>
 
 <script is:inline>
+  let isTocEnabled = false;
+
+  const setEnabled = () => (isTocEnabled = true);
+  const setDisabled = () => (isTocEnabled = false);
+
   const setupToc = () => {
+    console.log(isTocEnabled);
+    if (isTocEnabled) return;
+
+    if (!window.matchMedia("(min-width: 1024px)").matches) return;
+
     const links = document.querySelectorAll("#toc a[href^='#']");
 
     for (const link of links) {
@@ -80,7 +90,6 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
         });
       },
       {
-        threshold: 0.8,
         rootMargin: `-${headerHeight}px 0px 0px 0px`,
       },
     );
@@ -89,8 +98,41 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
     sections.forEach((section) => {
       observer.observe(section);
     });
+
+    console.log("pog");
+
+    setEnabled();
   };
 
   document.addEventListener("astro:page-load", setupToc);
+  document.addEventListener("astro:before-swap", setDisabled);
   document.addEventListener("astro:after-swap", setupToc);
+
+  function debounce(func, ms) {
+    let timeout;
+    return function () {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, arguments), ms);
+    };
+  }
+
+  const checkToc = debounce(() => {
+    console.log("check");
+    if (isTocEnabled) return;
+
+    setupToc();
+  }, 300);
+
+  setTimeout(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (entry) {
+        if (entry.contentRect.width >= 1024) {
+          checkToc();
+        }
+      }
+    });
+
+    resizeObserver.observe(document.body);
+  }, 1000);
 </script>
