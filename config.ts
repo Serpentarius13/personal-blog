@@ -38,6 +38,7 @@ export const ICONS = {
     telegram: "telegram",
     rss: "rss",
     search: "search",
+    "arrow-up": "arrow-up",
   },
 
   [IconSet.LINE_AWESOME]: {

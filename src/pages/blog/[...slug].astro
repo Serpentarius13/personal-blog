@@ -1,4 +1,5 @@
 ---
+import AppIcon from "@/components/astro/AppIcon.astro";
 import TableOfContents from "@/components/astro/posts/toc/TableOfContents.astro";
 import { H1Renderer } from "@/components/solid/H1Renderer";
 import Layout from "@/layouts/Layout.astro";
@@ -10,6 +11,7 @@ import type {
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
+import { IconSet } from "config";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("posts");
@@ -34,7 +36,7 @@ const { Content, headings } = await post.render();
 <Layout
   title={post.data.title}
   description={post.data.description}
-  mainClassname=" px-4 gap-12 "
+  mainClassname="px-4 gap-12 relative"
 >
   <header class="mx-auto w-fit mt-8 mb-8">
     <h1 class="text-6xl font-extrabold mb-12">
@@ -67,7 +69,44 @@ const { Content, headings } = await post.render();
       <Content components={{ h1: H1Renderer }} />
     </div>
   </div>
+
+  <button
+    id="scroll-top-btn"
+    class="fixed bottom-2 btn-primary right-2 z-[10] btn text-2xl opacity-0 translate-y-[120px] [&.visible]:translate-y-0 [&.visible]:opacity-100"
+  >
+    <AppIcon set={IconSet.LINE_MD} name="arrow-up" />
+  </button>
 </Layout>
+
+<script>
+  const attachListeners = () => {
+    const button = document.querySelector("#scroll-top-btn");
+
+    button?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.body.addEventListener("wheel", handleWheel);
+
+    function handleWheel(event: WheelEvent) {
+      if (checkScrollDirectionIsUp(event)) {
+        button?.classList.remove("visible");
+      } else {
+        button?.classList[window.scrollY > 250 ? "add" : "remove"]("visible");
+      }
+    }
+
+    function checkScrollDirectionIsUp(event: WheelEvent) {
+      if (event.deltaY) {
+        return event.deltaY > 0;
+      }
+      return event.deltaY < 0;
+    }
+  };
+
+  document.addEventListener("astro:page-load", attachListeners);
+  document.addEventListener("astro:after-swap", attachListeners);
+</script>
 
 <!-- <script is:inline>
   document.addEventListener("DOMContentLoaded", () => {
