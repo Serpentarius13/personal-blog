@@ -5,7 +5,6 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
-import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 
 // rehype
@@ -22,6 +21,9 @@ const rehypeCodePlugin = () => {
   return function (tree: Root) {
     visit(tree, "element", (node: any) => {
       if (node.tagName === "pre") {
+        node.properties.dataset = {
+          theme: "everforest-light",
+        };
         if (!node.properties.className) {
           node.properties.className = "not-prose";
         } else {
@@ -54,10 +56,21 @@ export default defineConfig({
     },
   },
   integrations: [
-    expressiveCode({
-      themes: ["night-owl", "ayu-dark"],
-      shiki: {},
-    }),
+    // expressiveCode({
+    //   themes: Object.values(CODE_THEMES),
+    //   shiki: {},
+
+    //   plugins: [
+    //     definePlugin({
+    //       name: "a",
+    //       hooks: {
+    //         preprocessCode: (context) => {
+    //           console.log(context.codeBlock.props);
+    //         },
+    //       },
+    //     }),
+    //   ],
+    // }),
     mdx(),
     react(),
     tailwind(),

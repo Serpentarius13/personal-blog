@@ -4,7 +4,7 @@ import "@/styles/global.scss";
 import "@/styles/components.scss";
 import "@/styles/code.scss";
 import "@fontsource/jetbrains-mono";
-import { THEMES } from "config";
+import { THEMES, CODE_THEMES, LIGHT_THEMES, DARK_THEMES } from "config";
 import Footer from "@/components/astro/Footer.astro";
 import { ViewTransitions } from "astro:transitions";
 import { cn } from "@/lib/cn";
@@ -40,7 +40,10 @@ const { title, description, mainClassname } = Astro.props;
   </body>
 </html>
 
-<script is:inline define:vars={{ THEMES }}>
+<script
+  is:inline
+  define:vars={{ THEMES, CODE_THEMES, LIGHT_THEMES, DARK_THEMES }}
+>
   const THEME_KEY = "theme";
 
   const getThemePreference = () => {
@@ -53,16 +56,28 @@ const { title, description, mainClassname } = Astro.props;
     }
 
     return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? THEMES.dark
-      : THEMES.bumblebee;
+      ? DARK_THEMES.dark
+      : LIGHT_THEMES.bumblebee;
   };
 
   const getDocumentTheme = () => {
     return document.documentElement.dataset.theme;
   };
 
+  const getCodeTheme = (theme) => {
+    const codeTheme =
+      theme in DARK_THEMES
+        ? CODE_THEMES["ayu-dark"]
+        : CODE_THEMES["everforest-light"];
+    return codeTheme;
+  };
+
   const setDarkMode = (document) => {
-    document.documentElement.dataset.theme = getThemePreference();
+    const theme = getThemePreference();
+    const codeTheme = getCodeTheme(theme);
+
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.codeTheme = codeTheme;
   };
 
   setDarkMode(document);
@@ -75,7 +90,7 @@ const { title, description, mainClassname } = Astro.props;
     const observer = new MutationObserver(() => {
       const theme = getDocumentTheme();
       if (!theme) return;
-      localStorage.setItem(THEME_KEY, getDocumentTheme());
+      localStorage.setItem(THEME_KEY, theme);
     });
     observer.observe(document.documentElement, {
       attributes: true,

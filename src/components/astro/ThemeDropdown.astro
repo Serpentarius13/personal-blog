@@ -1,0 +1,51 @@
+---
+import { THEMES } from "config";
+
+const toTitleCase = (str: string) => {
+  return str.slice(0, 1).toUpperCase() + str.slice(1);
+};
+interface Props {
+  children?: any;
+}
+---
+
+<div class="dropdown dropdown-bottom">
+  <div tabindex="0" role="button" class="btn btn-md rounded-btn btn-outline">
+    <slot />
+  </div>
+  <ul
+    tabindex="0"
+    class="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 mt-2 ring-2 ring-primary max-h-[200px] flex-nowrap overflow-auto"
+  >
+    {
+      Object.values(THEMES).map((theme) => {
+        return (
+          <li data-theme={theme} class="rounded-box mb-2 [&:last-child]:mb-0">
+            <div
+              role="button"
+              tabindex="0"
+              id={`theme-switcher-${theme}`}
+              class="btn btn-primary rounded-box"
+            >
+              {toTitleCase(theme)}
+            </div>
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>
+
+<script is:inline>
+  const handleSwitchTheme = (theme) => {
+    document.documentElement.dataset.theme = theme;
+  };
+
+  document.querySelectorAll(`[id^="theme-switcher-"]`).forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      const theme = event.target.parentElement.dataset.theme;
+      handleSwitchTheme(theme);
+    });
+  });
+</script>
