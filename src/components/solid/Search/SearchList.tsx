@@ -90,7 +90,7 @@ export const SearchList: Component<Props> = () => {
                   <div class="flex flex-col gap-2 card-content m-2">
                     <img
                       src={result.image}
-                      class="max-h-[100px] max-w-full object-cover"
+                      class="h-[100px] w-full object-cover"
                     />
                     <h3 class="text-lg font-semibold">{result.title}</h3>
                     <p class="text-muted-foreground text-sm">
