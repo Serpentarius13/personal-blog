@@ -1,4 +1,3 @@
-import { minWait } from "@/lib/utils";
 import { actions } from "astro:actions";
 import { createResource, type Component } from "solid-js";
 
@@ -8,13 +7,11 @@ interface Props {
 }
 
 export const PostInfo: Component<Props> = ({ postId, date }) => {
-  const [post, {}] = createResource(postId, () =>
-    minWait(actions.getPost({ postId }), 5000),
-  );
+  const [post, {}] = createResource(postId, () => actions.getPost({ postId }));
 
   return (
     <>
-      <div class="w-20 h-full">
+      <div class="min-w-20 h-full">
         {post.state === "errored" || post()?.error ? (
           <div class="badge badge-error w-full"> "Views: 1337" </div>
         ) : post.state === "pending" ? (
