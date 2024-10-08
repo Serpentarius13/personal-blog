@@ -1,16 +1,13 @@
+import { Icon } from "@iconify-icon/solid";
 import { createSignal, lazy, type Component } from "solid-js";
 import { Portal } from "solid-js/web";
-import type { SearchRecord } from "./types";
-
-interface Props {
-  records: SearchRecord[];
-}
+interface Props {}
 
 const LazySearchList = lazy(() =>
   import("./SearchList").then((r) => ({ default: r.SearchList })),
 );
 
-export const Search: Component<Props> = ({ records }) => {
+export const Search: Component<Props> = ({}) => {
   let dialogRef: HTMLDialogElement | undefined;
 
   const [open, setOpen] = createSignal(false);
@@ -18,14 +15,13 @@ export const Search: Component<Props> = ({ records }) => {
   return (
     <>
       <button
-        class="btn btn-primary"
+        class="btn btn-sm btn-ghost"
         onClick={() => {
           dialogRef?.showModal();
           setOpen(true);
         }}
       >
-        {" "}
-        open
+        <Icon icon="line-md:search" class="text-xl" />
       </button>
       <Portal>
         <dialog ref={dialogRef} id="my_modal_3" class="modal">
@@ -35,7 +31,9 @@ export const Search: Component<Props> = ({ records }) => {
                 ✕
               </button>
             </form>
-            {open() && <LazySearchList records={records} />}
+            <div class="mx-auto  h-[min(600px,100vh)] ">
+              {open() && <LazySearchList />}
+            </div>
           </div>{" "}
           <form method="dialog" class="modal-backdrop">
             <button>close</button>

@@ -23,7 +23,6 @@ export const THEMES = {
 export enum IconSet {
   GAME_ICONS = "game-icons",
   LINE_MD = "line-md",
-  CATPPUCCIN = "catppuccin",
   LINE_AWESOME = "la",
   LOGOS = "logos",
 }
@@ -38,10 +37,9 @@ export const ICONS = {
     github: "github",
     telegram: "telegram",
     rss: "rss",
+    search: "search",
   },
-  [IconSet.CATPPUCCIN]: {
-    typescript: "typescript",
-  },
+
   [IconSet.LINE_AWESOME]: {
     "chevron-right": "chevron-right",
   },
