@@ -1,29 +1,9 @@
 ---
+//@ts-nocheck
 import { Search } from "@/components/solid/Search/Search";
 import Layout from "@/layouts/Layout.astro";
-import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
 
-const copy = (arr: any[], times: number) => {
-  const result = [];
-  for (let i = 0; i < times; i++) {
-    result.push(arr.slice());
-  }
-  return result;
-};
-const posts = await getCollection("posts").then((r) => {
-  const res = copy(r, 1).flat() as CollectionEntry<"posts">[];
-
-  return res.map((post) => {
-    return {
-      title: post.data.title,
-      content: post.body,
-      description: post.data.description,
-      slug: post.slug,
-      tags: post.data.tags,
-    };
-  });
-});
+if (import.meta.env.PROD) return Astro.redirect("/");
 ---
 
 <Layout>
