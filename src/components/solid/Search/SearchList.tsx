@@ -1,8 +1,6 @@
-import { type FuseResult } from "fuse.js";
-
+import type { SearchRecordResult } from "@/actions";
 import { actions } from "astro:actions";
 import { createSignal, type Component } from "solid-js";
-import type { SearchRecord } from "./types";
 
 interface Props {}
 
@@ -10,9 +8,9 @@ export const SearchList: Component<Props> = () => {
   const [error, setError] = createSignal<string>();
   const [isLoading, setIsLoading] = createSignal(false);
   const [hasTriedSearching, setHasTriedSearching] = createSignal(false);
-  const [searchResults, setSearchResults] = createSignal<
-    FuseResult<SearchRecord>[]
-  >([]);
+  const [searchResults, setSearchResults] = createSignal<SearchRecordResult[]>(
+    [],
+  );
 
   const handleSearch = debounce(async (value: string) => {
     if (error()) {
@@ -84,19 +82,26 @@ export const SearchList: Component<Props> = () => {
             {searchResults().map((result, index) => {
               return (
                 <a
-                  href={`/blog/${result.item.slug}`}
+                  href={`/blog/${result.slug}`}
                   tabindex={0}
-                  class="focus-within:shadow-xl card flex p-3 flex-col gap-2 transition-all hover:shadow-xl hover:shadow-primary focus-within:shadow-primary focus:outline-none"
+                  class="focus-within:shadow-xl group card flex p-3 flex-col gap-2 transition-all hover:shadow-xl hover:shadow-primary focus-within:shadow-primary focus:outline-none"
                 >
                   <div class="flex flex-col gap-2 card-content m-2">
                     <img
-                      src={result.item.image}
+                      src={result.image}
                       class="max-h-[100px] max-w-full object-cover"
                     />
-                    <h3 class="text-lg font-semibold">{result.item.title}</h3>
+                    <h3 class="text-lg font-semibold">{result.title}</h3>
                     <p class="text-muted-foreground text-sm">
-                      {result.item.description}
+                      {result.description}
                     </p>
+                    <ul class="flex flex-wrap gap-1">
+                      {result.tags.map((tag) => (
+                        <li class="badge badge-sm group-hover:badge-primary group-focus-within:badge-primary">
+                          {tag}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </a>
               );

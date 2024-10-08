@@ -2,15 +2,13 @@ import type { SearchRecord } from "@/components/solid/Search/types";
 import { defineAction } from "astro:actions";
 import { getCollection } from "astro:content";
 import { z } from "astro:schema";
-import Fuse, { type FuseResult } from "fuse.js";
+import Fuse from "fuse.js";
 
-const copy = (arr: any[], times: number) => {
-  const result = [];
-  for (let i = 0; i < times; i++) {
-    result.push(arr.slice());
-  }
-  return result;
-};
+export interface SearchRecordResult
+  extends Pick<
+    SearchRecord,
+    "title" | "image" | "description" | "tags" | "slug"
+  > {}
 
 const collection = await getCollection("posts");
 
@@ -39,10 +37,12 @@ export const server = {
         .string()
         .max(200, "Search term must be less than 200 characters"),
     }),
-    handler: async ({ search }): Promise<FuseResult<SearchRecord>[]> => {
-      if (!search) return records.map((r) => ({ item: r, refIndex: 0 }));
+    handler: async ({ search }): Promise<SearchRecordResult[]> => {
+      if (!search) return records.map(({ content, ...record }) => record);
 
-      return fuse.search(search, { limit: 30 });
+      return fuse
+        .search(search, { limit: 30 })
+        .map(({ item: { content, ...item } }) => item);
     },
   }),
 };

@@ -108,8 +108,11 @@ export const SOCIAL_LINKS = {
   }
 >;
 
+const SITE_URL = "https://void-flower.vercel.app";
+
 export const CONFIG = {
   NAV_LINKS,
   SITE_TITLE,
   SOCIAL_LINKS,
+  SITE_URL,
 };

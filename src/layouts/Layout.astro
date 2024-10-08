@@ -29,6 +29,13 @@ const { title, description, mainClassname } = Astro.props;
     <meta name="description" content={description} />
     <ViewTransitions />
 
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={title}
+      href={new URL("rss.xml", Astro.site)}
+    />
+
     <script
       is:inline
       define:vars={{ THEMES, DARK_THEMES, LIGHT_THEMES, CODE_THEMES }}

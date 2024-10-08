@@ -48,10 +48,11 @@ import { remarkReadingTime } from "./plugins/remark-reading-time";
 // adapter
 import node from "@astrojs/node";
 import vercel from "@astrojs/vercel/serverless";
-import { CODE_THEMES, ICONS } from "./config";
+import { CODE_THEMES, CONFIG, ICONS } from "./config";
 
 // https://astro.build/config
 export default defineConfig({
+  site: CONFIG.SITE_URL,
   vite: {
     css: {
       preprocessorOptions: {
