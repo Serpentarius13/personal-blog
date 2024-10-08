@@ -3,12 +3,22 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     },
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
     "traceResolution": false
   },
-  "exclude": ["dist", "node_modules"],
-  "include": ["src/**/*", "config.ts", "astro.config.ts", "tailwind.config.ts"]
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*",
+    "config.ts",
+    "astro.config.ts",
+    "tailwind.config.ts"
+  ]
 }

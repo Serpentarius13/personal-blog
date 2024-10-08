@@ -3,7 +3,7 @@ import { defineConfig } from "astro/config";
 
 // integrations
 import mdx from "@astrojs/mdx";
-import react from "@astrojs/react";
+import solidJs from "@astrojs/solid-js";
 import tailwind from "@astrojs/tailwind";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
@@ -48,7 +48,7 @@ import { remarkReadingTime } from "./plugins/remark-reading-time";
 // adapter
 import node from "@astrojs/node";
 import vercel from "@astrojs/vercel/serverless";
-import { ICONS } from "./config";
+import { CODE_THEMES, ICONS } from "./config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -63,12 +63,11 @@ export default defineConfig({
   },
   integrations: [
     expressiveCode({
-      themes: ["ayu-dark", "rose-pine-dawn"],
+      themes: Object.values(CODE_THEMES),
       themeCssSelector: (theme) => `[data-code-theme="${theme.name}"]`,
       plugins: [pluginLineNumbers(), pluginBlurLines()],
     }),
     mdx(),
-    react(),
     tailwind(),
     icon({
       include: Object.fromEntries(
@@ -78,6 +77,7 @@ export default defineConfig({
         ]),
       ),
     }),
+    solidJs(),
   ],
 
   markdown: {

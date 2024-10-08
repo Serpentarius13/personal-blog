@@ -45,7 +45,7 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
   )}
   id="toc"
 >
-  <ul class="menu menu-xs w-full">
+  <ul class="menu menu-xs w-full max-h-[400px] overflow-auto flex-nowrap">
     {toc.map((heading, index) => <TocItem heading={heading} index={index} />)}
   </ul>
 </aside>

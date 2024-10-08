@@ -1,6 +1,6 @@
 ---
 import TableOfContents from "@/components/astro/posts/toc/TableOfContents.astro";
-import { H1Renderer } from "@/components/react/H1Renderer";
+import { H1Renderer } from "@/components/solid/H1Renderer";
 import Layout from "@/layouts/Layout.astro";
 import type {
   GetStaticPaths,
@@ -52,7 +52,7 @@ const { Content, headings } = await post.render();
 
   <TableOfContents
     headings={headings}
-    class="lg:-z-[0] hidden lg:block lg:w-[210px] xl:w-[260px] relative lg:left-4 lg:bottom-12 h-fit lg:fixed"
+    class="lg:-z-[0] hidden lg:block lg:w-[210px] xl:w-[260px] 2xl:w-[300px] relative lg:left-4 lg:bottom-12 h-fit lg:fixed"
   />
 
   <section class="card prose box lg:hidden lg:mt-0 mt-12">
