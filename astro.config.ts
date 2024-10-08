@@ -5,6 +5,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
+import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 
 // rehype
@@ -16,16 +17,19 @@ const rehypeSlugOptions: SlugOptions = {
 
 import rehypeSectionize from "@hbsnow/rehype-sectionize";
 
-import { transformerNotationHighlight } from "@shikijs/transformers";
-import rehypePrettyCode, { type Options } from "rehype-pretty-code";
-const prettyCodeOptions: Options = {
-  theme: {
-    aurora: "aurora-x",
-    dark: "ayu-dark",
-    light: "catppuccin-frappe",
-  },
-
-  transformers: [transformerNotationHighlight()],
+import { visit } from "unist-util-visit";
+const rehypeCodePlugin = () => {
+  return function (tree: Root) {
+    visit(tree, "element", (node: any) => {
+      if (node.tagName === "pre") {
+        if (!node.properties.className) {
+          node.properties.className = "not-prose";
+        } else {
+          node.properties.className += " not-prose";
+        }
+      }
+    });
+  };
 };
 
 // remark
@@ -40,7 +44,20 @@ import { ICONS } from "./config";
 
 // https://astro.build/config
 export default defineConfig({
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern",
+        },
+      },
+    },
+  },
   integrations: [
+    expressiveCode({
+      themes: ["night-owl", "ayu-dark"],
+      shiki: {},
+    }),
     mdx(),
     react(),
     tailwind(),
@@ -58,9 +75,9 @@ export default defineConfig({
     syntaxHighlight: false,
     remarkPlugins: [remarkReadingTime],
     rehypePlugins: [
-      [rehypePrettyCode, prettyCodeOptions],
       [rehypeSlug, rehypeSlugOptions],
       rehypeSectionize,
+      rehypeCodePlugin as any,
     ],
   },
 

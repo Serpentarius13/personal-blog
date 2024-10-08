@@ -1,0 +1,7 @@
+pre:has(code) {
+  font-family: mo !important;
+
+  & code {
+    font-family: inherit !important;
+  }
+}

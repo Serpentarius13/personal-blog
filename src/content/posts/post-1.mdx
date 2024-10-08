@@ -10,92 +10,33 @@ tags: ["astro", "shiki", "markdown", "parsing", "css"]
 
 # Project Title: Dynamic Heading Selector
 
-## Introduction
-
-In modern web development, selecting elements based on their attributes is a common task. This project demonstrates how to dynamically select headings with specific `id` attributes using pure JavaScript. The focus is on headings that start with a specific string, allowing for flexible and efficient DOM manipulation.
-
-## Project Overview
-
-This project provides a simple way to select headings in an HTML document based on their `id` attributes. By using the `querySelectorAll` method, we can efficiently find all headings that match a specific pattern.
-
-## Getting Started
-
-### Prerequisites
-
-To run this project, you need:
-
-- A modern web browser (Chrome, Firefox, Safari, etc.)
-- Basic knowledge of HTML and JavaScript
-
-### Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/yourusername/dynamic-heading-selector.git
+```ts title="line-markers.js" del={2} ins={3-4} {6}
+console.log("Not highlighted");
+console.log("Highlighted");
+console.log("Not highlighted");
 ```
 
-2. Open the `index.html` file in your preferred web browser.
+## 1 23123123123123
 
-## Usage
+## 123
 
-### Selecting Headings
+## 3123
 
-To select headings with `id` attributes that start with "bh-", you can use the following JavaScript code:
-
-```javascript
-document.addEventListener("DOMContentLoaded", () => {
-  const headings = document.querySelectorAll('[id^="bh-"]');
-  console.log(headings); // Logs the NodeList of headings
-});
-```
-
-### Example Code
-
-Here is a complete example of an HTML document that utilizes the dynamic heading selector:
-
-```html
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dynamic Heading Selector</title>
-    <style>
-      h1,
-      h2,
-      h3 {
-        color: #333;
-      }
-    </style>
-  </head>
-  <body>
-    <h1 id="bh-1">Heading 1</h1>
-    <h2 id="bh-2">Heading 2</h2>
-    <h3 id="bh-3">Heading 3</h3>
-    <h2 id="other-1">Other Heading</h2>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const headings = document.querySelectorAll('[id^="bh-"]');
-        headings.forEach((heading) => {
-          heading.style.color = "blue"; // Change color of selected headings
-        });
-        console.log(headings); // Logs the NodeList of headings
-      });
-    </script>
-  </body>
-</html>
-```
-
-## Conclusion
-
-This project illustrates how to dynamically select and manipulate headings in an HTML document using pure JavaScript. By leveraging the `querySelectorAll` method with attribute selectors, developers can efficiently target elements based on their `id` attributes.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-\\
-
-This README provides a comprehensive overview of the project, including its purpose, usage, and example code. It is structured with clear headings and subheadings to enhance readability and organization.
+lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum  
+lorem ipsum lorem ipsum  
+lorem ipsumlorem ipsumlorem ipsum lorem ipsumlorem ipsumlorem ipsum lorem ipsumlorem ipsumlorem ipsum lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum  
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum lorem ipsumlorem ipsumlorem ipsum lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum
+lorem ipsumlorem ipsumlorem ipsum

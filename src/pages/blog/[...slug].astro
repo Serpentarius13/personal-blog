@@ -1,6 +1,6 @@
 ---
 import TableOfContents from "@/components/astro/posts/toc/TableOfContents.astro";
-import { Renderer } from "@/components/astro/posts/toc/toc.types";
+import { H1Renderer } from "@/components/react/H1Renderer";
 import Layout from "@/layouts/Layout.astro";
 import type {
   GetStaticPaths,
@@ -62,9 +62,9 @@ const { Content, headings } = await post.render();
     </ul>
   </section>
 
-  <div class="p-4 box mx-auto">
+  <div class="box mx-auto">
     <div class="prose">
-      <Content components={{ h1: Renderer }} />
+      <Content components={{ h1: H1Renderer }} />
     </div>
   </div>
 </Layout>

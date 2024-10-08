@@ -4,5 +4,3 @@ export interface TocHeading {
   children?: TocHeading[];
   depth: number;
 }
-
-export const Renderer = () => <> </>;

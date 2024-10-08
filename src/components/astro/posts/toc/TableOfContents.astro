@@ -36,8 +36,6 @@ function buildToc(headings: MarkdownHeading[]): TocHeading[] {
 }
 
 const toc = buildToc(headings.filter((h) => h.depth !== 1));
-
-console.log(JSON.stringify(toc, null, 2));
 ---
 
 <aside
@@ -53,19 +51,17 @@ console.log(JSON.stringify(toc, null, 2));
 </aside>
 
 <script is:inline>
-  const getParentSectionRecursive = (element) => {
-    let currentElement = element;
+  const setupToc = () => {
+    const links = document.querySelectorAll("#toc a[href^='#']");
 
-    while (
-      currentElement.parentElement?.tagName.toLowerCase() === "section" &&
-      !!currentElement.parentElement?.dataset.headingRank
-    ) {
-      currentElement = currentElement.parentElement;
+    for (const link of links) {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        const target = document.querySelector(link.getAttribute("href"));
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
     }
 
-    return currentElement;
-  };
-  const setupToc = () => {
     const header = document.querySelector("header");
     const headerHeight = header ? header.offsetHeight : 0;
 
