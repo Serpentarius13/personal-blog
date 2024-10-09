@@ -11,8 +11,13 @@ import AppIcon from "./AppIcon.astro";
     <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
   </aside>
   <nav>
-    <a href="/rss.xml" class="btn btn-sm btn-primary btn-outline">
+    <a
+      href="/rss.xml"
+      class="btn btn-sm btn-primary btn-outline"
+      aria-labelledby="rss-btn-label"
+    >
       <AppIcon set={IconSet.LINE_MD} name="rss" class="size-6" />
+      <span id="rss-btn-label" class="sr-only">Opens RSS feed xml page</span>
     </a>
   </nav>
 </footer>

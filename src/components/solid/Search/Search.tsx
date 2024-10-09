@@ -20,8 +20,12 @@ export const Search: Component<Props> = ({}) => {
           dialogRef?.showModal();
           setOpen(true);
         }}
+        aria-labelledby="search-btn-label"
       >
         <Icon icon="line-md:search" class="text-xl" />
+        <span id="search-btn-label" class="sr-only">
+          Opens dialog window for global article search
+        </span>
       </button>
       <Portal>
         <dialog ref={dialogRef} id="my_modal_3" class="modal">
