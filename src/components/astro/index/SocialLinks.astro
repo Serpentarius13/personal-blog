@@ -22,8 +22,12 @@ const { className } = Astro.props;
             class="btn btn-outline btn-sm flex items-center justify-center"
             target="_blank"
             rel="nofollow"
+            aria-labelledby={`${label}-btn-label`}
           >
             <AppIcon set={icon.set} name={icon.name} class="size-4 md:size-6" />
+            <span id={`${label}-btn-label`} class="sr-only">
+              Opens {label} social network link in the separate window
+            </span>
           </a>
         </li>
       );
