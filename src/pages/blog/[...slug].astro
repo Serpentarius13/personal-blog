@@ -45,29 +45,36 @@ const { Content, headings } = await post.render();
     <meta property="twitter:card" content="summary_large_image" />
   </Fragment>
 
-  <header class="mx-auto w-fit mt-8 mb-8">
-    <h1 class="text-6xl font-extrabold mb-12">
-      {post.data.title}
-    </h1>
+  <h1 class="text-6xl font-extrabold mx-auto w-fit mt-4 mb-8">
+    {post.data.title}
+  </h1>
 
-    <div class="max-h-[400px] h-[400px]">
-      <Image
-        src={post.data.image}
-        alt={post.data.imageAlt}
-        width={700}
-        height={400}
-        class="rounded-xl h-full object-cover"
-      />
-    </div>
+  <Image
+    src={post.data.image}
+    alt={post.data.imageAlt}
+    width={1200}
+    height={450}
+    class="rounded-xl mx-auto h-[450px] object-cover"
+  />
 
-    <div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6">
-      <PostInfo
-        client:only="solid"
-        postId={post.slug}
-        date={formatDate(post.data.date)}
-      />
-    </div>
-  </header>
+  <div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6">
+    <PostInfo
+      client:only="solid"
+      postId={post.slug}
+      date={formatDate(post.data.date)}
+    />
+  </div>
+  {
+    post.data.tags && (
+      <ul class="mx-auto flex flex-wrap gap-1 w-fit mt-4">
+        {post.data.tags.map((tag) => {
+          return (
+            <li class="badge badge-sm badge-outline badge-primary">{tag}</li>
+          );
+        })}
+      </ul>
+    )
+  }
 
   <div
     class="lg:grid flex flex-col lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:pl-8 gap-[clamp(1rem,10vw,3rem)] items-start"
