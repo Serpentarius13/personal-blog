@@ -14,6 +14,7 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import { IconSet } from "config";
+import jetbrainsPreload from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("posts");
@@ -43,6 +44,14 @@ const { Content, headings } = await post.render();
   <Fragment slot="head">
     <meta property="og:type" content="article" />
     <meta property="twitter:card" content="summary_large_image" />
+
+    <link
+      rel="preload"
+      as="font"
+      href={jetbrainsPreload}
+      type="font/woff2"
+      crossorigin
+    />
   </Fragment>
 
   <h1 class="text-6xl font-extrabold mx-auto w-fit mt-4 mb-8">

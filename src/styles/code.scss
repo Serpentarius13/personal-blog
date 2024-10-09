@@ -1,7 +1,6 @@
-pre:has(code) {
-  font-family: "JetBrains Mono", monospace !important;
-
-  & code {
+pre {
+  font-family: "JetBrains Mono Variable", monospace !important;
+  code {
     font-family: inherit !important;
   }
 }

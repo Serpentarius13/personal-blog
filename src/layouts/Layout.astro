@@ -3,7 +3,6 @@ import Navbar from "@/components/astro/Navbar.astro";
 import "@/styles/global.scss";
 import "@/styles/components.scss";
 import "@/styles/code.scss";
-import "@fontsource/jetbrains-mono";
 import Footer from "@/components/astro/Footer.astro";
 import { ViewTransitions } from "astro:transitions";
 import { cn } from "@/lib/cn";
@@ -123,15 +122,3 @@ const imageUrl = image && new URL(image, Astro.url);
     </script>
   </body>
 </html>
-
-<style is:global>
-  body {
-    overflow-x: hidden;
-  }
-
-  @supports (overflow: clip) {
-    body {
-      overflow-x: clip;
-    }
-  }
-</style>
