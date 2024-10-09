@@ -16,6 +16,7 @@ import { getCollection } from "astro:content";
 import { IconSet } from "config";
 import jetbrainsPreload from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2";
 import PostCard from "@/components/astro/posts/PostCard.astro";
+import { fade } from "astro:transitions";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("posts");
@@ -65,6 +66,8 @@ const { Content, headings } = await post.render();
     width={1200}
     height={450}
     class="rounded-xl mx-auto h-[450px] object-cover"
+    transition:name="post-image"
+    transition:animate={fade({ duration: 300 })}
   />
 
   <div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6">

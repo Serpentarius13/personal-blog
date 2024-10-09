@@ -58,15 +58,9 @@ const imageUrl = image && new URL(image, Astro.url);
 
     <slot name="head" />
     <ViewTransitions />
-  </head>
-  <body class="px-3 md:px-1 flex flex-col">
-    <Navbar />
-    <main class={cn(" h-0 flex-1", mainClassname)}>
-      <slot />
-    </main>
-    <Footer />
 
-    <script define:vars={{ DARK_THEMES, LIGHT_THEMES, CODE_THEMES }}>
+    <script is:inline>
+      const darkThemes = ["dark", "aqua"];
       const THEME_KEY = "theme";
       const getThemePreference = () => {
         if (typeof localStorage !== "undefined") {
@@ -78,13 +72,15 @@ const imageUrl = image && new URL(image, Astro.url);
         }
 
         return window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? DARK_THEMES.dark
-          : LIGHT_THEMES.bumblebee;
+          ? // must be synced on its own because I don't wanna import themes into head on page load
+            "dark"
+          : "bumblebee";
       };
 
       const getCodeTheme = (theme) => {
-        const codeTheme =
-          theme in DARK_THEMES ? CODE_THEMES.dark : CODE_THEMES.light;
+        const codeTheme = darkThemes.includes(theme)
+          ? "ayu-dark"
+          : "rose-pine-dawn";
         return codeTheme;
       };
 
@@ -114,11 +110,19 @@ const imageUrl = image && new URL(image, Astro.url);
           document.documentElement.dataset.codeTheme = codeTheme;
           localStorage.setItem(THEME_KEY, theme);
         });
+
         observer.observe(document.documentElement, {
           attributes: true,
           attributeFilter: ["data-theme"],
         });
       }
     </script>
+  </head>
+  <body class="px-3 md:px-1 flex flex-col">
+    <Navbar />
+    <main class={cn("h-0 flex-1", mainClassname)}>
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>
