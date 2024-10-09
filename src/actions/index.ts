@@ -7,6 +7,8 @@ import { getCollection } from "astro:content";
 import { z } from "astro:schema";
 import Fuse from "fuse.js";
 
+export const prerender = false;
+
 export interface SearchRecordResult
   extends Pick<
     SearchRecord,

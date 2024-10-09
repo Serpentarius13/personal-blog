@@ -10,15 +10,13 @@ pre {
 }
 
 html {
-  height: 100%;
-}
-
-html,
-body {
-  width: 100%;
-}
-
-body {
   min-height: 100%;
-  @apply px-3 md:px-0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html {
+    overflow-x: clip;
+  }
 }

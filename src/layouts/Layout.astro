@@ -7,6 +7,7 @@ import "@fontsource/jetbrains-mono";
 import Footer from "@/components/astro/Footer.astro";
 import { ViewTransitions } from "astro:transitions";
 import { cn } from "@/lib/cn";
+import { CODE_THEMES, DARK_THEMES, LIGHT_THEMES, THEMES } from "config";
 
 interface Props {
   title: string;
@@ -59,8 +60,8 @@ const imageUrl = image && new URL(image, Astro.url);
     <slot name="head" />
     <ViewTransitions />
   </head>
-  <body class="min-h-full h-full">
-    <div class="max-w-screen overflow-x-hidden min-h-full flex flex-col">
+  <body class="min-h-full px-3 md:px-1">
+    <div class="max-w-screen min-h-full flex flex-col">
       <Navbar />
       <main class={cn(" h-0 flex-1", mainClassname)}>
         <slot />
@@ -68,9 +69,7 @@ const imageUrl = image && new URL(image, Astro.url);
       <Footer />
     </div>
 
-    <script>
-      import { CODE_THEMES, DARK_THEMES, LIGHT_THEMES } from "config";
-
+    <script define:vars={{ DARK_THEMES, LIGHT_THEMES, CODE_THEMES }}>
       const THEME_KEY = "theme";
       const getThemePreference = () => {
         if (typeof localStorage !== "undefined") {
@@ -86,7 +85,7 @@ const imageUrl = image && new URL(image, Astro.url);
           : LIGHT_THEMES.bumblebee;
       };
 
-      const getCodeTheme = (theme: string) => {
+      const getCodeTheme = (theme) => {
         const codeTheme =
           theme in DARK_THEMES ? CODE_THEMES.dark : CODE_THEMES.light;
         return codeTheme;
@@ -96,7 +95,7 @@ const imageUrl = image && new URL(image, Astro.url);
         return document.documentElement.dataset.theme;
       };
 
-      const setDarkMode = (document: Document) => {
+      const setDarkMode = (document) => {
         const theme = getThemePreference();
         const codeTheme = getCodeTheme(theme);
 
@@ -126,3 +125,15 @@ const imageUrl = image && new URL(image, Astro.url);
     </script>
   </body>
 </html>
+
+<style is:global>
+  body {
+    overflow-x: hidden;
+  }
+
+  @supports (overflow: clip) {
+    body {
+      overflow-x: clip;
+    }
+  }
+</style>

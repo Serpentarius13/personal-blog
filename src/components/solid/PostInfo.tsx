@@ -13,7 +13,7 @@ export const PostInfo: Component<Props> = ({ postId, date }) => {
     <>
       <div class="min-w-20 h-full">
         {post.state === "errored" || post()?.error ? (
-          <div class="badge badge-error w-full"> "Views: 1337" </div>
+          <div class="badge badge-error w-full"> Views: 1337 </div>
         ) : post.state === "pending" ? (
           <div class="skeleton h-full w-full" />
         ) : (

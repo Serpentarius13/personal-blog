@@ -23,27 +23,8 @@ const rehypeSlugOptions: SlugOptions = {
 
 import rehypeSectionize from "@hbsnow/rehype-sectionize";
 
-import { visit } from "unist-util-visit";
-const rehypeCodePlugin = () => {
-  return function (tree: Root) {
-    visit(tree, "element", (node: any) => {
-      if (node.tagName === "pre") {
-        node.properties.dataset = {
-          theme: "everforest-light",
-        };
-        if (!node.properties.className) {
-          node.properties.className = "not-prose";
-        } else {
-          node.properties.className += " not-prose";
-        }
-      }
-    });
-  };
-};
-
 // remark
 
-import type { Root } from "mdast";
 import { remarkReadingTime } from "./plugins/remark-reading-time";
 
 // adapter
@@ -88,11 +69,7 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: false,
     remarkPlugins: [remarkReadingTime],
-    rehypePlugins: [
-      [rehypeSlug, rehypeSlugOptions],
-      rehypeSectionize,
-      rehypeCodePlugin as any,
-    ],
+    rehypePlugins: [[rehypeSlug, rehypeSlugOptions], rehypeSectionize],
   },
 
   adapter: process.env.IS_LOCAL
