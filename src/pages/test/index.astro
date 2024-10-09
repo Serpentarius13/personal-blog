@@ -6,6 +6,6 @@ import Layout from "@/layouts/Layout.astro";
 if (import.meta.env.PROD) return Astro.redirect("/");
 ---
 
-<Layout>
+<Layout noIndex>
   <Search client:load />
 </Layout>

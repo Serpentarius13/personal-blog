@@ -39,7 +39,13 @@ const { Content, headings } = await post.render();
   title={post.data.title}
   description={post.data.description}
   mainClassname="px-4 gap-12 relative"
+  image={new URL(post.data.image.src, Astro.site).toString()}
 >
+  <Fragment slot="head">
+    <meta property="og:type" content="article" />
+    <meta property="twitter:card" content="summary_large_image" />
+  </Fragment>
+
   <header class="mx-auto w-fit mt-8 mb-8">
     <h1 class="text-6xl font-extrabold mb-12">
       {post.data.title}

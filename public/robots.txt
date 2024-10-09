@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /404
+Disallow: /test
+Disallow: /500
+
+Sitemap: https://void-flower.vercel.app/sitemap-index.xml

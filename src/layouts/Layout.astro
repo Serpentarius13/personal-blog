@@ -4,7 +4,6 @@ import "@/styles/global.scss";
 import "@/styles/components.scss";
 import "@/styles/code.scss";
 import "@fontsource/jetbrains-mono";
-import { THEMES, DARK_THEMES, LIGHT_THEMES, CODE_THEMES } from "config";
 import Footer from "@/components/astro/Footer.astro";
 import { ViewTransitions } from "astro:transitions";
 import { cn } from "@/lib/cn";
@@ -13,9 +12,12 @@ interface Props {
   title: string;
   description: string;
   mainClassname?: string;
+  noIndex?: boolean;
+  image?: string;
 }
 
-const { title, description, mainClassname } = Astro.props;
+const { title, description, mainClassname, noIndex, image } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -25,9 +27,28 @@ const { title, description, mainClassname } = Astro.props;
     <meta name="viewport" content="width=device-width; initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
+
     <title>{title}</title>
     <meta name="description" content={description} />
-    <ViewTransitions />
+
+    {noIndex && <meta name="robots" content="noindex" />}
+
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Void Flower" />
+    <meta property="og:locale" content="en_US" />
+    {image && <meta property="og:image" content={image} />}
+    <meta property="og:url" content={Astro.url} />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    {
+      image && (
+        <meta property="twitter:image" content={new URL(image, Astro.url)} />
+      )
+    }
 
     <link
       rel="alternate"
@@ -35,6 +56,10 @@ const { title, description, mainClassname } = Astro.props;
       title={title}
       href={new URL("rss.xml", Astro.site)}
     />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <slot name="head" />
+    <ViewTransitions />
   </head>
   <body class="min-h-full h-full">
     <div class="max-w-screen overflow-x-hidden min-h-full flex flex-col">

@@ -10,16 +10,8 @@ export async function getStaticPaths({
 }: {
   paginate: PaginateFunction;
 }) {
-  const copy = (arr: any[], times: number) => {
-    const result = [];
-    for (let i = 0; i < times; i++) {
-      result.push(arr.slice());
-    }
-    return result;
-  };
-
-  const allPosts = await getCollection("posts", ({ data }) => !data.draft).then(
-    (r) => copy(r, 50).flat(),
+  const allPosts = await getCollection("posts", ({ data }) =>
+    import.meta.env.PROD ? !data.draft : true,
   );
   return paginate(
     allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
