@@ -24,6 +24,7 @@ const postsCollection = defineCollection({
       imageAlt: z.string(),
       tags: z.array(z.string()).optional(),
       draft: z.boolean().optional(),
+      story: z.string().optional(),
     }),
 });
 

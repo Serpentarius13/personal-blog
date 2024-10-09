@@ -2,10 +2,6 @@ import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
-import MarkdownIt from "markdown-it";
-import sanitizeHtml from "sanitize-html";
-const parser = new MarkdownIt();
-
 export const GET: APIRoute = async (context) => {
   if (!context.site) {
     throw new Error("No site specified in config");
@@ -29,9 +25,9 @@ export const GET: APIRoute = async (context) => {
       pubDate: post.data.date,
       description: post.data.description,
       link: `/blog/${post.slug}`,
-      content: sanitizeHtml(parser.render(post.body), {
-        allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
-      }),
+      content: `<p> ${post.data.story || post.data.description} </p>
+      <div style="margin-top: 50px; font-style: italic;"> <strong><a href="${context.site}/blog/${post.slug}">Keep reading here 👻</a>.</strong>
+      </div> <br /> <br />`,
     })),
     // (optional) inject custom xml
     customData: `<language>en-us</language>`,
