@@ -18,7 +18,6 @@ export const PostInfo: Component<Props> = ({ postId, date }) => {
           <div class="skeleton h-full w-full" />
         ) : (
           <span class="badge badge-accent w-full">
-            {" "}
             Views: {post()?.data?.views}
           </span>
         )}

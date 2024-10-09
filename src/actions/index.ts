@@ -59,7 +59,7 @@ export const server = {
       try {
         await db.post
           .update({
-            where: { id: "123" },
+            where: { id: postId },
             data: {
               reads: {
                 increment: 1,
@@ -97,7 +97,7 @@ export const server = {
       try {
         await db.post
           .update({
-            where: { id: "123" },
+            where: { id: postId },
             data: {
               views: {
                 increment: 1,
@@ -105,6 +105,7 @@ export const server = {
             },
           })
           .catch(async (err) => {
+            console.log("not exists");
             if (
               err instanceof PrismaClientKnownRequestError &&
               err.code === "P2025"
