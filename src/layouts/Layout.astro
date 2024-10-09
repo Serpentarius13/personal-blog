@@ -18,6 +18,7 @@ interface Props {
 
 const { title, description, mainClassname, noIndex, image } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = image && new URL(image, Astro.url);
 ---
 
 <!doctype html>
@@ -39,16 +40,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content="Void Flower" />
     <meta property="og:locale" content="en_US" />
-    {image && <meta property="og:image" content={image} />}
     <meta property="og:url" content={Astro.url} />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    {
-      image && (
-        <meta property="twitter:image" content={new URL(image, Astro.url)} />
-      )
-    }
+
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    {imageUrl && <meta property="twitter:image" content={imageUrl} />}
 
     <link
       rel="alternate"
