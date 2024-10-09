@@ -164,3 +164,9 @@ const { Content, headings } = await post.render();
   document.addEventListener("astro:page-load", attachListeners);
   document.addEventListener("astro:after-swap", attachListeners);
 </script>
+
+<style is:global>
+  :is(h1, h2, h3, h4, h5, h6) > a {
+    @apply no-underline hover:text-primary transition-all !important;
+  }
+</style>

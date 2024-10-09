@@ -17,11 +17,10 @@ import { pluginBlurLines } from "./plugins/expressive-code-blur";
 // rehype
 
 import rehypeSlug, { type Options as SlugOptions } from "rehype-slug";
-const rehypeSlugOptions: SlugOptions = {
-  prefix: "bh-",
-};
+const rehypeSlugOptions: SlugOptions = {};
 
 import rehypeSectionize from "@hbsnow/rehype-sectionize";
+import rehypeAutolink from "rehype-autolink-headings";
 
 // remark
 
@@ -69,7 +68,11 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: false,
     remarkPlugins: [remarkReadingTime],
-    rehypePlugins: [[rehypeSlug, rehypeSlugOptions], rehypeSectionize],
+    rehypePlugins: [
+      [rehypeSlug, rehypeSlugOptions],
+      rehypeSectionize,
+      [rehypeAutolink, { behavior: "wrap" }],
+    ],
   },
 
   adapter: process.env.IS_LOCAL
