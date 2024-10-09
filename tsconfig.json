@@ -10,5 +10,5 @@
     "traceResolution": false
   },
   "exclude": ["dist", "node_modules"],
-  "include": ["src/**/*", "config.ts", "astro.config.ts", "tailwind.config.ts"]
+  "include": ["src/**/*", "*config.ts"]
 }

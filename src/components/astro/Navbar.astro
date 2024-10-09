@@ -1,6 +1,7 @@
 ---
 import AppIcon from "@/components/astro/AppIcon.astro";
 import { Search } from "@/components/solid/Search";
+import { Image } from "astro:assets";
 import { CONFIG, IconSet } from "config";
 import ThemeDropdown from "./ThemeDropdown.astro";
 ---
@@ -31,7 +32,7 @@ import ThemeDropdown from "./ThemeDropdown.astro";
       </ul>
     </div> -->
     <a class="items-center gap-1 flex" href="/">
-      <img src="/logo.webp" class="size-6" alt="Logo" />
+      <Image src="/logo.webp" alt="Logo" width={24} height={24} />
       <span class="hover:underline ml-2 text-xl">
         {CONFIG.SITE_TITLE}
       </span>

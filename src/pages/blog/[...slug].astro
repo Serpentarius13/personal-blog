@@ -63,8 +63,8 @@ const { Content, headings } = await post.render();
   <Image
     src={post.data.image}
     alt={post.data.imageAlt}
-    width={1200}
-    height={450}
+    widths={[240, 540, 720, 1200]}
+    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1200px`}
     class="rounded-xl mx-auto h-[450px] object-cover"
     transition:name="post-image"
     transition:animate={fade({ duration: 300 })}

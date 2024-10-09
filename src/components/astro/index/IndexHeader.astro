@@ -22,16 +22,20 @@ import Flower from "./flower.svg?raw";
           </span> TypeScript&rcub;, drop some bedtime thoughts on life, and sometimes
           make educative content.
         </span>
-        <div class="flex items-center gap-2">
+        <div class="items-center gap-2 hidden sm:flex">
           You can find me here: <SocialLinks />
         </div>
 
-        <span class="pt-2">Hope you will rest well 😼</span>
+        <span class="hidden sm:inline">Hope you will rest well 😼</span>
       </p>
     </div>
     <div class="h-full">
       <Fragment set:html={Flower} />
     </div>
+  </div>
+  <div class="gap-1 flex flex-col sm:hidden">
+    You can find me here: <SocialLinks />
+    <span class="pt-2">Hope you will rest well 😼</span>
   </div>
 </section>
 

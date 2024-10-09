@@ -9,9 +9,17 @@ interface Props {
 }
 ---
 
-<div class="dropdown dropdown-bottom">
-  <div tabindex="0" role="button" class="btn btn-md rounded-btn btn-outline">
+<div class="dropdown dropdown-bottom -md:dropdown-left -md:dropdown-bottom">
+  <div
+    tabindex="0"
+    role="button"
+    class="btn btn-md btn-primary rounded-btn btn-outline"
+    aria-labelledby="theme-switcher-label"
+  >
     <slot />
+    <span class="sr-only" id="theme-switcher-label"
+      >Theme switcher dropdown</span
+    >
   </div>
   <ul
     tabindex="0"

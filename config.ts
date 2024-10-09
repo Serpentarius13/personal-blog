@@ -6,19 +6,21 @@ export const CODE_THEMES = {
   light: "rose-pine-dawn",
 } as const satisfies Record<string, BundledTheme>;
 
+type DaisyThemeMap = Partial<Record<Theme, Theme>>;
+
 export const DARK_THEMES = {
   aqua: "aqua",
   dark: "dark",
-} as const satisfies Record<string, Theme>;
+} as const satisfies DaisyThemeMap;
 
 export const LIGHT_THEMES = {
-  bumblebee: "bumblebee",
-} as const satisfies Record<string, Theme>;
+  autumn: "autumn",
+} as const satisfies DaisyThemeMap;
 
 export const THEMES = {
   ...DARK_THEMES,
   ...LIGHT_THEMES,
-} as const satisfies Record<string, Theme>;
+} as const satisfies DaisyThemeMap;
 
 export enum IconSet {
   GAME_ICONS = "game-icons",
