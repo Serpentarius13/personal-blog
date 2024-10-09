@@ -34,14 +34,16 @@ const getPageUrl = (page: number) => {
 <Layout
   title="Void Flower | Blog posts"
   description="Blog posts page of Void Flower blog"
+  mainClassname="flex flex-col gap-4"
 >
+  <!-- class="h-full grid lg:grid-cols-3 content-center md:grid-cols-2 mx-auto max-w-[95%] lg:max-w-[1200px] gap-6"  -->
   <div
-    class="min-h-[calc(100%-100px)] grid lg:grid-cols-3 md:grid-cols-2 mx-auto max-w-[95%] lg:max-w-[1200px] gap-6"
+    class="min-h-full max-w-[95%] lg:max-w-[1200px] flex flex-wrap mx-auto items-center flex-1 justify-center gap-8"
   >
     {pageInfo.data.map((post) => <PostGridCard post={post} />)}
   </div>
 
-  <div class="join flex mx-auto box justify-center mt-10 box flex-wrap">
+  <div class="join flex mx-auto box justify-center mt-auto box flex-wrap">
     <a
       class={cn("btn join-item", {
         ["pointer-events-none cursor-default"]: pageInfo.currentPage === 1,
