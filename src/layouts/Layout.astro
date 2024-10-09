@@ -35,11 +35,19 @@ const { title, description, mainClassname } = Astro.props;
       title={title}
       href={new URL("rss.xml", Astro.site)}
     />
+  </head>
+  <body class="min-h-full h-full">
+    <div class="max-w-screen overflow-x-hidden min-h-full flex flex-col">
+      <Navbar />
+      <main class={cn(" h-0 flex-1", mainClassname)}>
+        <slot />
+      </main>
+      <Footer />
+    </div>
 
-    <script
-      is:inline
-      define:vars={{ THEMES, DARK_THEMES, LIGHT_THEMES, CODE_THEMES }}
-    >
+    <script>
+      import { CODE_THEMES, DARK_THEMES, LIGHT_THEMES } from "config";
+
       const THEME_KEY = "theme";
       const getThemePreference = () => {
         if (typeof localStorage !== "undefined") {
@@ -55,7 +63,7 @@ const { title, description, mainClassname } = Astro.props;
           : LIGHT_THEMES.bumblebee;
       };
 
-      const getCodeTheme = (theme) => {
+      const getCodeTheme = (theme: string) => {
         const codeTheme =
           theme in DARK_THEMES ? CODE_THEMES.dark : CODE_THEMES.light;
         return codeTheme;
@@ -65,7 +73,7 @@ const { title, description, mainClassname } = Astro.props;
         return document.documentElement.dataset.theme;
       };
 
-      const setDarkMode = (document) => {
+      const setDarkMode = (document: Document) => {
         const theme = getThemePreference();
         const codeTheme = getCodeTheme(theme);
 
@@ -93,14 +101,5 @@ const { title, description, mainClassname } = Astro.props;
         });
       }
     </script>
-  </head>
-  <body class="min-h-full h-full">
-    <div class="max-w-screen overflow-x-hidden min-h-full flex flex-col">
-      <Navbar />
-      <main class={cn(" h-0 flex-1", mainClassname)}>
-        <slot />
-      </main>
-      <Footer />
-    </div>
   </body>
 </html>

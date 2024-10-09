@@ -45,13 +45,15 @@ const { Content, headings } = await post.render();
       {post.data.title}
     </h1>
 
-    <Image
-      src={post.data.image}
-      alt={post.data.imageAlt}
-      width={700}
-      height={300}
-      class="rounded-xl"
-    />
+    <div class="max-h-[400px] h-[400px]">
+      <Image
+        src={post.data.image}
+        alt={post.data.imageAlt}
+        width={700}
+        height={400}
+        class="rounded-xl h-full object-cover"
+      />
+    </div>
 
     <div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6">
       <PostInfo
