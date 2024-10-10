@@ -62,7 +62,10 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
     for (const link of links) {
       link.addEventListener("click", (event) => {
         event.preventDefault();
-        const target = document.querySelector(link.href);
+        const target = document.getElementById(
+          link.getAttribute("href")!.slice(1),
+        );
+
         target?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }

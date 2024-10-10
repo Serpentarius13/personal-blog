@@ -24,7 +24,7 @@ const { Content, headings } = await post.render();
       alt={post.data.imageAlt}
       widths={[240, 540, 720, 1200]}
       sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1200px`}
-      class="mx-auto h-[450px] max-w-[1200px] w-full object-contain"
+      class="mx-auto h-[450px] max-w-[1200px] w-full object-cover md:object-contain"
     />
   </div>
 
