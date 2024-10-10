@@ -11,19 +11,24 @@ const { next, prev } = Astro.props;
 ---
 
 <div class="flex flex-col gap-2 box mt-12">
+  <slot name="title" />
+
   <a href={next} class="link">
-    Read next article <AppIcon
+    <slot name="next" />
+    <AppIcon
       set={IconSet.LINE_MD}
-      class="rotate-90 arrow-right"
+      class="rotate-90 arrow-left"
       name="arrow-up"
     />
   </a>
+
   <a href={prev} class="link">
     <AppIcon
       set={IconSet.LINE_MD}
-      class="-rotate-90 arrow-left"
+      class="-rotate-90 arrow-right"
       name="arrow-up"
-    /> Read previous article
+    />
+    <slot name="prev" />
   </a>
 </div>
 
@@ -36,11 +41,11 @@ const { next, prev } = Astro.props;
     }
 
     &:hover .arrow-right {
-      @apply translate-x-2;
+      @apply -translate-x-2;
     }
 
     &:hover .arrow-left {
-      @apply -translate-x-2;
+      @apply translate-x-2;
     }
     
 

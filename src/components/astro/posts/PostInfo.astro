@@ -11,7 +11,7 @@ const { post, readingTime } = Astro.props;
 ---
 
 <div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6 flex-wrap">
-  <div class="min-w-20 h-full">
+  <div class="min-w-20">
     <span
       class="badge badge-accent w-full data-[loading='true']:skeleton"
       id="views-badge"
@@ -23,7 +23,15 @@ const { post, readingTime } = Astro.props;
 
   <div class="badge badge-primary">{formatDate(post.data.date)}</div>
 
-  <div class="badge badge-secondary">{readingTime}</div>
+  <div class="badge badge-success">{readingTime}</div>
+
+  {
+    post.data.trackName && (
+      <div class="badge badge-info" data-pagefind-filter="Track">
+        Track: {post.data.trackName}
+      </div>
+    )
+  }
 </div>
 
 <script>

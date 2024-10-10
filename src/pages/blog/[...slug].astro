@@ -18,13 +18,26 @@ export const getStaticPaths = (async () => {
   const posts = await getPosts();
 
   return posts.map((post, ix) => {
+    const searchAgainst = post.data.trackName
+      ? posts.filter(
+          (p) =>
+            p.data.trackName === post.data.trackName && p.slug !== post.slug,
+        )
+      : posts;
+
+    const nextPost = searchAgainst.at(
+      ix + 1 < searchAgainst.length ? ix + 1 : 0,
+    );
+    const prevPost = searchAgainst.at(ix - 1 >= 0 ? ix - 1 : -1);
+
     return {
       params: { slug: post.slug },
       props: {
         post,
-        nextPost: posts.at(ix + 1 < posts.length ? ix + 1 : 0),
-        prevPost: posts.at(ix - 1 >= 0 ? ix - 1 : -1),
-        hasOnlyOneLeft: posts.length === 2,
+        nextPost,
+        prevPost:
+          prevPost?.slug === nextPost?.slug || !post ? undefined : prevPost,
+        track: post.data.trackName,
       },
     };
   });
@@ -38,7 +51,7 @@ interface Params extends InferGetStaticParamsType<typeof getStaticPaths> {
   slug: string;
 }
 
-const { post, nextPost, prevPost, hasOnlyOneLeft } = Astro.props;
+const { post, nextPost, prevPost } = Astro.props;
 ---
 
 <Layout
@@ -58,9 +71,35 @@ const { post, nextPost, prevPost, hasOnlyOneLeft } = Astro.props;
   <PostPage post={post} />
 
   <PostNavigation
-    prev={hasOnlyOneLeft ? undefined : `/blog/${prevPost?.slug}`}
+    prev={prevPost ? `/blog/${prevPost?.slug}` : undefined}
     next={nextPost ? `/blog/${nextPost?.slug}` : undefined}
-  />
+  >
+    {
+      post.data.trackName && (
+        <h3 slot="title" class="mb-3">
+          Track:
+          <span class="badge badge-info badge-sm">
+            {post.data.trackName} #{post.data.trackIndex}
+          </span>
+        </h3>
+      )
+    }
+
+    {
+      post.data.trackName && (
+        <span slot="next">Check out next track article</span>
+      )
+    }
+
+    {
+      post.data.trackName && (
+        <span slot="prev">Check out previous track article</span>
+      )
+    }
+
+    {!post.data.trackName && <span slot="next">Read next article</span>}
+    {!post.data.trackName && <span slot="prev">Read previous article</span>}
+  </PostNavigation>
 
   <div class="hidden" id="slug-holder" data-slug={post.slug}></div>
 
