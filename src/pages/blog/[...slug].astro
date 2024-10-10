@@ -9,23 +9,22 @@ import type {
 import type { CollectionEntry } from "astro:content";
 import { IconSet } from "config";
 import "@fontsource-variable/jetbrains-mono";
-import PostCard from "@/components/astro/posts/PostCard.astro";
 import PostPage from "@/components/astro/posts/PostPage.astro";
 import { getPosts } from "@/lib/posts";
 import CatButton from "@/components/astro/posts/CatButton.astro";
+import PostNavigation from "@/components/astro/posts/PostNavigation.astro";
 
 export const getStaticPaths = (async () => {
   const posts = await getPosts();
 
   return posts.map((post, ix) => {
-    const postsWithoutThisOne = posts.filter((p) => p.slug !== post.slug);
-
     return {
       params: { slug: post.slug },
       props: {
         post,
-        nextPost:
-          postsWithoutThisOne.at(ix + 1) ?? postsWithoutThisOne.at(ix - 1),
+        nextPost: posts.at(ix + 1 < posts.length ? ix + 1 : 0),
+        prevPost: posts.at(ix - 1 >= 0 ? ix - 1 : -1),
+        hasOnlyOneLeft: posts.length === 2,
       },
     };
   });
@@ -39,7 +38,7 @@ interface Params extends InferGetStaticParamsType<typeof getStaticPaths> {
   slug: string;
 }
 
-const { post, nextPost } = Astro.props;
+const { post, nextPost, prevPost, hasOnlyOneLeft } = Astro.props;
 ---
 
 <Layout
@@ -58,14 +57,10 @@ const { post, nextPost } = Astro.props;
 
   <PostPage post={post} />
 
-  {
-    nextPost && (
-      <div class="box mt-20">
-        <h4 class="text-xl mb-3">Next post, if you wanna:</h4>
-        <PostCard entry={nextPost} />
-      </div>
-    )
-  }
+  <PostNavigation
+    prev={hasOnlyOneLeft ? undefined : `/blog/${prevPost?.slug}`}
+    next={nextPost ? `/blog/${nextPost?.slug}` : undefined}
+  />
 
   <div class="hidden" id="slug-holder" data-slug={post.slug}></div>
 

@@ -4,12 +4,13 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   post: CollectionEntry<"posts">;
+  readingTime: string;
 }
 
-const { post } = Astro.props;
+const { post, readingTime } = Astro.props;
 ---
 
-<div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6">
+<div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6 flex-wrap">
   <div class="min-w-20 h-full">
     <span
       class="badge badge-accent w-full data-[loading='true']:skeleton"
@@ -21,6 +22,8 @@ const { post } = Astro.props;
   </div>
 
   <div class="badge badge-primary">{formatDate(post.data.date)}</div>
+
+  <div class="badge badge-secondary">{readingTime}</div>
 </div>
 
 <script>

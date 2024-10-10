@@ -1,0 +1,51 @@
+---
+import { IconSet } from "config";
+import AppIcon from "../AppIcon.astro";
+
+interface Props {
+  next?: string | undefined;
+  prev?: string | undefined;
+}
+
+const { next, prev } = Astro.props;
+---
+
+<div class="flex flex-col gap-2 box mt-12">
+  <a href={next} class="link">
+    Read next article <AppIcon
+      set={IconSet.LINE_MD}
+      class="rotate-90 arrow-right"
+      name="arrow-up"
+    />
+  </a>
+  <a href={prev} class="link">
+    <AppIcon
+      set={IconSet.LINE_MD}
+      class="-rotate-90 arrow-left"
+      name="arrow-up"
+    /> Read previous article
+  </a>
+</div>
+
+<style lang="postcss">
+  .link {
+    @apply btn btn-md w-full btn-outline disabled:btn-ghost disabled:pointer-events-none disabled:cursor-not-allowed;
+
+    [data-icon] {
+        @apply transition-all duration-500;
+    }
+
+    &:hover .arrow-right {
+      @apply translate-x-2;
+    }
+
+    &:hover .arrow-left {
+      @apply -translate-x-2;
+    }
+    
+
+    &:not(:link) {
+      @apply opacity-50  pointer-events-none;
+    }
+  }
+</style>
