@@ -73,7 +73,7 @@ export default defineConfig({
     vue(),
     pagefind(),
     preact(),
-    playformInline(),
+    playformInline({}),
   ],
 
   markdown: {
