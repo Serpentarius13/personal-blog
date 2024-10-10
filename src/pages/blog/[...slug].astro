@@ -55,8 +55,8 @@ const { post, nextPost } = Astro.props;
 
   {
     nextPost && (
-      <div class="box">
-        <h4 class="text-xl mb-3">Next post:</h4>
+      <div class="box mt-20">
+        <h4 class="text-xl mb-3">Next post, if you wanna:</h4>
         <PostCard entry={nextPost} />
       </div>
     )

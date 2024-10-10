@@ -48,7 +48,7 @@ const { Content, headings } = await post.render();
   }
 
   <div
-    class="lg:grid flex flex-col lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:pl-8 gap-[clamp(1rem,10vw,3rem)] items-start"
+    class="lg:grid flex flex-col lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] 2xl:grid-cols-[340px_1fr] lg:pl-8 gap-[clamp(1rem,10vw,6rem)] items-start"
   >
     <TableOfContents
       headings={headings}
@@ -58,7 +58,7 @@ const { Content, headings } = await post.render();
 
     <div class="max-w-full md:mx-auto lg:mx-0">
       <div
-        class="prose prose-lg xl:prose-xl prose-code:not-prose justify-self-center"
+        class="prose prose-md xl:prose-lg prose-code:not-prose justify-self-center"
       >
         <Content components={{ h1: H1Renderer }} />
       </div>
