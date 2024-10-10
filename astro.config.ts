@@ -18,6 +18,7 @@ import { pluginIgnoreIndex } from "./plugins/expressive-code-ignore-index";
 
 // rehype
 
+import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug, { type Options as SlugOptions } from "rehype-slug";
 const rehypeSlugOptions: SlugOptions = {};
 
@@ -78,6 +79,7 @@ export default defineConfig({
     rehypePlugins: [
       [rehypeSlug, rehypeSlugOptions],
       rehypeSectionize,
+      [rehypeExternalLinks, { target: "_blank" }],
       [rehypeAutolink, { behavior: "wrap" }],
     ],
   },

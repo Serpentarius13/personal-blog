@@ -144,4 +144,8 @@ const { post, nextPost } = Astro.props;
   :is(h1, h2, h3, h4, h5, h6) > a {
     @apply no-underline hover:text-primary transition-all !important;
   }
+
+  a[target="_blank"] {
+    @apply text-primary hover:text-primary/50 transition-all;
+  }
 </style>
