@@ -9,6 +9,6 @@
     "jsxImportSource": "preact",
     "traceResolution": false
   },
-  "exclude": ["dist", "node_modules"],
+  "exclude": ["dist/", "node_modules/"],
   "include": ["src/**/*", "*config.ts"]
 }

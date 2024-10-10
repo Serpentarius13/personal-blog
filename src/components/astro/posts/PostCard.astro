@@ -32,8 +32,8 @@ const {
           <Image
             src={entry.data.image}
             alt={entry.data.title}
-            width={1200}
-            height={630}
+            widths={[320, 640]}
+            sizes={`(max-width: 600px) 320px, (min-width: 600px) 640px`}
             class="object-cover"
           />
         </div>
