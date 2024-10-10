@@ -1,3 +1,5 @@
+import { CONFIG } from "config";
+
 export function debounce<T extends (...args: any[]) => void>(
   func: T,
   delay: number,
@@ -35,3 +37,7 @@ export function minWait<T>(
       .catch(reject);
   });
 }
+
+export const getAbsoluteUrl = (url: string) => {
+  return new URL(url, CONFIG.SITE_URL);
+};

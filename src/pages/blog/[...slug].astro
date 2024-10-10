@@ -71,7 +71,7 @@ const { post, nextPost } = Astro.props;
 </Layout>
 
 <script>
-  import { actions } from "astro:actions";
+  import { postsApi } from "@/lib/api";
 
   const attachListeners = () => {
     const postSlug = window.location.pathname.split("/").pop()!;
@@ -85,9 +85,14 @@ const { post, nextPost } = Astro.props;
         (entries) => {
           entries.forEach(async (entry) => {
             if (entry.isIntersecting && !hasRead) {
-              await actions.readPost({ postId: postSlug });
-              localStorage.setItem(`read-post-${postSlug}`, "true");
-              hasRead = true;
+              await postsApi.readPost(postSlug).then((res) => {
+                if (!res.success) {
+                  return;
+                }
+                localStorage.setItem(`read-post-${postSlug}`, "true");
+                hasRead = true;
+              });
+
               observer.disconnect();
             }
           });
@@ -98,7 +103,10 @@ const { post, nextPost } = Astro.props;
     }
 
     if (!hasViewed) {
-      actions.viewPost({ postId: postSlug }).then(() => {
+      postsApi.viewPost(postSlug).then((res) => {
+        if (!res.success) {
+          return;
+        }
         localStorage.setItem(`view-post-${postSlug}`, "true");
         hasViewed = true;
       });

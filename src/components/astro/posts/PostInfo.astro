@@ -1,0 +1,49 @@
+---
+import { formatDate } from "@/lib/date";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+---
+
+<div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6">
+  <div class="min-w-20 h-full">
+    <span
+      class="badge badge-accent w-full data-[loading='true']:skeleton"
+      id="views-badge"
+    >
+      Views: &nbsp;<span id="views-count"></span>
+    </span>
+  </div>
+
+  <div class="badge badge-primary">{formatDate(post.data.date)}</div>
+</div>
+
+<script>
+  import { postsApi } from "@/lib/api";
+
+  document.addEventListener("astro:page-load", async () => {
+    const badge = document.querySelector("#views-badge") as HTMLElement;
+    const count = document.querySelector("#views-count");
+
+    if (!count || !badge) return;
+
+    badge.dataset.loading = "true";
+    const slug = window.location.pathname.split("/").pop()!;
+
+    postsApi
+      .getPost(slug)
+      .then((postInfo) => {
+        count.textContent = String(postInfo.views);
+      })
+      .finally(() => {
+        badge.dataset.loading = "false";
+      })
+      .catch(() => {
+        count.textContent = "0";
+      });
+  });
+</script>

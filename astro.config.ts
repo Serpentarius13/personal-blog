@@ -4,7 +4,6 @@ import { defineConfig } from "astro/config";
 // integrations
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import solidJs from "@astrojs/solid-js";
 import tailwind from "@astrojs/tailwind";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
@@ -65,7 +64,6 @@ export default defineConfig({
         ]),
       ),
     }),
-    solidJs(),
     sitemap({
       filter: (page) => page !== "/404" && page !== "/500" && page !== "/test",
     }),

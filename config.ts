@@ -110,7 +110,9 @@ export const SOCIAL_LINKS = {
   }
 >;
 
-const SITE_URL = "https://void-flower.vercel.app";
+const SITE_URL = import.meta.env.PROD
+  ? "https://void-flower.vercel.app"
+  : "http://localhost:4321";
 const SITE_TITLE = "Void Flower";
 
 export const CONFIG = {

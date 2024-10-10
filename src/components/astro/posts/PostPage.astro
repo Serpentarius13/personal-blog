@@ -1,10 +1,9 @@
 ---
 import { H1Renderer } from "@/components/solid/H1Renderer";
-import { PostInfo } from "@/components/solid/PostInfo";
-import { formatDate } from "@/lib/date";
 import { fade } from "astro/virtual-modules/transitions.js";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import PostInfo from "./PostInfo.astro";
 import TableOfContents from "./toc/TableOfContents.astro";
 
 interface Props {
@@ -32,13 +31,7 @@ const { Content, headings } = await post.render();
     />
   </div>
 
-  <div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6">
-    <PostInfo
-      client:only="solid"
-      postId={post.slug}
-      date={formatDate(post.data.date)}
-    />
-  </div>
+  <PostInfo post={post} />
 
   {
     post.data.tags && (
