@@ -77,6 +77,7 @@ Here's my full list (aside from the `Astro` itself, that the documentation help 
 - How to highlight code? 🌈
 - How to add client-side logic? 🏭
 - How to make it searchable? 🔍
+- How to store persistent data while being just a single SSG app? 💾
 - How to deploy it? 🚀
 - How to make it accessible and SEO-compliant? 🤖
 
@@ -240,7 +241,7 @@ since it is a live-saver as it does two things:
 
 Well, anyway, some may find it worse than `&&`'s, but to each their own 🐈
 
-## Combining secret recipes
+## Combining stolen recipes
 
 While `Astro` provides native `Markdown` language support out of the box via [`Content collections`](ADDLINK),
 and gives an easy [`integration`](ADDLINK) to work with `MDX`, this was not all I had to get my eyes at.
@@ -444,13 +445,110 @@ For users to discover my content, I have planned to make two features:
 - A paginated search (which you could find at [here](/blog))
 - A global search bar that would be openable from anywhere and would give user ability to search for any content or keyword.
 
+A global search might be done in backend, but when you have few articles that do not have much content,
+I don't think the investment in `Algolia` is worth it. 
+
 While `Astro` provides [API for pagination out of the box](ADDLINK), the search is handled by separate libraries.
 Coming from `Astro` docs, I found myself before two choices: [`pagefind`](ADDLINK) and [`fuse.js`](ADDLINK).
 
 `pagefind` is a `Rust`-based static search artifacts generator. It makes resources to search at build-time
-and an API to call this search from the client. While blazingly-fast sounds cool, I found it difficult to work with as it
-required me to prebuild my documents and use cumbersome js-only lib on the client
+and an API to call this search from the client. While blazingly-fast sounds cool, at first, I find it difficult
+because of the cumbersome way to load `WASM` bundle, artifacts and client-side API that is working through `window` binding.
+First, you need to generate it all, then put it in a public folder so you can import js client and so on..
 
+`Fuse.js` is a `JavaScript`-based fuzzy-search library. It has nice API and does its job, but search is very simple.
+
+So, I have decided on Fuse because of its simplicity. Here's how it went:
+
+- Firstly, I wanted to see what happens when I use it over 100 fat articles on the client. It was horrible as initial
+HTML Astro sent was about `26 megabytes!`. So, I had another idea.
+- I have read recently from Astro docs, that they have added something like "Server actions" with `rpc`-like client.
+It was very pleasant to work with as you can import actions all around the project and even in UI libs and scripts,
+while having good API that was much better than `fetch` to work with, because actions provided in-built `zod` validation
+with type inference and public API.
+- So, I have set up something like that:
+
+```ts
+export const prerender = false;
+
+export interface SearchRecordResult
+  extends Pick<
+    SearchRecord,
+    "title" | "image" | "description" | "tags" | "slug"
+  > {}
+
+// get all records
+const collection = await getCollection("posts");
+
+// transform them to searchable records
+const records = collection.map((c) => {
+  return {
+    title: c.data.title,
+    content: c.body,
+    description: c.data.description,
+    tags: c.data.tags || [],
+    slug: c.slug,
+    image: c.data.image.src,
+  };
+}) satisfies SearchRecord[];
+
+// initialize Fuse
+const fuse = new Fuse(records, {
+  keys: ["title", "content", "description", "tags"],
+  threshold: 0.45,
+  ignoreLocation: true,
+  isCaseSensitive: false,
+});
+
+export const server = {
+  // define action
+  searchArticles: defineAction({
+    input: z.object({
+      // with one search field
+      search: z
+        .string()
+        .max(200, "Search term must be less than 200 characters"),
+    }),
+    // handle search if no field was provided or when it was
+    handler: async ({ search }): Promise<SearchRecordResult[]> => {
+      if (!search) return records.map(({ content, ...record }) => record);
+
+      return fuse
+        .search(search, { limit: 30 })
+        .map(({ item: { content, ...item } }) => item);
+    },
+  }),
+}
+```
+
+- And I was rendering it on the client with `Solid.js` and it's cool `createResource` hook.
+
+But, while I was writing this article, I reconsidered the idea of pagefind being insurmountable.
+It has a feature that provides exact text excerpts, while with Fuse I was limited to just showing simple cards,
+and also filtering, sorting and so on. I wanted to find out if it was possible to build with it the way it would work. And it did.
+
+Thanks to [this library](https://github.com/shishkin/astro-pagefind), it was possible to integrate pagefind with Astro in few clicks.
+However, I still had to rewrite all my logic for it to work. So, I decided on a plan:
+
+- I would trade `Solid` to `preact` as a renderer, which would reduce bundle size a bit while removing the whole search modal component.
+- I would remove actions alltogether, because they load client-side JavaScript that was certainly unnecessary just to make an HTTP-request.
+- I would use `pagefind` solely with Astro. That meant I would have to place daisy's `<dialog>` component in the `<body>`.
+
+I made two components: `<SearchTrigger>` and `<SearchDialog>`. The first one is a button that opens the search modal,
+which I put in the navbar, while the second one is a modal that is opened with `dialog` element.
+
+I had some tinkering, mostly struggling with building & assets loading. For the lib to work, you need to build your project first,
+and then it would load pagefind script with Vite. Assets loading really crushed me though. At first, I placed `dialog` in the body,
+but in the wrong place: right below my navbar. It was a critical mistake, as its loading prevented whole page to load, so I moved it lower.
+Also, as a novice bundle optimizer, I was worried that my dev client bundle grew to 1.7mb, however in production it still stays about 200kb.
+
+In the end, I had a great experience with fuzzy-finding. It was quite easy to adapt the lib to work with all daisy themes
+and make it adaptive. So, cheers to pagefind! Choose your libs wisely 👼
+
+## A go to the cellar
+
+When I was looking for inspiration, I stumbled again upon [Josh Comeau's website](ADDLINK). It had this cool heart button
+that I wanted to steal. 
 
 ## Rocket cake
 

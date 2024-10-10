@@ -1,0 +1,108 @@
+---
+import { IconSet } from "config";
+import AppIcon from "../AppIcon.astro";
+
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+
+<div
+  tabindex="0"
+  role="button"
+  id="cat-button"
+  class="text-[28px] btn btn-sm opacity-0 btn-ghost flex flex-nowrap items-center relative"
+  data-slug={slug}
+>
+  <span class="sr-only"> Click the cat! </span>
+
+  <div class="swap">
+    <div class="swap-on">😸</div>
+    <div class="swap-off">😾</div>
+  </div>
+
+  <span id="cat-count" class="text-sm mr-1">0</span>
+
+  <span id="cat-notes">🎶</span>
+</div>
+
+<script>
+  import { postsApi } from "@/lib/api";
+  import { debounce } from "@/lib/utils";
+
+  const catButton = document.querySelector("#cat-button") as HTMLDivElement;
+  const notes = document.querySelector("#cat-notes")!;
+  const slug = catButton.dataset.slug!;
+
+  let hasPat = false;
+
+  if (localStorage.getItem(`pat-cat-${slug}`)) {
+    catButton.classList.add("swap-active");
+    hasPat = true;
+  }
+
+  const handlePlayCat = debounce(() => {
+    const audio = new Audio(window.location.origin + "/sounds/cat.mp3");
+    audio.play();
+  }, 300);
+
+  catButton.addEventListener("click", async () => {
+    handlePlayCat();
+
+    if (hasPat) {
+      return;
+    }
+
+    catButton.classList.add("swap-active");
+    catButton.classList.add("disabled");
+
+    notes.classList.add("active");
+
+    postsApi.likePost(slug).then(() => {
+      localStorage.setItem(`pat-cat-${slug}`, "true");
+      const count = document.querySelector("#cat-count") as HTMLElement;
+      count.textContent = String(Number(count.textContent) + 1);
+    });
+  });
+
+  let hasShownCat = false;
+
+  const handleScroll = debounce(() => {
+    if (hasShownCat) return;
+
+    if (window.scrollY > 1200) {
+      hasShownCat = true;
+      catButton.classList.add("visible");
+      return;
+    }
+  }, 100);
+
+  window.addEventListener("scroll", handleScroll);
+</script>
+
+<style lang="scss">
+  #cat-button {
+    &.visible {
+      @apply opacity-100;
+    }
+  }
+
+  #cat-notes {
+    @apply opacity-0 text-xl absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 block w-[32px] h-[32px] z-[10];
+
+    &.active {
+      animation: 3.5s animate-notes ease-out forwards;
+    }
+  }
+
+  @keyframes animate-notes {
+    10% {
+      @apply opacity-100 -translate-y-[30px];
+    }
+
+    100% {
+      @apply opacity-0 -translate-y-[30px];
+    }
+  }
+</style>

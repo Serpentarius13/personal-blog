@@ -25,7 +25,7 @@ const imageUrl = image && new URL(image, Astro.url);
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
 
@@ -58,10 +58,8 @@ const imageUrl = image && new URL(image, Astro.url);
 
     <slot name="head" />
 
-    <ViewTransitions />
-
     <script is:inline>
-      const darkThemes = ["dark", "aqua"];
+      const darkThemes = ["dark", "luxury"];
       const THEME_KEY = "theme";
       const getThemePreference = () => {
         if (typeof localStorage !== "undefined") {
@@ -99,10 +97,6 @@ const imageUrl = image && new URL(image, Astro.url);
 
       setDarkMode(document);
 
-      document.addEventListener("astro:before-swap", (event) => {
-        setDarkMode(event.newDocument);
-      });
-
       if (typeof localStorage !== "undefined") {
         const observer = new MutationObserver(() => {
           const theme = getDocumentTheme();
@@ -118,9 +112,17 @@ const imageUrl = image && new URL(image, Astro.url);
         });
       }
     </script>
+
+    <style>
+      @view-transition {
+        navigation: auto; /* enabled! */
+      }
+    </style>
   </head>
   <body class="px-3 md:px-1 flex flex-col">
-    <Navbar />
+    <Navbar>
+      <slot name="navbar" slot="default" />
+    </Navbar>
 
     <main class={cn("h-0 flex-1", mainClassname)}>
       <slot />

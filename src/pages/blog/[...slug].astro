@@ -12,6 +12,7 @@ import "@fontsource-variable/jetbrains-mono";
 import PostCard from "@/components/astro/posts/PostCard.astro";
 import PostPage from "@/components/astro/posts/PostPage.astro";
 import { getPosts } from "@/lib/posts";
+import CatButton from "@/components/astro/posts/CatButton.astro";
 
 export const getStaticPaths = (async () => {
   const posts = await getPosts();
@@ -51,6 +52,10 @@ const { post, nextPost } = Astro.props;
     <meta property="twitter:card" content="summary_large_image" />
   </Fragment>
 
+  <Fragment slot="navbar">
+    <CatButton slug={post.slug} />
+  </Fragment>
+
   <PostPage post={post} />
 
   {
@@ -61,6 +66,8 @@ const { post, nextPost } = Astro.props;
       </div>
     )
   }
+
+  <div class="hidden" id="slug-holder" data-slug={post.slug}></div>
 
   <button
     id="scroll-top-btn"
@@ -73,10 +80,16 @@ const { post, nextPost } = Astro.props;
 <script>
   import { postsApi } from "@/lib/api";
 
-  const attachListeners = () => {
-    const postSlug = window.location.pathname.split("/").pop()!;
-    let hasViewed = !!localStorage.getItem(`view-post-${postSlug}`);
-    let hasRead = !!localStorage.getItem(`read-post-${postSlug}`);
+  function main() {
+    const slugHolder = document.querySelector("#slug-holder") as
+      | HTMLElement
+      | undefined;
+    if (!slugHolder) return;
+
+    const slug = slugHolder.dataset.slug!;
+
+    let hasViewed = !!localStorage.getItem(`view-post-${slug}`);
+    let hasRead = !!localStorage.getItem(`read-post-${slug}`);
 
     if (!hasRead) {
       const footer = document.querySelector("#footer");
@@ -85,11 +98,11 @@ const { post, nextPost } = Astro.props;
         (entries) => {
           entries.forEach(async (entry) => {
             if (entry.isIntersecting && !hasRead) {
-              await postsApi.readPost(postSlug).then((res) => {
+              await postsApi.readPost(slug).then((res) => {
                 if (!res.success) {
                   return;
                 }
-                localStorage.setItem(`read-post-${postSlug}`, "true");
+                localStorage.setItem(`read-post-${slug}`, "true");
                 hasRead = true;
               });
 
@@ -103,49 +116,43 @@ const { post, nextPost } = Astro.props;
     }
 
     if (!hasViewed) {
-      postsApi.viewPost(postSlug).then((res) => {
+      postsApi.viewPost(slug).then((res) => {
         if (!res.success) {
           return;
         }
-        localStorage.setItem(`view-post-${postSlug}`, "true");
+        localStorage.setItem(`view-post-${slug}`, "true");
         hasViewed = true;
       });
     }
-  };
-
-  document.addEventListener("astro:page-load", attachListeners);
-  document.addEventListener("astro:after-swap", attachListeners);
+  }
+  main();
 </script>
 
 <script>
   import { debounce } from "@/lib/utils";
 
-  const attachListeners = () => {
-    const button = document.querySelector("#scroll-top-btn");
+  const button = document.querySelector("#scroll-top-btn");
 
-    button?.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+  button?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 
-    let prevScroll = 0;
+  let prevScroll = 0;
 
-    const handleScroll = debounce(() => {
-      if (!prevScroll) {
-        prevScroll = window.scrollY;
-        return;
-      }
-
-      button?.classList[prevScroll > window.scrollY ? "add" : "remove"](
-        "visible",
-      );
-
+  const handleScroll = debounce(() => {
+    if (!prevScroll) {
       prevScroll = window.scrollY;
-    }, 100);
+      return;
+    }
 
-    window.addEventListener("scroll", handleScroll);
-  };
+    button?.classList[prevScroll > window.scrollY ? "add" : "remove"](
+      "visible",
+    );
 
-  document.addEventListener("astro:page-load", attachListeners);
+    prevScroll = window.scrollY;
+  }, 100);
+
+  window.addEventListener("scroll", handleScroll);
 </script>
 
 <style is:global>

@@ -9,8 +9,9 @@ export const CODE_THEMES = {
 type DaisyThemeMap = Partial<Record<Theme, Theme>>;
 
 export const DARK_THEMES = {
-  aqua: "aqua",
+  luxury: "luxury",
   dark: "dark",
+  aqua: "aqua",
 } as const satisfies DaisyThemeMap;
 
 export const LIGHT_THEMES = {

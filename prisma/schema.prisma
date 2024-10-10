@@ -13,4 +13,5 @@ model Post {
 
   reads Int @default(0)
   views Int @default(0)
+  likes Int @default(0)
 }

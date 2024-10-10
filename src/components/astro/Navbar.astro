@@ -33,7 +33,7 @@ import { CONFIG, IconSet } from "config";
     </div> -->
     <a class="items-center gap-1 flex" href="/">
       <Image src="/logo.webp" alt="Logo" width={24} height={24} />
-      <span class="hover:underline ml-2 text-xl">
+      <span class="hover:underline ml-2 text-xl hidden sm:block">
         {CONFIG.SITE_TITLE}
       </span>
     </a>
@@ -52,6 +52,7 @@ import { CONFIG, IconSet } from "config";
     </ul>
 
     <div class="flex items-center gap-2">
+      <slot />
       <SearchTrigger />
       <ThemeDropdown>
         <AppIcon

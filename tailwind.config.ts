@@ -1,10 +1,13 @@
 import typography from "@tailwindcss/typography";
 import daisyui, { type Config as DaisyConfig } from "daisyui";
 import { type Config } from "tailwindcss";
-import { THEMES } from "./config";
+import { DARK_THEMES, THEMES } from "./config";
 
 const config: Config = {
-  darkMode: ["variant", ["[data-theme='dark'] &", "[data-theme='aqua'] &"]],
+  darkMode: [
+    "variant",
+    Object.values(DARK_THEMES).map((theme) => `[data-theme='${theme}'] &`),
+  ],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
