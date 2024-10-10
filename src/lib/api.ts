@@ -19,7 +19,7 @@ const readPost = async (postId: string) => {
 };
 
 const viewPost = async (postId: string) => {
-  return fetch(`/api/blog/${postId}`, {
+  return fetch(`/api/blog`, {
     method: "POST",
     body: JSON.stringify({
       postId,

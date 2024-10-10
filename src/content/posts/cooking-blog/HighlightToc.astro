@@ -6,7 +6,7 @@
   this fella
 </button>
 
-<script>
+<script is:inline>
   const button = document.querySelector("#cooking-toc-highligher");
   button?.addEventListener("click", () => {
     const toc = document.querySelector("#toc");
@@ -33,7 +33,7 @@
         "backdrop-blur-sm",
       ];
 
-      const clone = toc?.cloneNode(true) as Element;
+      const clone = toc?.cloneNode(true);
 
       clone.classList.add(...classes);
       clone.id = "toc-backdrop";
