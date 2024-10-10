@@ -12,9 +12,10 @@ import { IconSet } from "config";
 import "@fontsource-variable/jetbrains-mono";
 import PostCard from "@/components/astro/posts/PostCard.astro";
 import PostPage from "@/components/astro/posts/PostPage.astro";
+import { getPosts } from "@/lib/articles";
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection("posts");
+  const posts = await getPosts();
 
   return posts.map((post, ix) => {
     const postsWithoutThisOne = posts.filter((p) => p.slug !== post.slug);

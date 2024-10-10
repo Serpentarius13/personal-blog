@@ -1,18 +1,16 @@
 ---
 import PostGridCard from "@/components/astro/posts/PostGridCard.astro";
 import Layout from "@/layouts/Layout.astro";
+import { getPosts } from "@/lib/articles";
 import { cn } from "@/lib/cn";
 import type { PaginateFunction } from "astro";
-import { getCollection } from "astro:content";
 
 export async function getStaticPaths({
   paginate,
 }: {
   paginate: PaginateFunction;
 }) {
-  const allPosts = await getCollection("posts", ({ data }) =>
-    import.meta.env.PROD ? !data.draft : true,
-  );
+  const allPosts = await getPosts();
   return paginate(
     allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
     { pageSize: 6 },

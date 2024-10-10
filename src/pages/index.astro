@@ -2,9 +2,9 @@
 import IndexHeader from "@/components/astro/index/IndexHeader.astro";
 import PostCard from "@/components/astro/posts/PostCard.astro";
 import Layout from "@/layouts/Layout.astro";
-import { getCollection } from "astro:content";
+import { getPosts } from "@/lib/articles";
 
-const posts = await getCollection("posts");
+const posts = await getPosts();
 posts.sort(
   (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
 );
