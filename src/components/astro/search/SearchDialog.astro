@@ -10,7 +10,8 @@ import { CONFIG, IconSet } from "config";
       class="mx-auto h-[min(600px,100vh)] md:overflow-hidden overflow-auto px-4"
     >
       <form method="dialog" class="z-[20] absolute -right-4 -top-4">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" aria-labelledby="search-btn-label">
+          <span class="sr-only"> Close search modal </span>
           <AppIcon set={IconSet.LINE_MD} name="close" class="text-xl" />
         </button>
       </form>
