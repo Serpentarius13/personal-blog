@@ -2,7 +2,7 @@
 import IndexHeader from "@/components/astro/index/IndexHeader.astro";
 import PostCard from "@/components/astro/posts/PostCard.astro";
 import Layout from "@/layouts/Layout.astro";
-import { getPosts } from "@/lib/articles";
+import { getPosts } from "@/lib/posts";
 
 const posts = await getPosts();
 posts.sort(
@@ -17,18 +17,9 @@ const latestPost = posts[0];
 >
   <IndexHeader />
   <section class="flex flex-1 flex-col gap-4 box lg:mt-4 mt-8">
-    {
-      latestPost ? (
-        <Fragment>
-          <h2 class="text-2xl font-bold">My latest post</h2>
-          <PostCard entry={latestPost} />
-        </Fragment>
-      ) : (
-        <h2 class="text-3xl font-bold">
-          There is no articles yet. Time will come..{" "}
-        </h2>
-      )
-    }
+    <h2 class="text-2xl font-bold">My latest post</h2>
+    <PostCard entry={latestPost} />
+
     <a href="/blog" class="btn btn-primary w-fit mx-auto btn-outline"
       >More blog posts
     </a>

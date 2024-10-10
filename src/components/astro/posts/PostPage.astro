@@ -1,6 +1,5 @@
 ---
-import { H1Renderer } from "@/components/solid/H1Renderer";
-import { fade } from "astro/virtual-modules/transitions.js";
+import { H1Renderer } from "@/components/preact/H1Renderer";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import PostInfo from "./PostInfo.astro";
@@ -26,8 +25,6 @@ const { Content, headings } = await post.render();
       widths={[240, 540, 720, 1200]}
       sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1200px`}
       class="mx-auto h-[450px] max-w-[1200px] w-full object-contain"
-      transition:name="post-image"
-      transition:animate={fade({ duration: 300 })}
     />
   </div>
 

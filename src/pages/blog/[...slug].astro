@@ -7,12 +7,11 @@ import type {
   InferGetStaticPropsType,
 } from "astro";
 import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
 import { IconSet } from "config";
 import "@fontsource-variable/jetbrains-mono";
 import PostCard from "@/components/astro/posts/PostCard.astro";
 import PostPage from "@/components/astro/posts/PostPage.astro";
-import { getPosts } from "@/lib/articles";
+import { getPosts } from "@/lib/posts";
 
 export const getStaticPaths = (async () => {
   const posts = await getPosts();

@@ -1,8 +1,8 @@
 ---
 import PostGridCard from "@/components/astro/posts/PostGridCard.astro";
 import Layout from "@/layouts/Layout.astro";
-import { getPosts } from "@/lib/articles";
 import { cn } from "@/lib/cn";
+import { getPosts } from "@/lib/posts";
 import type { PaginateFunction } from "astro";
 
 export async function getStaticPaths({
