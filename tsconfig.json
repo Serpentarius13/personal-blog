@@ -3,20 +3,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     "traceResolution": false
   },
-  "exclude": [
-    "dist",
-    "node_modules"
-  ],
-  "include": [
-    "src/**/*",
-    "*config.ts"
-  ]
+  "exclude": ["dist", "node_modules"],
+  "include": ["src/**/*", "*config.ts"]
 }

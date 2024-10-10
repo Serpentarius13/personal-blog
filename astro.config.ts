@@ -7,6 +7,7 @@ import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import vue from "@astrojs/vue";
+import playformInline from "@playform/inline";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
@@ -72,6 +73,7 @@ export default defineConfig({
     vue(),
     pagefind(),
     preact(),
+    playformInline(),
   ],
 
   markdown: {
