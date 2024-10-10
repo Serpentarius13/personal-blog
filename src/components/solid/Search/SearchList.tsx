@@ -2,6 +2,7 @@ import type { SearchRecordResult } from "@/actions";
 import { debounce, minWait } from "@/lib/utils";
 import { actions } from "astro:actions";
 import { createSignal, type Component } from "solid-js";
+import { Searchy } from "./Searchy";
 
 interface Props {}
 
@@ -109,6 +110,8 @@ export const SearchList: Component<Props> = () => {
             })}
           </ul>
         )}
+
+        <Searchy />
       </div>
     </div>
   );

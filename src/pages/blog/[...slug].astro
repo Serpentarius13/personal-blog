@@ -1,29 +1,33 @@
 ---
 import AppIcon from "@/components/astro/AppIcon.astro";
-import TableOfContents from "@/components/astro/posts/toc/TableOfContents.astro";
-import { H1Renderer } from "@/components/solid/H1Renderer";
-import { PostInfo } from "@/components/solid/PostInfo";
 import Layout from "@/layouts/Layout.astro";
-import { formatDate } from "@/lib/date";
 import type {
   GetStaticPaths,
   InferGetStaticParamsType,
   InferGetStaticPropsType,
 } from "astro";
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import { IconSet } from "config";
-import jetbrainsPreload from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2";
+import "@fontsource-variable/jetbrains-mono";
 import PostCard from "@/components/astro/posts/PostCard.astro";
-import { fade } from "astro:transitions";
+import PostPage from "@/components/astro/posts/PostPage.astro";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("posts");
-  return posts.map((post, ix) => ({
-    params: { slug: post.slug },
-    props: { post, nextPost: posts.at(ix + 1) ?? posts.at(ix - 1) },
-  }));
+
+  return posts.map((post, ix) => {
+    const postsWithoutThisOne = posts.filter((p) => p.slug !== post.slug);
+
+    return {
+      params: { slug: post.slug },
+      props: {
+        post,
+        nextPost:
+          postsWithoutThisOne.at(ix + 1) ?? postsWithoutThisOne.at(ix - 1),
+      },
+    };
+  });
 }) satisfies GetStaticPaths;
 
 interface Props extends InferGetStaticPropsType<typeof getStaticPaths> {
@@ -35,7 +39,6 @@ interface Params extends InferGetStaticParamsType<typeof getStaticPaths> {
 }
 
 const { post, nextPost } = Astro.props;
-const { Content, headings } = await post.render();
 ---
 
 <Layout
@@ -46,65 +49,9 @@ const { Content, headings } = await post.render();
   <Fragment slot="head">
     <meta property="og:type" content="article" />
     <meta property="twitter:card" content="summary_large_image" />
-
-    <link
-      rel="preload"
-      as="font"
-      href={jetbrainsPreload}
-      type="font/woff2"
-      crossorigin
-    />
   </Fragment>
 
-  <h1 class="text-6xl font-extrabold mx-auto w-fit mt-4 mb-8">
-    {post.data.title}
-  </h1>
-
-  <Image
-    src={post.data.image}
-    alt={post.data.imageAlt}
-    widths={[240, 540, 720, 1200]}
-    sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1200px`}
-    class="rounded-xl mx-auto h-[450px] object-cover"
-    transition:name="post-image"
-    transition:animate={fade({ duration: 300 })}
-  />
-
-  <div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6">
-    <PostInfo
-      client:only="solid"
-      postId={post.slug}
-      date={formatDate(post.data.date)}
-    />
-  </div>
-  {
-    post.data.tags && (
-      <ul class="mx-auto flex flex-wrap gap-1 w-fit mt-4">
-        {post.data.tags.map((tag) => {
-          return (
-            <li class="badge badge-sm badge-outline badge-primary">{tag}</li>
-          );
-        })}
-      </ul>
-    )
-  }
-
-  <div
-    class="lg:grid flex flex-col lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:pl-8 gap-[clamp(1rem,10vw,3rem)] items-start"
-  >
-    <TableOfContents
-      headings={headings}
-      class="lg:sticky lg:top-24 mx-auto lg:mx-0 w-full max-w-[95%] md:max-w-[85%] lg:max-w-full"
-    />
-
-    <div class="max-w-full md:mx-auto lg:mx-0">
-      <div
-        class="prose prose-lg xl:prose-xl prose-code:not-prose justify-self-center"
-      >
-        <Content components={{ h1: H1Renderer }} />
-      </div>
-    </div>
-  </div>
+  <PostPage post={post} />
 
   {
     nextPost && (
@@ -179,11 +126,11 @@ const { Content, headings } = await post.render();
         prevScroll = window.scrollY;
         return;
       }
-      if (prevScroll < window.scrollY) {
-        button?.classList.remove("visible");
-      } else {
-        button?.classList.add("visible");
-      }
+
+      button?.classList[prevScroll > window.scrollY ? "add" : "remove"](
+        "visible",
+      );
+
       prevScroll = window.scrollY;
     }, 100);
 
@@ -191,7 +138,6 @@ const { Content, headings } = await post.render();
   };
 
   document.addEventListener("astro:page-load", attachListeners);
-  document.addEventListener("astro:after-swap", attachListeners);
 </script>
 
 <style is:global>

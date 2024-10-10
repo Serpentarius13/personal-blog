@@ -3,13 +3,14 @@ import type { MarkdownHeading } from "astro";
 import TocItem from "./TocItem.astro";
 import { cn } from "@/lib/cn";
 import { type TocHeading } from "./toc.types";
+import type { ComponentProps, HTMLAttributes } from "astro/types";
 
-interface Props {
+interface Props extends HTMLAttributes<"aside"> {
   headings: MarkdownHeading[];
   class?: string;
 }
 
-const { headings, class: className } = Astro.props;
+const { headings, class: className, ...props } = Astro.props;
 
 function buildToc(headings: MarkdownHeading[]): TocHeading[] {
   const toc: TocHeading[] = [];
@@ -38,6 +39,7 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
 ---
 
 <aside
+  {...props}
   class={cn(
     "p-2 shadow-md shadow-primary  rounded-lg bg-base-100 backdrop-blur-xl z-[10]",
     className,
@@ -49,21 +51,19 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
   </ul>
 </aside>
 
-<script is:inline>
-  var isTocEnabled = false;
-
-  var setupToc = () => {
-    if (isTocEnabled) return;
-
+<script>
+  const setupToc = () => {
     if (!window.matchMedia("(min-width: 1024px)").matches) return;
 
-    const links = document.querySelectorAll("#toc a[href^='#']");
+    const links = document.querySelectorAll(
+      "#toc a[href^='#']",
+    ) as NodeListOf<HTMLAnchorElement>;
 
     for (const link of links) {
       link.addEventListener("click", (event) => {
         event.preventDefault();
-        const target = document.querySelector(link.getAttribute("href"));
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        const target = document.querySelector(link.href);
+        target?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
 
@@ -80,8 +80,7 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
           const link = document.querySelector(`#toc li a[href="#${id}"]`);
           if (!link) return;
 
-          const addRemove = section.isIntersecting ? "add" : "remove";
-          link.classList[addRemove]("seeing");
+          link.classList[section.isIntersecting ? "add" : "remove"]("seeing");
         });
       },
       {
@@ -93,44 +92,8 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
     sections.forEach((section) => {
       observer.observe(section);
     });
-
-    isTocEnabled = true;
   };
 
   document.addEventListener("astro:page-load", setupToc);
-
   document.addEventListener("astro:after-swap", setupToc);
-
-  var setupTocResizeObserver = () => {
-    function debounce(func, ms) {
-      let timeout;
-      return function () {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, arguments), ms);
-      };
-    }
-
-    const checkToc = debounce(() => {
-      if (isTocEnabled) return;
-
-      setupToc();
-    }, 300);
-
-    setTimeout(() => {
-      const resizeObserver = new ResizeObserver((entries) => {
-        const entry = entries[0];
-        if (entry && entry.contentRect.width >= 1024) {
-          checkToc();
-        }
-      });
-
-      resizeObserver.observe(document.body);
-    }, 1000);
-  };
-
-  document.addEventListener("astro:page-load", setupTocResizeObserver);
-  document.addEventListener("astro:before-swap", () => {
-    isTocEnabled = false;
-  });
-  document.addEventListener("astro:after-swap", setupTocResizeObserver);
 </script>

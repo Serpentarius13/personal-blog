@@ -1,11 +1,16 @@
 ---
-//@ts-nocheck
-import { Search } from "@/components/solid/Search/Search";
+import PostPage from "@/components/astro/posts/PostPage.astro";
 import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
 
 if (import.meta.env.PROD) return Astro.redirect("/");
+
+const postName = "astro-blog-from-scratch";
+const post = await getCollection("posts", ({ slug }) => slug === postName).then(
+  (r) => r[0],
+);
 ---
 
-<Layout noIndex>
-  <Search client:load />
+<Layout noIndex title="" description="">
+  <PostPage post={post} />
 </Layout>

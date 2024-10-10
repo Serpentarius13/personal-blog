@@ -1,0 +1,90 @@
+---
+import AppIcon from "@/components/astro/AppIcon.astro";
+import Search from "astro-pagefind/components/Search";
+import { CONFIG, IconSet } from "config";
+---
+
+<dialog id={CONFIG.SEARCH_MODAL_ID} class="modal">
+  <div class="modal-box max-w-2xl overflow-visible">
+    <div
+      class="mx-auto h-[min(600px,100vh)] md:overflow-hidden overflow-auto px-4"
+    >
+      <form method="dialog" class="z-[20] absolute -right-4 -top-4">
+        <button class="btn btn-primary">
+          <AppIcon set={IconSet.LINE_MD} name="close" class="text-xl" />
+        </button>
+      </form>
+      <Search
+        id="search"
+        className="pagefind-ui "
+        uiOptions={{
+          showImages: true,
+          autofocus: true,
+          showSubResults: true,
+          showEmptyFilters: true,
+          translations: {
+            placeholder: "Search anything here!",
+          },
+        }}
+      />
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
+<style is:global>
+  .pagefind-ui__filter-panel {
+    @apply md:!min-w-[120px] md:max-w-[120px]  md:h-fit;
+  }
+  .pagefind-ui__filter-group {
+    @apply md:w-full md:overflow-auto  md:text-nowrap !pb-4 !pl-1;
+  }
+  .pagefind-ui__filter-checkbox {
+    @apply min-w-[14px];
+  }
+
+  .pagefind-ui,
+  .pagefind-ui__form,
+  .pagefind-ui__drawer {
+    @apply !h-full;
+  }
+
+  .pagefind-ui__results-area {
+    @apply md:overflow-y-auto md:h-[95%] md:flex-1;
+  }
+  .pagefind-ui__search-input {
+    @apply focus-within:shadow-lg focus-within:shadow-primary focus-within:outline-none;
+  }
+
+  .pagefind-ui__result {
+    @apply flex-col;
+  }
+
+  .pagefind-ui__result-thumb {
+    @apply !min-w-[155px] !w-full !max-w-full max-h-[140px];
+  }
+
+  .pagefind-ui__result-image {
+    @apply !w-full !h-full !object-contain;
+  }
+
+  .pagefind-ui__result {
+    @apply !py-3;
+  }
+
+  :root {
+    --pagefind-ui-scale: 0.9;
+    --pagefind-ui-primary: oklch(var(--p));
+    --pagefind-ui-text: oklch(var(--bc));
+    --pagefind-ui-background: oklch(var(--b1));
+    --pagefind-ui-border: oklch(var(--p));
+    --pagefind-ui-tag: oklch(var(--p));
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 12px;
+    --pagefind-ui-image-border-radius: 8px;
+    --pagefind-ui-image-box-ratio: 3 / 2;
+    --pagefind-ui-font: "JetBrains Mono", monospace;
+  }
+</style>

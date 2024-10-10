@@ -1,0 +1,61 @@
+---
+
+---
+
+<button id="cooking-toc-highligher" class="btn btn-sm inline-block">
+  this fella
+</button>
+
+<script>
+  const button = document.querySelector("#cooking-toc-highligher");
+  button?.addEventListener("click", () => {
+    const toc = document.querySelector("#toc");
+
+    if (window.matchMedia("(prefers-reduced-motion)").matches) {
+      const classes = ["ring-2", "ring-red-500"];
+      toc?.classList.add(...classes);
+      setTimeout(() => {
+        toc?.classList.remove(...classes);
+      }, 2500);
+      return;
+    }
+
+    if (window.matchMedia("(max-width: 1024px)").matches && toc) {
+      const classes = [
+        "fixed",
+        "top-0",
+        "right-0",
+        "bottom-0",
+        "left-0",
+        "h-fit",
+        "m-auto",
+        "bg-black/30",
+        "backdrop-blur-sm",
+      ];
+
+      const clone = toc?.cloneNode(true) as Element;
+
+      clone.classList.add(...classes);
+      clone.id = "toc-backdrop";
+      document.body.appendChild(clone);
+
+      setTimeout(() => {
+        document.body.removeChild(clone);
+      }, 2500);
+      return;
+    }
+
+    const classes = [
+      "scale-[1.15]",
+      "duration-[350]",
+      "transition-all",
+      "ring-2",
+      "ring-red-500",
+    ];
+
+    toc?.classList.add(...classes);
+    setTimeout(() => {
+      toc?.classList.remove(...classes);
+    }, 2500);
+  });
+</script>

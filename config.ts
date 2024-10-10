@@ -41,6 +41,7 @@ export const ICONS = {
     rss: "rss",
     search: "search",
     "arrow-up": "arrow-up",
+    close: "close",
   },
 
   [IconSet.LINE_AWESOME]: {
@@ -69,8 +70,6 @@ const NAV_LINKS: NavLink[] = [
   //   href: "/about",
   // },
 ];
-
-const SITE_TITLE = "Void Flower";
 
 interface Icon<S extends IconSet> {
   set: S;
@@ -112,10 +111,12 @@ export const SOCIAL_LINKS = {
 >;
 
 const SITE_URL = "https://void-flower.vercel.app";
+const SITE_TITLE = "Void Flower";
 
 export const CONFIG = {
   NAV_LINKS,
   SITE_TITLE,
   SOCIAL_LINKS,
   SITE_URL,
-};
+  SEARCH_MODAL_ID: "page-search-modal",
+} as const;

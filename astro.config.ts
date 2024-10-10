@@ -8,11 +8,13 @@ import solidJs from "@astrojs/solid-js";
 import tailwind from "@astrojs/tailwind";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
+import pagefind from "astro-pagefind";
 
 // expressive code
 
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { pluginBlurLines } from "./plugins/expressive-code-blur";
+import { pluginIgnoreIndex } from "./plugins/expressive-code-ignore-index";
 
 // rehype
 
@@ -31,9 +33,12 @@ import node from "@astrojs/node";
 import vercel from "@astrojs/vercel/serverless";
 import { CODE_THEMES, CONFIG, ICONS } from "./config";
 
+import vue from "@astrojs/vue";
+
 // https://astro.build/config
 export default defineConfig({
   site: CONFIG.SITE_URL,
+
   vite: {
     css: {
       preprocessorOptions: {
@@ -47,7 +52,7 @@ export default defineConfig({
     expressiveCode({
       themes: Object.values(CODE_THEMES),
       themeCssSelector: (theme) => `[data-code-theme="${theme.name}"]`,
-      plugins: [pluginLineNumbers(), pluginBlurLines()],
+      plugins: [pluginLineNumbers(), pluginBlurLines(), pluginIgnoreIndex()],
     }),
     mdx(),
     tailwind(),
@@ -63,6 +68,8 @@ export default defineConfig({
     sitemap({
       filter: (page) => page !== "/404" && page !== "/500" && page !== "/test",
     }),
+    vue(),
+    pagefind(),
   ],
 
   markdown: {

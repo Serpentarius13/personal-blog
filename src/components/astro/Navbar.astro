@@ -1,9 +1,9 @@
 ---
 import AppIcon from "@/components/astro/AppIcon.astro";
-import { Search } from "@/components/solid/Search";
+import ThemeDropdown from "@/components/astro/ThemeDropdown.astro";
+import SearchTrigger from "@/components/astro/search/SearchTrigger.astro";
 import { Image } from "astro:assets";
 import { CONFIG, IconSet } from "config";
-import ThemeDropdown from "./ThemeDropdown.astro";
 ---
 
 <header
@@ -52,7 +52,7 @@ import ThemeDropdown from "./ThemeDropdown.astro";
     </ul>
 
     <div class="flex items-center gap-2">
-      <Search client:load />
+      <SearchTrigger />
       <ThemeDropdown>
         <AppIcon
           set={IconSet.GAME_ICONS}

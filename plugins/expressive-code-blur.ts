@@ -1,8 +1,5 @@
-import {
-  ExpressiveCodeAnnotation,
-  type ExpressiveCodePlugin,
-} from "@expressive-code/core";
-import { addClassName, h } from "@expressive-code/core/hast";
+import { type ExpressiveCodePlugin } from "@expressive-code/core";
+import { addClassName } from "@expressive-code/core/hast";
 
 export interface PluginBlurSettings {
   blurredLines: Record<number, boolean> | undefined;
@@ -26,8 +23,6 @@ export function pluginBlurLines(): ExpressiveCodePlugin {
         background: rgba(255, 255, 255, 0.1);
         z-index: 1;
         backdrop-filter: blur(4px);
-        
-
       }
       
       .blurred {
@@ -35,10 +30,7 @@ export function pluginBlurLines(): ExpressiveCodePlugin {
       }     
     `,
     hooks: {
-      preprocessMetadata: ({
-        codeBlock: { metaOptions, props, getLines },
-        addGutterElement,
-      }) => {
+      preprocessMetadata: ({ codeBlock: { metaOptions, props } }) => {
         // Transfer meta options (if any) to props
         const range = metaOptions.getRange("blurredLines");
 
@@ -64,29 +56,13 @@ export function pluginBlurLines(): ExpressiveCodePlugin {
           props.blurredLines = blurredLines;
         }
       },
-      postprocessRenderedLine: ({ codeBlock, renderData, lineIndex }) => {
+      postprocessRenderedLine: ({ codeBlock, renderData, lineIndex, line }) => {
         if (codeBlock.props.blurredLines) {
           if (lineIndex + 1 in codeBlock.props.blurredLines) {
             addClassName(renderData.lineAst, "blurred");
           }
         }
       },
-      postprocessRenderedBlock: ({ codeBlock, renderData }) => {
-        // If the line numbers column needs more width than the default 2 characters,
-        // adjust it to fit the longest line number
-        const { blurredLines } = codeBlock.props;
-      },
     },
   };
-}
-
-class SquigglesAnnotation extends ExpressiveCodeAnnotation {
-  /** @param {import('@expressive-code/core').AnnotationRenderOptions} context */
-  render({
-    nodesToTransform,
-  }: Parameters<ExpressiveCodeAnnotation["render"]>[0]) {
-    return nodesToTransform.map((node) => {
-      return h("span.error-squiggles", node);
-    });
-  }
 }

@@ -1,0 +1,77 @@
+---
+import { H1Renderer } from "@/components/solid/H1Renderer";
+import { PostInfo } from "@/components/solid/PostInfo";
+import { formatDate } from "@/lib/date";
+import { fade } from "astro/virtual-modules/transitions.js";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import TableOfContents from "./toc/TableOfContents.astro";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+---
+
+<div data-pagefind-body>
+  <h1 class="text-6xl font-extrabold mx-auto w-fit mt-4 mb-8">
+    {post.data.title}
+  </h1>
+
+  <div class="mx-auto">
+    <Image
+      src={post.data.image}
+      alt={post.data.imageAlt}
+      widths={[240, 540, 720, 1200]}
+      sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1200px`}
+      class="mx-auto h-[450px] max-w-[1200px] w-full object-contain"
+      transition:name="post-image"
+      transition:animate={fade({ duration: 300 })}
+    />
+  </div>
+
+  <div class="mx-auto mt-4 w-fit flex items-center gap-2 h-6">
+    <PostInfo
+      client:only="solid"
+      postId={post.slug}
+      date={formatDate(post.data.date)}
+    />
+  </div>
+
+  {
+    post.data.tags && (
+      <ul class="mx-auto flex flex-wrap gap-1.5 w-fit mt-4 max-w-xs justify-center">
+        {post.data.tags.map((tag) => {
+          return (
+            <li
+              data-pagefind-filter={"Topics"}
+              class="badge badge-sm badge-outline badge-primary"
+            >
+              {tag}
+            </li>
+          );
+        })}
+      </ul>
+    )
+  }
+
+  <div
+    class="lg:grid flex flex-col lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] lg:pl-8 gap-[clamp(1rem,10vw,3rem)] items-start"
+  >
+    <TableOfContents
+      headings={headings}
+      data-pagefind-ignore="all"
+      class="lg:sticky lg:top-24 mx-auto lg:mx-0 w-full max-w-[95%] md:max-w-[85%] lg:max-w-full"
+    />
+
+    <div class="max-w-full md:mx-auto lg:mx-0">
+      <div
+        class="prose prose-lg xl:prose-xl prose-code:not-prose justify-self-center"
+      >
+        <Content components={{ h1: H1Renderer }} />
+      </div>
+    </div>
+  </div>
+</div>

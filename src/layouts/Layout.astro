@@ -6,7 +6,10 @@ import "@/styles/code.scss";
 import Footer from "@/components/astro/Footer.astro";
 import { ViewTransitions } from "astro:transitions";
 import { cn } from "@/lib/cn";
-import { CODE_THEMES, DARK_THEMES, LIGHT_THEMES, THEMES } from "config";
+import { IconSet } from "config";
+import AppIcon from "@/components/astro/AppIcon.astro";
+import Search from "astro-pagefind/components/Search";
+import SearchDialog from "@/components/astro/search/SearchDialog.astro";
 
 interface Props {
   title: string;
@@ -57,6 +60,7 @@ const imageUrl = image && new URL(image, Astro.url);
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <slot name="head" />
+
     <ViewTransitions />
 
     <script is:inline>
@@ -120,9 +124,12 @@ const imageUrl = image && new URL(image, Astro.url);
   </head>
   <body class="px-3 md:px-1 flex flex-col">
     <Navbar />
+
     <main class={cn("h-0 flex-1", mainClassname)}>
       <slot />
     </main>
     <Footer />
+
+    <SearchDialog />
   </body>
 </html>
