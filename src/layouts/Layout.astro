@@ -57,7 +57,16 @@ const imageUrl = image && new URL(image, Astro.url);
     <slot name="head" />
 
     <script is:inline>
-      const darkThemes = ["dark", "luxury"];
+      const darkThemes = {
+        night: "night",
+        luxury: "luxury",
+      };
+
+      const lightThemes = {
+        autumn: "autumn",
+        nord: "nord",
+      };
+
       const THEME_KEY = "theme";
       const getThemePreference = () => {
         if (typeof localStorage !== "undefined") {
@@ -70,7 +79,7 @@ const imageUrl = image && new URL(image, Astro.url);
 
         return window.matchMedia("(prefers-color-scheme: dark)").matches
           ? // must be synced on its own because I don't wanna import themes into head on page load
-            "dark"
+            "night"
           : "autumn";
       };
 

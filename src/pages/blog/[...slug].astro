@@ -179,7 +179,7 @@ const { post, nextPost, prevPost } = Astro.props;
       return;
     }
 
-    if (Math.abs(prevScroll - window.scrollY) > 300) {
+    if (window.scrollY - prevScroll > 250) {
       button?.classList.remove("visible");
     } else {
       button?.classList.add("visible");
