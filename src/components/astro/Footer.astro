@@ -5,7 +5,7 @@ import AppIcon from "./AppIcon.astro";
 
 <footer
   id="footer"
-  class="flex items-center justify-between mt-9 p-3 gap-2 box w-full"
+  class="box mt-9 flex w-full items-center justify-between gap-2 p-3"
 >
   <aside>
     <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
@@ -13,7 +13,7 @@ import AppIcon from "./AppIcon.astro";
   <nav>
     <a
       href="/rss.xml"
-      class="btn btn-sm btn-primary btn-outline"
+      class="btn btn-outline btn-primary btn-sm"
       aria-labelledby="rss-btn-label"
     >
       <AppIcon set={IconSet.LINE_MD} name="rss" class="size-6" />

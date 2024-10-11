@@ -1,0 +1,6 @@
+pre {
+  font-family: "JetBrains Mono Variable", monospace !important;
+  code {
+    font-family: inherit !important;
+  }
+}

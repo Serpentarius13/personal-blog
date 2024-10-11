@@ -1,0 +1,15 @@
+html {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html {
+    overflow-x: clip;
+  }
+}
+
+body {
+  @apply min-h-screen;
+}

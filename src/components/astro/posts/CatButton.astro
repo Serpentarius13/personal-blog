@@ -12,7 +12,7 @@ const { slug } = Astro.props;
   tabindex="0"
   role="button"
   id="cat-button"
-  class="text-[28px] btn btn-sm opacity-0 btn-ghost flex flex-nowrap items-center relative"
+  class="btn btn-ghost btn-sm relative flex flex-nowrap items-center text-[28px] opacity-0"
   data-slug={slug}
 >
   <span class="sr-only"> Click the cat! </span>
@@ -22,7 +22,7 @@ const { slug } = Astro.props;
     <div class="swap-off">😾</div>
   </div>
 
-  <span id="cat-count" class="text-sm mr-1">0</span>
+  <span id="cat-count" class="mr-1 text-sm">0</span>
 
   <span id="cat-notes">🎶</span>
 </div>
@@ -78,10 +78,10 @@ const { slug } = Astro.props;
     }
   }, 100);
 
-  window.addEventListener("scroll", handleScroll);
+  window.addEventListener("scroll", handleScroll, { passive: true });
 </script>
 
-<style lang="scss">
+<style>
   #cat-button {
     &.visible {
       @apply opacity-100;

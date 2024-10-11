@@ -11,11 +11,11 @@ const { post } = Astro.props;
 ---
 
 <a
-  class="card shadow-2xl hover:shadow-md hover:scale-[1.05] transition-all max-h-full md:max-h-[380px] min-w-[240px] flex-1 relative group md:max-w-[320px]"
+  class="group card relative max-h-full min-w-[240px] flex-1 shadow-2xl transition-all hover:scale-[1.05] hover:shadow-md md:max-h-[380px] md:max-w-[320px]"
   href={`/blog/${post.slug}`}
 >
   <div
-    class="badge rounded-tl-none rounded-bl-none rounded-tr-none rounded-lg badge-md absolute left-0 top-0"
+    class="badge badge-md absolute left-0 top-0 rounded-lg rounded-bl-none rounded-tl-none rounded-tr-none"
   >
     {formatDate(post.data.date)}
   </div>
@@ -28,7 +28,7 @@ const { post } = Astro.props;
       class="object-cover"
     />
   </figure>
-  <div class="card-body pt-2 pb-4 gap-0.5">
+  <div class="card-body gap-0.5 pb-4 pt-2">
     <h2 class="card-title">
       {post.data.title}
     </h2>
@@ -37,9 +37,9 @@ const { post } = Astro.props;
     </p>
     {
       post.data.tags && (
-        <div class="card-actions justify-end mt-2">
+        <div class="card-actions mt-2 justify-end">
           {post.data.tags.map((tag) => (
-            <div class="badge  badge-sm group-hover:badge-primary duration-500">
+            <div class="badge badge-sm duration-500 group-hover:badge-primary">
               {tag}
             </div>
           ))}

@@ -1,10 +1,8 @@
 ---
 import Navbar from "@/components/astro/Navbar.astro";
-import "@/styles/global.scss";
-import "@/styles/components.scss";
-import "@/styles/code.scss";
+import "@/styles/index.css";
+
 import Footer from "@/components/astro/Footer.astro";
-import { ViewTransitions } from "astro:transitions";
 import { cn } from "@/lib/cn";
 import SearchDialog from "@/components/astro/search/SearchDialog.astro";
 
@@ -119,7 +117,7 @@ const imageUrl = image && new URL(image, Astro.url);
       }
     </style>
   </head>
-  <body class="px-3 md:px-1 flex flex-col">
+  <body class="flex flex-col px-3 md:px-1">
     <Navbar>
       <slot name="navbar" slot="default" />
     </Navbar>

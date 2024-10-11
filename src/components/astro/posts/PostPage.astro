@@ -18,7 +18,7 @@ const {
 ---
 
 <div data-pagefind-body>
-  <h1 class="text-6xl font-extrabold mx-auto w-fit mt-4 mb-8">
+  <h1 class="mx-auto mb-8 mt-4 w-fit text-6xl font-extrabold">
     {post.data.title}
   </h1>
 
@@ -28,7 +28,7 @@ const {
       alt={post.data.imageAlt}
       widths={[240, 540, 720, 1200]}
       sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1200px`}
-      class="mx-auto h-[450px] max-w-[1200px] w-full object-cover md:object-contain"
+      class="mx-auto h-[450px] w-full max-w-[1200px] object-cover md:object-contain"
     />
   </div>
 
@@ -36,12 +36,12 @@ const {
 
   {
     post.data.tags && (
-      <ul class="mx-auto flex flex-wrap gap-1.5 w-fit mt-4 max-w-xs justify-center">
+      <ul class="mx-auto mt-4 flex w-fit max-w-xs flex-wrap justify-center gap-1.5">
         {post.data.tags.map((tag) => {
           return (
             <li
               data-pagefind-filter={"Topics"}
-              class="badge badge-sm badge-outline badge-primary"
+              class="badge badge-primary badge-outline badge-sm"
             >
               {tag}
             </li>
@@ -52,17 +52,17 @@ const {
   }
 
   <div
-    class="lg:grid flex flex-col lg:grid-cols-[250px_1fr] xl:grid-cols-[300px_1fr] 2xl:grid-cols-[340px_1fr] lg:pl-8 gap-[clamp(1rem,10vw,6rem)] items-start"
+    class="flex flex-col items-start gap-[clamp(1rem,10vw,6rem)] lg:grid lg:grid-cols-[250px_1fr] lg:pl-8 xl:grid-cols-[300px_1fr] 2xl:grid-cols-[340px_1fr]"
   >
     <TableOfContents
       headings={headings}
       data-pagefind-ignore="all"
-      class="lg:sticky lg:top-24 mx-auto lg:mx-0 w-full max-w-[95%] md:max-w-[85%] lg:max-w-full"
+      class="mx-auto w-full max-w-[95%] md:max-w-[85%] lg:sticky lg:top-24 lg:mx-0 lg:max-w-full"
     />
 
     <div class="max-w-full md:mx-auto lg:mx-0">
       <div
-        class="prose prose-md xl:prose-lg prose-code:not-prose justify-self-center"
+        class="prose-md prose-code:not-prose prose justify-self-center xl:prose-lg"
       >
         <Content components={{ h1: H1Renderer }} />
       </div>

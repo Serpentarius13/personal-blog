@@ -23,7 +23,7 @@ const { class: className, contentClassname } = Astro.props;
   <div
     tabindex="0"
     role="button"
-    class="btn btn-md btn-primary rounded-btn btn-outline"
+    class="btn btn-outline btn-primary btn-sm rounded-btn"
     aria-labelledby="theme-switcher-label"
   >
     <slot />
@@ -41,7 +41,7 @@ const { class: className, contentClassname } = Astro.props;
     {
       Object.values(THEMES).map((theme) => {
         return (
-          <li data-theme={theme} class="rounded-box mb-2 [&:last-child]:mb-0">
+          <li data-theme={theme} class="mb-2 rounded-box [&:last-child]:mb-0">
             <div
               role="button"
               tabindex="0"

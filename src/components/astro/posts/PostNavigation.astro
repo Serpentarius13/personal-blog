@@ -10,14 +10,14 @@ interface Props {
 const { next, prev } = Astro.props;
 ---
 
-<div class="flex flex-col gap-2 box mt-12">
+<div class="box mt-12 flex flex-col gap-2">
   <slot name="title" />
 
   <a href={next} class="link">
     <slot name="next" />
     <AppIcon
       set={IconSet.LINE_MD}
-      class="rotate-90 arrow-left"
+      class="arrow-left rotate-90"
       name="arrow-up"
     />
   </a>
@@ -25,7 +25,7 @@ const { next, prev } = Astro.props;
   <a href={prev} class="link">
     <AppIcon
       set={IconSet.LINE_MD}
-      class="-rotate-90 arrow-right"
+      class="arrow-right -rotate-90"
       name="arrow-up"
     />
     <slot name="prev" />

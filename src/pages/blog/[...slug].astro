@@ -105,7 +105,7 @@ const { post, nextPost, prevPost } = Astro.props;
 
   <button
     id="scroll-top-btn"
-    class="fixed bottom-2 btn-primary right-2 z-[10] btn text-2xl opacity-0 translate-y-[120px] [&.visible]:translate-y-0 [&.visible]:opacity-100"
+    class="btn btn-primary fixed bottom-2 right-2 z-[10] translate-y-[120px] text-2xl opacity-0 [&.visible]:translate-y-0 [&.visible]:opacity-100"
   >
     <AppIcon set={IconSet.LINE_MD} name="arrow-up" />
   </button>
@@ -186,7 +186,7 @@ const { post, nextPost, prevPost } = Astro.props;
     prevScroll = window.scrollY;
   }, 100);
 
-  window.addEventListener("scroll", handleScroll);
+  window.addEventListener("scroll", handleScroll, { passive: true });
 </script>
 
 <style is:global>

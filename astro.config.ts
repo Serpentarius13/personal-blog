@@ -42,15 +42,6 @@ import { CODE_THEMES, CONFIG, ICONS } from "./config";
 export default defineConfig({
   site: CONFIG.SITE_URL,
 
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          api: "modern",
-        },
-      },
-    },
-  },
   integrations: [
     expressiveCode({
       themes: Object.values(CODE_THEMES),

@@ -36,12 +36,12 @@ const getPageUrl = (page: number) => {
 >
   <!-- class="h-full grid lg:grid-cols-3 content-center md:grid-cols-2 mx-auto max-w-[95%] lg:max-w-[1200px] gap-6"  -->
   <div
-    class="min-h-full max-w-[95%] lg:max-w-[1200px] flex flex-wrap mx-auto flex-1 justify-center gap-8"
+    class="mx-auto flex min-h-full max-w-[95%] flex-1 flex-wrap justify-center gap-8 lg:max-w-[1200px]"
   >
     {pageInfo.data.map((post) => <PostGridCard post={post} />)}
   </div>
 
-  <div class="join flex mx-auto box justify-center mt-auto box flex-wrap">
+  <div class="box box join mx-auto mt-auto flex flex-wrap justify-center">
     <a
       class={cn("btn join-item", {
         ["pointer-events-none cursor-default"]: pageInfo.currentPage === 1,

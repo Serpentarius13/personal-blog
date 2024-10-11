@@ -7,8 +7,10 @@ import { CONFIG, IconSet } from "config";
 ---
 
 <header
-  class="navbar z-50 max-w-5xl shadow-md bg-base-100 mx-auto sticky top-2 mt-4 mb-6 bg-base-100/60 backdrop-blur-lg px-2 md:px-4 rounded-xl"
+  id="navbar"
+  class="bg-base-100/60backdrop-blur-lg navbar sticky top-2 z-50 mx-auto mb-6 mt-4 max-w-5xl rounded-xl bg-base-100 px-2 shadow-md transition-all md:px-4"
 >
+  <div class="flex gap-2 shadow-xl"></div>
   <div class="navbar-start">
     <!-- <div class="dropdown md:hidden">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -31,15 +33,18 @@ import { CONFIG, IconSet } from "config";
         }
       </ul>
     </div> -->
-    <a class="items-center gap-1 flex" href="/">
+    <a class="flex items-center gap-1" href="/">
       <Image src="/logo.webp" alt="Logo" width={24} height={24} />
-      <span class="hover:underline ml-2 text-xl hidden sm:block">
+      <span
+        class="ml-2 hidden text-xl transition-all hover:underline sm:block"
+        id="page-title"
+      >
         {CONFIG.SITE_TITLE}
       </span>
     </a>
   </div>
-  <div class="w-fit ml-auto">
-    <ul class="menu menu-horizontal px-1 hidden md:flex">
+  <div class="ml-auto w-fit">
+    <ul class="menu menu-horizontal hidden px-1 md:flex">
       {
         CONFIG.NAV_LINKS.map((link) => {
           return (
@@ -68,8 +73,8 @@ import { CONFIG, IconSet } from "config";
 <style>
   .icon-flower {
     animation: rotate 10s linear infinite;
-    height: 32px;
-    width: 32px;
+    width: 24px;
+    height: 24px;
   }
 
   @keyframes rotate {
@@ -80,4 +85,31 @@ import { CONFIG, IconSet } from "config";
       transform: rotate(360deg);
     }
   }
+
+  #navbar {
+    &.shrinked {
+      background-color: red;
+
+      #page-title {
+        opacity: 0;
+      }
+    }
+  }
 </style>
+
+<script>
+  import { debounce } from "@/lib/utils";
+
+  const navbar = document.querySelector("#navbar")!;
+
+  const handleScroll = debounce(() => {
+    if (window.scrollY > 250) {
+      navbar.classList.add("shrinked");
+      return;
+    }
+
+    navbar.classList.remove("shrinked");
+  }, 100);
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+</script>

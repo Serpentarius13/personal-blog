@@ -5,7 +5,7 @@ import { IconSet } from "config";
 import Flower from "./flower.svg?raw";
 ---
 
-<section class="card box">
+<section class="box card">
   <div class="card-content flex items-start gap-2">
     <div class="flex flex-col gap-2">
       <h2 class="text-3xl">Welcome to my place 🛋️</h2>
@@ -17,12 +17,12 @@ import Flower from "./flower.svg?raw";
             &lcub;<AppIcon
               set={IconSet.LOGOS}
               name="typescript"
-              class="text-lg inline-block"
+              class="inline-block text-lg"
             />
           </span> TypeScript&rcub;, drop some bedtime thoughts on life, and sometimes
           make educative content.
         </span>
-        <div class="items-center gap-2 hidden sm:flex">
+        <div class="hidden items-center gap-2 sm:flex">
           You can find me here: <SocialLinks />
         </div>
 
@@ -33,7 +33,7 @@ import Flower from "./flower.svg?raw";
       <Fragment set:html={Flower} />
     </div>
   </div>
-  <div class="gap-1 flex flex-col sm:hidden">
+  <div class="flex flex-col gap-1 sm:hidden">
     You can find me here: <SocialLinks />
     <span class="pt-2">Hope you will rest well 😼</span>
   </div>

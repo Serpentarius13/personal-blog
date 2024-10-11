@@ -11,4 +11,3 @@ echo "Database migrated!"
 echo "Starting server..."
 pnpm dev
 echo "Server started!"
-

@@ -7,9 +7,9 @@ import { CONFIG, IconSet } from "config";
 <dialog id={CONFIG.SEARCH_MODAL_ID} class="modal">
   <div class="modal-box max-w-2xl overflow-visible">
     <div
-      class="mx-auto h-[min(600px,100vh)] md:overflow-hidden overflow-auto px-4"
+      class="mx-auto h-[min(600px,100vh)] overflow-auto px-4 md:overflow-hidden"
     >
-      <form method="dialog" class="z-[20] absolute -right-4 -top-4">
+      <form method="dialog" class="absolute -right-4 -top-4 z-[20]">
         <button class="btn btn-primary" aria-labelledby="search-btn-label">
           <span class="sr-only"> Close search modal </span>
           <AppIcon set={IconSet.LINE_MD} name="close" class="text-xl" />
@@ -17,7 +17,7 @@ import { CONFIG, IconSet } from "config";
       </form>
       <Search
         id="search"
-        className="pagefind-ui "
+        className="pagefind-ui"
         uiOptions={{
           showImages: true,
           autofocus: true,
