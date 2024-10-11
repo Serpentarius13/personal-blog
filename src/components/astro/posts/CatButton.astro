@@ -1,7 +1,4 @@
 ---
-import { IconSet } from "config";
-import AppIcon from "../AppIcon.astro";
-
 interface Props {
   slug: string;
 }
@@ -67,6 +64,11 @@ const { slug } = Astro.props;
   });
 
   let hasShownCat = false;
+
+  if (window.scrollY > 1200 || hasPat) {
+    hasShownCat = true;
+    catButton.classList.add("visible");
+  }
 
   const handleScroll = debounce(() => {
     if (hasShownCat) return;

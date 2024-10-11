@@ -179,12 +179,13 @@ const { post, nextPost, prevPost } = Astro.props;
       return;
     }
 
-    button?.classList[prevScroll > window.scrollY ? "add" : "remove"](
-      "visible",
-    );
-
-    prevScroll = window.scrollY;
-  }, 100);
+    if (Math.abs(prevScroll - window.scrollY) > 300) {
+      button?.classList.remove("visible");
+    } else {
+      button?.classList.add("visible");
+      prevScroll = window.scrollY;
+    }
+  }, 150);
 
   window.addEventListener("scroll", handleScroll, { passive: true });
 </script>

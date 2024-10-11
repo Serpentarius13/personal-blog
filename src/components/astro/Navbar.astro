@@ -8,7 +8,7 @@ import { CONFIG, IconSet } from "config";
 
 <header
   id="navbar"
-  class="bg-base-100/60backdrop-blur-lg navbar sticky top-2 z-50 mx-auto mb-6 mt-4 max-w-5xl rounded-xl bg-base-100 px-2 shadow-md transition-all md:px-4"
+  class="group navbar sticky top-2 z-50 mx-auto mb-6 mt-4 max-w-5xl rounded-xl bg-base-100 bg-base-100/30 px-2 shadow-md backdrop-blur-lg transition-all md:px-4"
 >
   <div class="flex gap-2 shadow-xl"></div>
   <div class="navbar-start">
@@ -33,12 +33,9 @@ import { CONFIG, IconSet } from "config";
         }
       </ul>
     </div> -->
-    <a class="flex items-center gap-1" href="/">
+    <a class="flex items-center gap-1" href="/" id="page-title">
       <Image src="/logo.webp" alt="Logo" width={24} height={24} />
-      <span
-        class="ml-2 hidden text-xl transition-all hover:underline sm:block"
-        id="page-title"
-      >
+      <span class="ml-2 hidden text-xl transition-all hover:underline sm:block">
         {CONFIG.SITE_TITLE}
       </span>
     </a>
@@ -59,7 +56,9 @@ import { CONFIG, IconSet } from "config";
     <div class="flex items-center gap-2">
       <slot />
       <SearchTrigger />
-      <ThemeDropdown>
+      <ThemeDropdown
+        class="group-[.shrinked]:!dropdown-left group-[.shrinked]:!dropdown-bottom"
+      >
         <AppIcon
           set={IconSet.GAME_ICONS}
           name="dandelion-flower"
@@ -88,10 +87,10 @@ import { CONFIG, IconSet } from "config";
 
   #navbar {
     &.shrinked {
-      background-color: red;
+      @apply w-auto !ml-auto mx-0 duration-[300] ease-in;
 
       #page-title {
-        opacity: 0;
+        @apply hidden;
       }
     }
   }
@@ -101,6 +100,10 @@ import { CONFIG, IconSet } from "config";
   import { debounce } from "@/lib/utils";
 
   const navbar = document.querySelector("#navbar")!;
+
+  if (window.scrollY > 250) {
+    navbar.classList.add("shrinked");
+  }
 
   const handleScroll = debounce(() => {
     if (window.scrollY > 250) {
