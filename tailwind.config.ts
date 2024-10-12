@@ -1,5 +1,7 @@
+import { addIconSelectors } from "@iconify/tailwind";
 import typography from "@tailwindcss/typography";
 import daisyui, { type Config as DaisyConfig } from "daisyui";
+import scrollbar from "tailwind-scrollbar";
 import { type Config } from "tailwindcss";
 import { DARK_THEMES, THEMES } from "./config";
 
@@ -20,7 +22,12 @@ const config: Config = {
       },
     },
   },
-  plugins: [daisyui, typography],
+  plugins: [
+    daisyui,
+    typography,
+    addIconSelectors(["line-md", "logos", "la", "game-icons"]),
+    scrollbar,
+  ],
 
   daisyui: {
     themes: Object.values(THEMES),

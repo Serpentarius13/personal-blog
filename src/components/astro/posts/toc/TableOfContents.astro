@@ -4,6 +4,7 @@ import TocItem from "./TocItem.astro";
 import { cn } from "@/lib/cn";
 import { type TocHeading } from "./toc.types";
 import type { ComponentProps, HTMLAttributes } from "astro/types";
+import { Icon } from "@/components/preact/Icon";
 
 interface Props extends HTMLAttributes<"aside"> {
   headings: MarkdownHeading[];
@@ -38,18 +39,71 @@ function buildToc(headings: MarkdownHeading[]): TocHeading[] {
 const toc = buildToc(headings.filter((h) => h.depth !== 1));
 ---
 
-<aside
-  {...props}
-  class={cn(
-    "p-2 shadow-md shadow-primary rounded-box bg-base-100 backdrop-blur-xl z-[10]",
-    className,
-  )}
-  id="toc"
->
-  <ul class="menu menu-xs max-h-[400px] w-full flex-nowrap overflow-auto">
-    {toc.map((heading, index) => <TocItem heading={heading} index={index} />)}
-  </ul>
+<aside {...props} class={cn("z-[10]", className)} id="toc">
+  <div
+    class="peer origin-top-left rounded-box bg-base-100 shadow-md shadow-primary backdrop-blur-xl transition-all"
+    id="toc-inner"
+    data-open="true"
+  >
+    <ul
+      class="scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-primary menu menu-xs max-h-[600px] w-full flex-nowrap overflow-auto p-2"
+    >
+      {toc.map((heading, index) => <TocItem heading={heading} index={index} />)}
+    </ul>
+  </div>
+
+  <div id="toc-close-btn">
+    <Icon className="line-md--close toc-close-icon toc-close-icon--close" />
+    <Icon className="line-md--list toc-close-icon toc-close-icon--open" />
+  </div>
 </aside>
+
+<style>
+  #toc-inner[data-open="true"] {
+    @apply opacity-0 scale-0;
+
+    & ~ #toc-close-btn {
+      & .toc-close-icon--open {
+        @apply opacity-100;
+      }
+
+      & .toc-close-icon--close {
+        @apply opacity-0;
+      }
+    }
+  }
+
+  #toc-close-btn {
+    @apply z-[15] border-primary transition-all hover:border-primary hover:bg-primary hover:text-primary-content bg-base-100 absolute -left-5 -top-2 p-0  btn-ghost btn btn-sm w-10 h-10 flex items-center justify-center rounded-full;
+
+    & .toc-close-icon--open {
+      @apply opacity-0;
+    }
+
+    .toc-close-icon {
+      @apply text-2xl absolute;
+
+      &.toc-close-icon--close {
+      }
+
+      &.toc-close-icon--open {
+      }
+    }
+  }
+</style>
+
+<script>
+  function main() {
+    const closeButton = document.querySelector("#toc-close-btn")!;
+    const toc = document.querySelector("#toc-inner")! as HTMLElement;
+
+    closeButton.addEventListener("click", () => {
+      toc.dataset.open = toc.dataset.open === "true" ? "false" : "true";
+    });
+  }
+
+  main();
+</script>
 
 <script>
   function main() {
