@@ -40,9 +40,6 @@ export const GET: APIRoute = async ({ params }) => {
   return new Response(JSON.stringify(post));
 };
 
-async function handlePrismaError(
-  err: PrismaClientKnownRequestError,
-  postId: string,
-) {
+async function handlePrismaError(err: PrismaClientKnownRequestError, postId: string) {
   console.log(err);
 }

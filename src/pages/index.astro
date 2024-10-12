@@ -5,23 +5,16 @@ import Layout from "@/layouts/Layout.astro";
 import { getPosts } from "@/lib/posts";
 
 const posts = await getPosts();
-posts.sort(
-  (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
-);
+posts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
 const latestPost = posts[0];
 ---
 
-<Layout
-  title="Void Flower"
-  description="Void Flower is a blog about software engineering"
->
+<Layout title="Void Flower" description="Void Flower is a blog about software engineering">
   <IndexHeader />
   <section class="box mt-8 flex flex-1 flex-col gap-4 lg:mt-4">
     <h2 class="text-2xl font-bold">My latest post</h2>
     <PostCard entry={latestPost} />
 
-    <a href="/blog" class="btn btn-outline btn-primary mx-auto w-fit"
-      >More blog posts
-    </a>
+    <a href="/blog" class="btn btn-outline btn-primary mx-auto w-fit">More blog posts </a>
   </section>
 </Layout>

@@ -15,9 +15,7 @@ const { heading, index } = Astro.props;
       <TocLink slug={heading.slug} text={heading.text} index={index + 1} />
       <ul style={{}} class="list-none">
         {heading.children.map((child, innerIndex) => {
-          return (
-            <Astro.self heading={child} index={index + (innerIndex + 1) / 10} />
-          );
+          return <Astro.self heading={child} index={index + (innerIndex + 1) / 10} />;
         })}
       </ul>
     </li>

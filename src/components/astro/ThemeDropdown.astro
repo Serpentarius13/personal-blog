@@ -14,12 +14,7 @@ interface Props {
 const { class: className, contentClassname } = Astro.props;
 ---
 
-<div
-  class={cn(
-    "dropdown dropdown-bottom -lg:dropdown-left -lg:dropdown-bottom",
-    className,
-  )}
->
+<div class={cn("dropdown dropdown-bottom -lg:dropdown-left -lg:dropdown-bottom", className)}>
   <div
     tabindex="0"
     role="button"
@@ -27,14 +22,13 @@ const { class: className, contentClassname } = Astro.props;
     aria-labelledby="theme-switcher-label"
   >
     <slot />
-    <span class="sr-only" id="theme-switcher-label"
-      >Theme switcher dropdown</span
-    >
+    <span class="sr-only" id="theme-switcher-label">Theme switcher dropdown</span>
   </div>
   <ul
     tabindex="0"
     class={cn(
-      "menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 mt-2 ring-2 ring-primary max-h-[200px] flex-nowrap overflow-auto",
+      `menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 mt-2 ring-2
+      ring-primary max-h-[200px] flex-nowrap overflow-auto`,
       contentClassname,
     )}
   >
@@ -65,8 +59,7 @@ const { class: className, contentClassname } = Astro.props;
   document.querySelectorAll(`[id^="theme-switcher-"]`).forEach((el) => {
     el.addEventListener("click", (event) => {
       event.preventDefault();
-      const theme = (event.target as HTMLElement)?.parentElement?.dataset
-        .theme as string;
+      const theme = (event.target as HTMLElement)?.parentElement?.dataset.theme as string;
       handleSwitchTheme(theme);
     });
   });

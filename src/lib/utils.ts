@@ -16,10 +16,7 @@ export function debounce<T extends (...args: any[]) => void>(
   };
 }
 
-export function minWait<T>(
-  promise: Promise<T>,
-  minDuration: number,
-): Promise<T> {
+export function minWait<T>(promise: Promise<T>, minDuration: number): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     const startTime = Date.now();
 

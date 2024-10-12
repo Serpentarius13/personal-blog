@@ -2,9 +2,7 @@
 
 ---
 
-<button id="cooking-toc-highligher" class="btn btn-sm inline-block">
-  this fella
-</button>
+<button id="cooking-toc-highligher" class="btn btn-sm inline-block"> this fella </button>
 
 <script is:inline>
   const button = document.querySelector("#cooking-toc-highligher");
@@ -45,13 +43,7 @@
       return;
     }
 
-    const classes = [
-      "scale-[1.15]",
-      "duration-[350]",
-      "transition-all",
-      "ring-2",
-      "ring-red-500",
-    ];
+    const classes = ["scale-[1.15]", "duration-[350]", "transition-all", "ring-2", "ring-red-500"];
 
     toc?.classList.add(...classes);
     setTimeout(() => {

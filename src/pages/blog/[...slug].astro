@@ -6,11 +6,7 @@ import { Icon } from "@/components/preact/Icon";
 import Layout from "@/layouts/Layout.astro";
 import { getPosts } from "@/lib/posts";
 import "@fontsource-variable/jetbrains-mono";
-import type {
-  GetStaticPaths,
-  InferGetStaticParamsType,
-  InferGetStaticPropsType,
-} from "astro";
+import type { GetStaticPaths, InferGetStaticParamsType, InferGetStaticPropsType } from "astro";
 import type { CollectionEntry } from "astro:content";
 
 export const getStaticPaths = (async () => {
@@ -18,15 +14,10 @@ export const getStaticPaths = (async () => {
 
   return posts.map((post, ix) => {
     const searchAgainst = post.data.trackName
-      ? posts.filter(
-          (p) =>
-            p.data.trackName === post.data.trackName && p.slug !== post.slug,
-        )
+      ? posts.filter((p) => p.data.trackName === post.data.trackName && p.slug !== post.slug)
       : posts;
 
-    const nextPost = searchAgainst.at(
-      ix + 1 < searchAgainst.length ? ix + 1 : 0,
-    );
+    const nextPost = searchAgainst.at(ix + 1 < searchAgainst.length ? ix + 1 : 0);
     const prevPost = searchAgainst.at(ix - 1 >= 0 ? ix - 1 : -1);
 
     return {
@@ -34,8 +25,7 @@ export const getStaticPaths = (async () => {
       props: {
         post,
         nextPost,
-        prevPost:
-          prevPost?.slug === nextPost?.slug || !post ? undefined : prevPost,
+        prevPost: prevPost?.slug === nextPost?.slug || !post ? undefined : prevPost,
         track: post.data.trackName,
       },
     };
@@ -84,17 +74,9 @@ const { post, nextPost, prevPost } = Astro.props;
       )
     }
 
-    {
-      post.data.trackName && (
-        <span slot="next">Check out next track article</span>
-      )
-    }
+    {post.data.trackName && <span slot="next">Check out next track article</span>}
 
-    {
-      post.data.trackName && (
-        <span slot="prev">Check out previous track article</span>
-      )
-    }
+    {post.data.trackName && <span slot="prev">Check out previous track article</span>}
 
     {!post.data.trackName && <span slot="next">Read next article</span>}
     {!post.data.trackName && <span slot="prev">Read previous article</span>}
@@ -114,9 +96,7 @@ const { post, nextPost, prevPost } = Astro.props;
   import { postsApi } from "@/lib/api";
 
   function main() {
-    const slugHolder = document.querySelector("#slug-holder") as
-      | HTMLElement
-      | undefined;
+    const slugHolder = document.querySelector("#slug-holder") as HTMLElement | undefined;
     if (!slugHolder) return;
 
     const slug = slugHolder.dataset.slug!;

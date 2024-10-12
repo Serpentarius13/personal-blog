@@ -3,9 +3,7 @@ import { PostAction } from "./schemas";
 import { getAbsoluteUrl } from "./utils";
 
 const getPost = async (postId: string) => {
-  return fetch(getAbsoluteUrl(`/api/blog/${postId}`)).then<Post>((res) =>
-    res.json(),
-  );
+  return fetch(getAbsoluteUrl(`/api/blog/${postId}`)).then<Post>((res) => res.json());
 };
 
 const readPost = async (postId: string) => {

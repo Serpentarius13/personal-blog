@@ -6,10 +6,7 @@ import { type Config } from "tailwindcss";
 import { DARK_THEMES, THEMES } from "./config";
 
 const config: Config = {
-  darkMode: [
-    "variant",
-    Object.values(DARK_THEMES).map((theme) => `[data-theme='${theme}'] &`),
-  ],
+  darkMode: ["variant", Object.values(DARK_THEMES).map((theme) => `[data-theme='${theme}'] &`)],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
@@ -27,6 +24,7 @@ const config: Config = {
     typography,
     addIconSelectors(["line-md", "logos", "la", "game-icons"]),
     scrollbar,
+    
   ],
 
   daisyui: {

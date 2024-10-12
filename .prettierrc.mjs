@@ -6,7 +6,10 @@ export default {
     "prettier-plugin-vue",
     "prettier-plugin-sh",
     "prettier-plugin-css-order",
+    // "prettier-plugin-classnames",
+    // "prettier-plugin-merge",
   ],
+  // endingPosition: 'absolute-with-indent',
   overrides: [
     {
       files: "*.astro",
@@ -27,4 +30,5 @@ export default {
       },
     },
   ],
+  printWidth: 100,
 };

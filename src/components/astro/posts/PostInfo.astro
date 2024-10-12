@@ -52,9 +52,7 @@ const { post, readingTime } = Astro.props;
       .then((postInfo) => {
         count.textContent = String(postInfo.views);
 
-        const cat = document.getElementById("cat-count") as
-          | HTMLElement
-          | undefined;
+        const cat = document.getElementById("cat-count") as HTMLElement | undefined;
         if (!cat) return;
         cat.textContent = String(postInfo.likes);
       })

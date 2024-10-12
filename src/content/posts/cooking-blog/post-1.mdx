@@ -547,8 +547,286 @@ and make it adaptive. So, cheers to pagefind! Choose your libs wisely 👼
 
 ## A go to the cellar
 
+import HighlightCat from "./HighlightCat.astro";
+
 When I was looking for inspiration, I stumbled again upon [Josh Comeau's website](ADDLINK). It had this cool heart button
-that I wanted to steal. 
+with sound effects and the urge to steal was like never before. You may have seen the result of this, angry, or maybe happy now.
+<HighlightCat /> to see him! My personal orange..
+
+This guy is needed for the purpose of bullying out like clicks from people, there is no mistake. But how to store anything
+over one client session in a static website? Its honestly so cool that these days you can setup a thing like this in a span of one or two hours.
+That's because almost all meta frameworks run in Node or something similar, meaning they could access database as much safely as a separate backend,
+commincation with which could become a big hurdle.
+
+But Astro is static! say you, but, gladly, there is an option to switch this behaviour in `astro.config.ts`:
+
+```ts title=astro.config.ts 
+output: "hybrid",
+```
+
+After doing the switch, we go to Node runtime, and generated files start looking like that instead of just a bunch of HTML & CSS:
+
+![Hybrid output file structure](./Node-files.png)
+
+And there opens a possibility to render some parts of our app on demand, real time. What does that mean?
+It means everything remains the same, however, now we have an ability to use any backend service freely,
+while not opting in to SSR, which would degrade our performance a bit, especially if our hosting machine is not so strong.
+All pages still remain static. Sadly, static hostings are gone too, so there is no way to use them with hybrid. But later about deploys!
+
+So, what choice have I made around ten-thousands ORMs and other solutions to fetch a database nowadays? `Prisma`, of course, as I used
+it a lot in production and I don't need any performance - just to pat a cat once in a lifetime! For hosting provider,
+as my pocket money are my pocket money, I have chosen to go free: [`Supabase`](ADDLINK) offers free `postgres` hosting forever,
+if there is no highload.
+
+In development I have crafted very minimal Docker Compose file:
+
+```yml title=compose.yml
+services:
+  db:
+    image: postgres:15.1
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
+
+volumes:
+  db_data:
+```
+
+It does elevate local postgres with healthcheck and basic env-variables which aren't even dynamic. After that, I added a little bash script
+to not be underforming writing all `docker-compose up` commands myself and added `+x` permissions to execute it:
+
+```bash title=startup.sh 
+#!/bin/bash
+
+echo "Starting Postgres..."
+docker-compose up -d --wait
+echo "Postgres started!"
+
+echo "Migrating database..."
+pnpm prisma db push
+echo "Database migrated!"
+
+echo "Starting server..."
+pnpm dev
+echo "Server started!"
+```
+
+```bash
+chmod +x ./startup.sh
+```
+
+I also had to finally add `.env` file:
+
+```python
+# DATABASE_URL=postgresql://postgres.******@aws-0-eu-central-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1
+# DIRECT_URL=postgresql://postgres.******@aws-0-eu-central-1.pooler.supabase.com:5432/postgres?pgbouncer=true
+
+DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/db
+DIRECT_URL=postgresql://postgres:postgres@127.0.0.1:5432/db
+```
+
+Here, commented-out lines are for connecting to remote supabase instance which I created. You can grab the url in the console.
+For Prisma migrations to work with it, it needs two distinct postgres strings: in session & transaction mode, i.e. `DATABASE_URL` and `DIRECT_URL`.
+We use `pgbouncer_true` because `stored procedures` do not work with Supabase, and `connection_limit=1` on DATABASE_URL
+so there would not be more than one instance of PrismaClient running around.
+
+So, what about the cat? As I got rid of the actions, I had to use `zod` add few server routes, a little abstracted as I wanted to also
+record reads and views as well:
+
+```ts title=schemas.ts
+import { z } from "astro:schema";
+
+export const postQuerySchema = z.object({
+  postId: z.string(),
+});
+
+// enum for multiple actions on the post records
+export enum PostAction {
+  READ = "read",
+  LIKE = "like",
+  VIEW = "view",
+}
+
+export const postActionSchema = z.object({
+  postId: z.string(),
+  action: z.enum([PostAction.READ, PostAction.LIKE, PostAction.VIEW]),
+});
+```
+
+```ts title=/api/blog/index.ts
+import { db } from "@/lib/db";
+import { PostAction, postActionSchema } from "@/lib/schemas";
+import type { Post } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import type { APIRoute } from "astro";
+
+// map to increment int fields
+const incFieldsSchema: Record<PostAction, keyof Omit<Post, "id">> = {
+  [PostAction.READ]: "reads",
+  [PostAction.LIKE]: "likes",
+  [PostAction.VIEW]: "views",
+};
+
+// say that astro should not prerender this server route
+export const prerender = false;
+
+export const POST: APIRoute = async ({ request }) => {
+  try {
+    // parse body with zod
+    const body = await request.json();
+    const parsedBody = await postActionSchema.safeParseAsync(body);
+
+    if (!parsedBody.success) {
+      throw new Error(parsedBody.error.message);
+    }
+
+    const { postId, action } = parsedBody.data;
+
+    await db.post
+      .update({
+        where: { id: postId },
+        data: {
+          // apply action
+          [incFieldsSchema[action]]: {
+            increment: 1,
+          },
+        },
+      })
+      .catch(async (err) => {
+        // Check for "Not Found" error and create the record if it does not exist
+        if (
+          err instanceof PrismaClientKnownRequestError &&
+          err.code === "P2025"
+        ) {
+          return db.post.create({
+            data: {
+              id: postId,
+              ...{ [incFieldsSchema[action]]: 1 },
+            },
+          });
+        }
+
+        console.log(err);
+      });
+
+    return new Response(JSON.stringify({ success: true }));
+  } catch (error) {
+    console.log(error);
+    return new Response(JSON.stringify({ success: false }));
+  }
+};
+```
+
+And here I get the post by id:
+
+```ts title=/api/blog/[postId].ts
+import { db } from "@/lib/db";
+import { postQuerySchema } from "@/lib/schemas";
+import type { Post } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import type { APIRoute } from "astro";
+
+export const prerender = false;
+
+export const GET: APIRoute = async ({ params }) => {
+  const result = await postQuerySchema.safeParseAsync(params);
+
+  if (result.error) {
+    throw new Response(JSON.stringify({ error: result.error.message }), {
+      status: 400,
+    });
+  }
+
+  const {
+    data: { postId },
+  } = result;
+
+  const post =
+    (await db.post
+      .findUnique({
+        where: { id: postId },
+      })
+      .catch((e) => {
+        console.log(e);
+      })) ??
+    ({
+      // and return default post if it does not exist
+      id: postId,
+      views: 1,
+      reads: 0,
+      likes: 0,
+    } satisfies Post);
+
+  return new Response(JSON.stringify(post));
+};
+```
+
+I return default post instead of creating because I dont want to deal with race that happens when page loads
+and info gets requested & 1 view pushed to db. Well, I may as well might have created all the posts myself,
+but then in dev mode, and if something happens to db, I would have to recreate them, which is not cool if I would have
+10 or more of them.
+
+For interaction I also created file `lib/api.ts` and put all requests there behind an `export` service:
+
+```ts
+const getPost = async (postId: string) => {
+  return fetch(getAbsoluteUrl(`/api/blog/${postId}`)).then<Post>((res) =>
+    res.json(),
+  );
+};
+
+const readPost = async (postId: string) => {
+  return fetch(`/api/blog`, {
+    method: "POST",
+    body: JSON.stringify({
+      postId,
+      action: PostAction.READ,
+    }),
+  }).then<{ success: boolean }>((res) => res.json());
+};
+
+// two other actions
+
+export const postsApi = {
+  getPost,
+  readPost,
+  viewPost,
+  likePost,
+} as const;
+```
+
+And used it like so:
+
+```ts
+postsApi.likePost(slug).then(() => {
+      count.textContent = String(Number(count.textContent) + 1);
+});
+```
+
+The rest of the code is pretty much the same for the button that scrolls upwards.
+
+The only real difference is that I used `Audio` api to make him purr, but just by importing the sound and playing it:
+
+```ts
+const audio = new Audio("/sounds/cat.mp3");
+audio.play();
+```
+
+Glad that Astro handles assets this easily even in script tags with underlying `Vite`.
+
+Now, let's get to deploying and adapting database to real world.
+
 
 ## Rocket cake
 

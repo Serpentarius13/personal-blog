@@ -39,10 +39,7 @@ const {
       <ul class="mx-auto mt-4 flex w-fit max-w-xs flex-wrap justify-center gap-1.5">
         {post.data.tags.map((tag) => {
           return (
-            <li
-              data-pagefind-filter={"Topics"}
-              class="badge badge-primary badge-outline badge-sm"
-            >
+            <li data-pagefind-filter={"Topics"} class="badge badge-primary badge-outline badge-sm">
               {tag}
             </li>
           );
@@ -52,7 +49,7 @@ const {
   }
 
   <div
-    class="flex flex-col items-start gap-[clamp(1rem,10vw,6rem)] lg:grid lg:grid-cols-[250px_1fr] lg:pl-8 xl:grid-cols-[300px_1fr] 2xl:grid-cols-[340px_1fr]"
+    class={"flex flex-col items-start gap-[clamp(1rem,10vw,6rem)] lg:grid lg:grid-cols-[250px_1fr] lg:pl-8 xl:grid-cols-[300px_1fr] 2xl:grid-cols-[340px_1fr]"}
   >
     <TableOfContents
       headings={headings}
@@ -61,9 +58,7 @@ const {
     />
 
     <div class="max-w-full md:mx-auto lg:mx-0">
-      <div
-        class="prose-md prose-code:not-prose prose justify-self-center xl:prose-lg"
-      >
+      <div class="prose-md prose-code:not-prose prose justify-self-center xl:prose-lg">
         <Content components={{ h1: H1Renderer }} />
       </div>
     </div>

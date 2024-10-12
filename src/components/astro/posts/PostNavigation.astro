@@ -14,11 +14,11 @@ const { next, prev } = Astro.props;
 
   <a href={next} class="link">
     <slot name="next" />
-    <Icon className="line-md--arrow-left rotate-90" />
+    <Icon className="rotate-90 line-md--arrow-left" />
   </a>
 
   <a href={prev} class="link">
-    <Icon className="line-md--arrow-right -rotate-90" />
+    <Icon className="-rotate-90 line-md--arrow-right" />
     <slot name="prev" />
   </a>
 </div>

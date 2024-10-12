@@ -18,7 +18,10 @@ function buildToc(headings: MarkdownHeading[]): TocHeading[] {
   const stack: TocHeading[] = [];
 
   headings.forEach((h) => {
-    const heading = { ...h, children: [] } satisfies TocHeading;
+    const heading = {
+      ...h,
+      children: [],
+    } satisfies TocHeading;
 
     while (stack.length > 0 && stack[stack.length - 1].depth >= heading.depth) {
       stack.pop();
@@ -39,35 +42,34 @@ function buildToc(headings: MarkdownHeading[]): TocHeading[] {
 const toc = buildToc(headings.filter((h) => h.depth !== 1));
 ---
 
-<aside {...props} class={cn("w-0 h-0 z-[120]", className)} id="toc">
+<aside {...props} class={cn("z-[120]", className)} id="toc">
+  <button id="toc-close-btn" aria-labelledby="toc-close-btn-label">
+    <Icon className="toc-close-icon toc-close-icon--close line-md--close" />
+    <Icon className="toc-close-icon toc-close-icon--open line-md--list" />
+    <span class="sr-only">Open table of contents</span>
+  </button>
+
   <div
-    class="peer origin-top-left rounded-box bg-base-100 shadow-md shadow-primary backdrop-blur-xl transition-all"
+    class="ring-3 peer absolute origin-top-left rounded-box bg-base-100 shadow-md shadow-primary backdrop-blur-xl transition-all"
     id="toc-inner"
     data-open="true"
   >
-    <ul
-      class="scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-primary menu menu-xs max-h-[600px] w-full flex-nowrap overflow-auto p-2"
-    >
+    <ul class="custom-scrollbar menu menu-xs max-h-[500px] w-full flex-nowrap overflow-auto p-2">
       {toc.map((heading, index) => <TocItem heading={heading} index={index} />)}
     </ul>
   </div>
-
-  <button
-    id="toc-close-btn"
-    class="z-[100]"
-    aria-labelledby="toc-close-btn-label"
-  >
-    <Icon className="line-md--close toc-close-icon toc-close-icon--close" />
-    <Icon className="line-md--list toc-close-icon toc-close-icon--open" />
-    <span class="sr-only">Open table of contents</span>
-  </button>
 </aside>
 
 <style>
   #toc-inner[data-open="false"] {
     @apply opacity-0 scale-0 z-[120];
+  }
 
-    & ~ #toc-close-btn {
+  #toc-close-btn {
+    @apply bg-base-100 transition-all p-0 border-primary btn-ghost btn btn-sm w-10 h-10 flex items-center justify-center rounded-full;
+    @apply hover:border-primary hover:bg-primary hover:text-primary-content focus:outline-none focus:ring-2 focus:ring-secondary;
+
+    &:has(~ #toc-inner[data-open="false"]) {
       & .toc-close-icon--open {
         @apply opacity-100;
       }
@@ -76,10 +78,6 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
         @apply opacity-0;
       }
     }
-  }
-
-  #toc-close-btn {
-    @apply z-[15] border-primary focus:outline-none focus:ring-2 focus:ring-secondary transition-all hover:border-primary hover:bg-primary hover:text-primary-content bg-base-100 absolute -left-5 -top-2 p-0  btn-ghost btn btn-sm w-10 h-10 flex items-center justify-center rounded-full;
 
     & .toc-close-icon--open {
       @apply opacity-0;
@@ -121,11 +119,12 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
     for (const link of links) {
       link.addEventListener("click", (event) => {
         event.preventDefault();
-        const target = document.getElementById(
-          link.getAttribute("href")!.slice(1),
-        );
+        const target = document.getElementById(link.getAttribute("href")!.slice(1));
 
-        target?.scrollIntoView({ behavior: "smooth", block: "start" });
+        target?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
 
         if (window.matchMedia("(max-width: 767px)").matches) {
           const tocInner = document.getElementById("toc-inner");

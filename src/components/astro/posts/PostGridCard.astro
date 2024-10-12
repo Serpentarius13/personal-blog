@@ -21,12 +21,7 @@ const { post } = Astro.props;
   </div>
 
   <figure>
-    <Image
-      src={post.data.image}
-      alt={post.data.imageAlt}
-      width={260}
-      class="object-cover"
-    />
+    <Image src={post.data.image} alt={post.data.imageAlt} width={260} class="object-cover" />
   </figure>
   <div class="card-body gap-0.5 pb-4 pt-2">
     <h2 class="card-title">
@@ -39,9 +34,7 @@ const { post } = Astro.props;
       post.data.tags && (
         <div class="card-actions mt-2 justify-end">
           {post.data.tags.map((tag) => (
-            <div class="badge badge-sm duration-500 group-hover:badge-primary">
-              {tag}
-            </div>
+            <div class="badge badge-sm duration-500 group-hover:badge-primary">{tag}</div>
           ))}
         </div>
       )

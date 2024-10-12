@@ -5,11 +5,7 @@ import { cn } from "@/lib/cn";
 import { getPosts } from "@/lib/posts";
 import type { PaginateFunction } from "astro";
 
-export async function getStaticPaths({
-  paginate,
-}: {
-  paginate: PaginateFunction;
-}) {
+export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
   const allPosts = await getPosts();
   return paginate(
     allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
@@ -46,9 +42,7 @@ const getPageUrl = (page: number) => {
       class={cn("btn join-item", {
         ["pointer-events-none cursor-default"]: pageInfo.currentPage === 1,
       })}
-      href={pageInfo.currentPage > 1
-        ? getPageUrl(pageInfo.currentPage - 1)
-        : undefined}
+      href={pageInfo.currentPage > 1 ? getPageUrl(pageInfo.currentPage - 1) : undefined}
     >
       &lt;
     </a>
@@ -66,8 +60,7 @@ const getPageUrl = (page: number) => {
     }
     <a
       class={cn("btn join-item", {
-        ["pointer-events-none cursor-default"]:
-          pageInfo.currentPage === pageInfo.lastPage,
+        ["pointer-events-none cursor-default"]: pageInfo.currentPage === pageInfo.lastPage,
       })}
       href={pageInfo.currentPage < pageInfo.lastPage
         ? getPageUrl(pageInfo.currentPage + 1)

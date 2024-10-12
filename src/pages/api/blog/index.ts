@@ -33,10 +33,7 @@ export const POST: APIRoute = async ({ request }) => {
         },
       })
       .catch(async (err) => {
-        if (
-          err instanceof PrismaClientKnownRequestError &&
-          err.code === "P2025"
-        ) {
+        if (err instanceof PrismaClientKnownRequestError && err.code === "P2025") {
           return db.post.create({
             data: {
               id: postId,

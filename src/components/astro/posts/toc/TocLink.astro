@@ -14,7 +14,6 @@ const { slug, text, index } = Astro.props;
   href={`#${slug}`}
   id={`toc-link-${slug}`}
   class="flex items-end text-nowrap text-lg [&.active]:!bg-base-100 [&.seeing.active]:text-primary-content [&.seeing]:pointer-events-none [&.seeing]:cursor-default [&.seeing]:text-primary [&.seeing]:hover:bg-base-100"
-  ><span class="text-2xl font-bold"
-    >{index} <Icon className="line-md--arrow-right text-sm" /></span
+  ><span class="text-2xl font-bold">{index} <Icon className="text-sm line-md--arrow-right" /></span
   >{text}</a
 >

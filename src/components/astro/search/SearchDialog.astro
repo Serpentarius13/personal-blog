@@ -6,13 +6,11 @@ import { CONFIG } from "config";
 
 <dialog id={CONFIG.SEARCH_MODAL_ID} class="modal">
   <div class="modal-box max-w-2xl overflow-visible">
-    <div
-      class="mx-auto h-[min(600px,100vh)] overflow-auto px-4 md:overflow-hidden"
-    >
+    <div class="mx-auto h-[min(600px,100vh)] overflow-auto px-4 md:overflow-hidden">
       <form method="dialog" class="absolute -right-4 -top-4 z-[20]">
         <button class="btn btn-primary" aria-labelledby="search-btn-label">
           <span class="sr-only"> Close search modal </span>
-          <Icon className="line-md--close text-xl" />
+          <Icon className="text-xl line-md--close" />
         </button>
       </form>
       <Search
