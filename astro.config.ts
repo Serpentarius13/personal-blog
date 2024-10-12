@@ -9,7 +9,6 @@ import tailwind from "@astrojs/tailwind";
 import vue from "@astrojs/vue";
 import playformInline from "@playform/inline";
 import expressiveCode from "astro-expressive-code";
-import icon from "astro-icon";
 import pagefind from "astro-pagefind";
 
 // expressive code
@@ -36,7 +35,7 @@ import node from "@astrojs/node";
 import vercel from "@astrojs/vercel/serverless";
 
 // conf
-import { CODE_THEMES, CONFIG, ICONS } from "./config";
+import { CODE_THEMES, CONFIG } from "./config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -50,14 +49,7 @@ export default defineConfig({
     }),
     mdx(),
     tailwind(),
-    icon({
-      include: Object.fromEntries(
-        Object.entries(ICONS).map(([key, value]) => [
-          key,
-          Object.values(value),
-        ]),
-      ),
-    }),
+
     sitemap({
       filter: (page) => page !== "/404" && page !== "/500" && page !== "/test",
     }),

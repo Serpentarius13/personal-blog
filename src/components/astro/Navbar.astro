@@ -58,15 +58,18 @@ import { CONFIG } from "config";
       <ThemeDropdown
         class="group-[.shrinked]:!dropdown-left group-[.shrinked]:!dropdown-bottom"
       >
-        <Icon className="game-icons--dandelion-flower" id="icon-flower" />
+        <Icon
+          className="game-icons--dandelion-flower text-2xl"
+          id="icon-flower"
+        />
       </ThemeDropdown>
     </div>
   </div>
 
-  <style is:global>
-    .icon-flower {
+  <style>
+    :global(#icon-flower) {
       animation: rotate 10s linear infinite;
-      @apply text-2xl;
+      @apply text-3xl;
     }
 
     @keyframes rotate {
