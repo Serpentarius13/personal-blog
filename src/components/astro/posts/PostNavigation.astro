@@ -1,6 +1,5 @@
 ---
-import { IconSet } from "config";
-import AppIcon from "../AppIcon.astro";
+import { Icon } from "@/components/preact/Icon";
 
 interface Props {
   next?: string | undefined;
@@ -15,19 +14,11 @@ const { next, prev } = Astro.props;
 
   <a href={next} class="link">
     <slot name="next" />
-    <AppIcon
-      set={IconSet.LINE_MD}
-      class="arrow-left rotate-90"
-      name="arrow-up"
-    />
+    <Icon className="line-md--arrow-left rotate-90" />
   </a>
 
   <a href={prev} class="link">
-    <AppIcon
-      set={IconSet.LINE_MD}
-      class="arrow-right -rotate-90"
-      name="arrow-up"
-    />
+    <Icon className="line-md--arrow-right -rotate-90" />
     <slot name="prev" />
   </a>
 </div>

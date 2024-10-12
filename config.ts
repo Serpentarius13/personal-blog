@@ -23,43 +23,6 @@ export const THEMES = {
   ...LIGHT_THEMES,
 } as const satisfies DaisyThemeMap;
 
-export enum IconSet {
-  GAME_ICONS = "game-icons",
-  LINE_MD = "line-md",
-  LINE_AWESOME = "la",
-  LOGOS = "logos",
-}
-
-export const ICONS = {
-  [IconSet.GAME_ICONS]: {
-    "dandelion-flower": "dandelion-flower",
-  },
-  [IconSet.LINE_MD]: {
-    "menu-fold-left": "menu-fold-left",
-    x: "twitter-x",
-    github: "github",
-    telegram: "telegram",
-    rss: "rss",
-    search: "search",
-    "arrow-up": "arrow-up",
-    close: "close",
-  },
-
-  [IconSet.LINE_AWESOME]: {
-    "chevron-right": "chevron-right",
-  },
-  [IconSet.LOGOS]: {
-    typescript: "typescript-icon",
-  },
-} as const satisfies Record<IconSet, Record<string, string>>;
-
-export const getIcon = <S extends IconSet>(
-  set: S,
-  name: keyof (typeof ICONS)[S],
-) => {
-  return ICONS[set][name];
-};
-
 export interface NavLink {
   title: string;
   href: string;
@@ -72,34 +35,20 @@ const NAV_LINKS: NavLink[] = [
   // },
 ];
 
-interface Icon<S extends IconSet> {
-  set: S;
-  name: keyof (typeof ICONS)[S];
-}
-
 export const SOCIAL_LINKS = {
   github: {
     label: "GitHub",
-    icon: {
-      set: IconSet.LINE_MD,
-      name: "github",
-    },
+    icon: "line-md--github",
     url: "https://github.com/Serpentarius13",
   },
   twitter: {
     label: "Twitter",
-    icon: {
-      set: IconSet.LINE_MD,
-      name: "x",
-    },
+    icon: "line-md--twitter",
     url: "https://twitter.com/numinosityy",
   },
   telegram: {
     label: "Telegram",
-    icon: {
-      set: IconSet.LINE_MD,
-      name: "telegram",
-    },
+    icon: "line-md--telegram",
     url: "https://t.me/numinosityy",
   },
 } as const satisfies Record<
@@ -107,7 +56,7 @@ export const SOCIAL_LINKS = {
   {
     label: string;
     url: string;
-    icon: Icon<any>;
+    icon: string;
   }
 >;
 

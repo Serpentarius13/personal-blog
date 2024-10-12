@@ -1,18 +1,17 @@
 ---
-import AppIcon from "@/components/astro/AppIcon.astro";
+import CatButton from "@/components/astro/posts/CatButton.astro";
+import PostNavigation from "@/components/astro/posts/PostNavigation.astro";
+import PostPage from "@/components/astro/posts/PostPage.astro";
+import { Icon } from "@/components/preact/Icon";
 import Layout from "@/layouts/Layout.astro";
+import { getPosts } from "@/lib/posts";
+import "@fontsource-variable/jetbrains-mono";
 import type {
   GetStaticPaths,
   InferGetStaticParamsType,
   InferGetStaticPropsType,
 } from "astro";
 import type { CollectionEntry } from "astro:content";
-import { IconSet } from "config";
-import "@fontsource-variable/jetbrains-mono";
-import PostPage from "@/components/astro/posts/PostPage.astro";
-import { getPosts } from "@/lib/posts";
-import CatButton from "@/components/astro/posts/CatButton.astro";
-import PostNavigation from "@/components/astro/posts/PostNavigation.astro";
 
 export const getStaticPaths = (async () => {
   const posts = await getPosts();
@@ -107,7 +106,7 @@ const { post, nextPost, prevPost } = Astro.props;
     id="scroll-top-btn"
     class="btn btn-primary fixed bottom-2 right-2 z-[10] translate-y-[120px] text-2xl opacity-0 [&.visible]:translate-y-0 [&.visible]:opacity-100"
   >
-    <AppIcon set={IconSet.LINE_MD} name="arrow-up" />
+    <Icon className="line-md--arrow-up" />
   </button>
 </Layout>
 

@@ -1,7 +1,6 @@
 ---
-import AppIcon from "@/components/astro/AppIcon.astro";
 import SocialLinks from "@/components/astro/index/SocialLinks.astro";
-import { IconSet } from "config";
+import { Icon } from "@/components/preact/Icon";
 import Flower from "./flower.svg?raw";
 ---
 
@@ -14,11 +13,7 @@ import Flower from "./flower.svg?raw";
           Here I write about my favorite programming language <span
             title="TypeScript"
           >
-            &lcub;<AppIcon
-              set={IconSet.LOGOS}
-              name="typescript"
-              class="inline-block text-lg"
-            />
+            &lcub;<Icon className="logos--typescript inline-block text-lg" />
           </span> TypeScript&rcub;, drop some bedtime thoughts on life, and sometimes
           make educative content.
         </span>

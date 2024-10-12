@@ -1,6 +1,5 @@
 ---
-import { IconSet } from "config";
-import AppIcon from "./AppIcon.astro";
+import { Icon } from "../preact/Icon";
 ---
 
 <footer
@@ -16,7 +15,7 @@ import AppIcon from "./AppIcon.astro";
       class="btn btn-outline btn-primary btn-sm"
       aria-labelledby="rss-btn-label"
     >
-      <AppIcon set={IconSet.LINE_MD} name="rss" class="size-6" />
+      <Icon className="line-md--rss text-2xl" />
       <span id="rss-btn-label" class="sr-only">Opens RSS feed xml page</span>
     </a>
   </nav>

@@ -1,6 +1,6 @@
 ---
-import { CONFIG, IconSet } from "config";
-import AppIcon from "../AppIcon.astro";
+import { Icon } from "@/components/preact/Icon";
+import { CONFIG } from "config";
 ---
 
 <button
@@ -8,7 +8,7 @@ import AppIcon from "../AppIcon.astro";
   onclick={`document.getElementById("${CONFIG.SEARCH_MODAL_ID}").showModal()`}
   aria-labelledby="search-btn-label"
 >
-  <AppIcon set={IconSet.LINE_MD} name="search" class="text-xl" />
+  <Icon className="line-md--search text-xl" />
   <span id="search-btn-label" class="sr-only">
     Opens dialog window for global article search
   </span>

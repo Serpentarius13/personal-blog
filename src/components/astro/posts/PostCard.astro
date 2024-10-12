@@ -1,9 +1,8 @@
 ---
-import AppIcon from "@/components/astro/AppIcon.astro";
+import { Icon } from "@/components/preact/Icon";
 import { formatDate } from "@/lib/date";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import { IconSet } from "config";
 
 type Props = {
   entry: CollectionEntry<"posts">;
@@ -62,9 +61,7 @@ const {
     </div>
   </a>
 
-  <AppIcon
-    set={IconSet.LINE_AWESOME}
-    name="chevron-right"
-    class="items-c2enter absolute -right-32 bottom-4 flex size-12 h-12 w-12 justify-center opacity-0 transition-all duration-500 ease-in-out group-hover:-translate-x-36 group-hover:opacity-100"
+  <Icon
+    class="la--chevron-right items-c2enter absolute -right-32 bottom-4 flex size-12 h-12 w-12 justify-center opacity-0 transition-all duration-500 ease-in-out group-hover:-translate-x-36 group-hover:opacity-100"
   />
 </div>

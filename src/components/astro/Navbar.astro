@@ -1,8 +1,8 @@
 ---
-import AppIcon from "@/components/astro/AppIcon.astro";
 import ThemeDropdown from "@/components/astro/ThemeDropdown.astro";
 import SearchTrigger from "@/components/astro/search/SearchTrigger.astro";
-import { CONFIG, IconSet } from "config";
+import { Icon } from "@/components/preact/Icon";
+import { CONFIG } from "config";
 ---
 
 <header
@@ -58,67 +58,62 @@ import { CONFIG, IconSet } from "config";
       <ThemeDropdown
         class="group-[.shrinked]:!dropdown-left group-[.shrinked]:!dropdown-bottom"
       >
-        <AppIcon
-          set={IconSet.GAME_ICONS}
-          name="dandelion-flower"
-          class="icon-flower"
-        /></ThemeDropdown
-      >
+        <Icon className="game-icons--dandelion-flower" id="icon-flower" />
+      </ThemeDropdown>
     </div>
   </div>
-</header>
 
-<style>
-  .icon-flower {
-    animation: rotate 10s linear infinite;
-    width: 28px;
-    height: 28px;
-  }
-
-  @keyframes rotate {
-    0% {
-      transform: rotate(0deg);
+  <style is:global>
+    .icon-flower {
+      animation: rotate 10s linear infinite;
+      @apply text-2xl;
     }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
 
-  #navbar {
-    &.mounting {
-      @apply opacity-0;
-    }
-    &.shrinked {
-      @apply w-auto !ml-auto mx-0 duration-[300] ease-in;
-
-      #page-title {
-        @apply hidden;
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
       }
     }
-  }
-</style>
 
-<script>
-  import { debounce } from "@/lib/utils";
+    #navbar {
+      &.mounting {
+        @apply opacity-0;
+      }
+      &.shrinked {
+        @apply w-auto !ml-auto mx-0 duration-[300] ease-in;
 
-  const navbar = document.querySelector("#navbar")!;
+        #page-title {
+          @apply hidden;
+        }
+      }
+    }
+  </style>
 
-  if (window.scrollY > 250) {
-    navbar.classList.add("!duration-0");
-    navbar.classList.add("shrinked");
-    navbar.classList.remove("!duration-0");
-  }
+  <script>
+    import { debounce } from "@/lib/utils";
 
-  navbar.classList.remove("mounting");
+    const navbar = document.querySelector("#navbar")!;
 
-  const handleScroll = debounce(() => {
     if (window.scrollY > 250) {
+      navbar.classList.add("!duration-0");
       navbar.classList.add("shrinked");
-      return;
+      navbar.classList.remove("!duration-0");
     }
 
-    navbar.classList.remove("shrinked");
-  }, 100);
+    navbar.classList.remove("mounting");
 
-  window.addEventListener("scroll", handleScroll, { passive: true });
-</script>
+    const handleScroll = debounce(() => {
+      if (window.scrollY > 250) {
+        navbar.classList.add("shrinked");
+        return;
+      }
+
+      navbar.classList.remove("shrinked");
+    }, 100);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+  </script>
+</header>
