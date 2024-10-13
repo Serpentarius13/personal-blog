@@ -1,10 +1,10 @@
 ---
-import type { MarkdownHeading } from "astro";
-import TocItem from "./TocItem.astro";
-import { cn } from "@/lib/cn";
-import { type TocHeading } from "./toc.types";
-import type { ComponentProps, HTMLAttributes } from "astro/types";
 import { Icon } from "@/components/preact/Icon";
+import { cn } from "@/lib/cn";
+import type { MarkdownHeading } from "astro";
+import type { HTMLAttributes } from "astro/types";
+import TocItem from "./TocItem.astro";
+import { type TocHeading } from "./toc.types";
 
 interface Props extends HTMLAttributes<"aside"> {
   headings: MarkdownHeading[];
