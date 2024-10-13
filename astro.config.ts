@@ -7,7 +7,6 @@ import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import vue from "@astrojs/vue";
-import playformInline from "@playform/inline";
 import expressiveCode from "astro-expressive-code";
 import pagefind from "astro-pagefind";
 
@@ -41,6 +40,14 @@ import { CODE_THEMES, CONFIG } from "./config";
 export default defineConfig({
   site: CONFIG.SITE_URL,
 
+  // vite: {
+  //   css: {
+  //     postcss: {
+  //       plugins: [cssnano],
+  //     },
+  //   },
+  // },
+
   integrations: [
     expressiveCode({
       themes: Object.values(CODE_THEMES),
@@ -48,7 +55,7 @@ export default defineConfig({
       plugins: [pluginLineNumbers(), pluginBlurLines(), pluginIgnoreIndex()],
     }),
     mdx(),
-    tailwind(),
+    tailwind({}),
 
     sitemap({
       filter: (page) => page !== "/404" && page !== "/500" && page !== "/test",
@@ -57,9 +64,6 @@ export default defineConfig({
     pagefind(),
     preact({
       compat: true,
-    }),
-    playformInline({
-      Critters: true,
     }),
   ],
 
