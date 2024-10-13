@@ -55,7 +55,9 @@ export default defineConfig({
     }),
     vue(),
     pagefind(),
-    preact(),
+    preact({
+      compat: true,
+    }),
     playformInline({}),
   ],
 
