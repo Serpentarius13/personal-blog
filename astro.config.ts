@@ -58,7 +58,9 @@ export default defineConfig({
     preact({
       compat: true,
     }),
-    playformInline({}),
+    playformInline({
+      Critters: true,
+    }),
   ],
 
   markdown: {
