@@ -27,6 +27,8 @@ const getPost = async (postId: string) => {
   return client.request(`/post/${postId}`).then<Post>((res) => res.json());
 };
 
+type UpdateResponse = Post | { error: string };
+
 const readPost = async (postId: string) => {
   return client
     .request(`/api/post`, {
@@ -36,7 +38,7 @@ const readPost = async (postId: string) => {
         action: PostAction.READ,
       }),
     })
-    .then<{ post: Post }>((res) => res.json());
+    .then<UpdateResponse>((res) => res.json());
 };
 
 const viewPost = async (postId: string) => {
@@ -48,7 +50,7 @@ const viewPost = async (postId: string) => {
         action: PostAction.VIEW,
       }),
     })
-    .then<{ post: Post }>((res) => res.json());
+    .then<UpdateResponse>((res) => res.json());
 };
 
 const likePost = async (postId: string) => {
@@ -60,7 +62,7 @@ const likePost = async (postId: string) => {
         action: PostAction.LIKE,
       }),
     })
-    .then<{ post: Post }>((res) => res.json());
+    .then<UpdateResponse>((res) => res.json());
 };
 
 export const postsApi = {
