@@ -6,48 +6,19 @@
 
 <script is:inline>
   const button = document.querySelector("#cooking-toc-highligher");
-  button?.addEventListener("click", () => {
-    const toc = document.querySelector("#toc");
+  button?.addEventListener("click", (ev) => {
+    ev.stopPropagation();
 
-    if (window.matchMedia("(prefers-reduced-motion)").matches) {
-      const classes = ["ring-2", "ring-red-500"];
-      toc?.classList.add(...classes);
-      setTimeout(() => {
-        toc?.classList.remove(...classes);
-      }, 2500);
-      return;
-    }
+    const toc = document.querySelector("#toc-inner");
 
-    if (window.matchMedia("(max-width: 1024px)").matches && toc) {
-      const classes = [
-        "fixed",
-        "top-0",
-        "right-0",
-        "bottom-0",
-        "left-0",
-        "h-fit",
-        "m-auto",
-        "bg-black/30",
-        "backdrop-blur-sm",
-      ];
+    toc.dataset.open = "true";
 
-      const clone = toc?.cloneNode(true);
-
-      clone.classList.add(...classes);
-      clone.id = "toc-backdrop";
-      document.body.appendChild(clone);
-
-      setTimeout(() => {
-        document.body.removeChild(clone);
-      }, 2500);
-      return;
-    }
-
-    const classes = ["scale-[1.15]", "duration-[350]", "transition-all", "ring-2", "ring-red-500"];
-
+    const classes = ["ring-2", "ring-red-500"];
     toc?.classList.add(...classes);
+
     setTimeout(() => {
       toc?.classList.remove(...classes);
+      toc.dataset.open = "false";
     }, 2500);
   });
 </script>

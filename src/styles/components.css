@@ -3,5 +3,5 @@
 }
 
 .custom-scrollbar {
-  @apply scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-primary;
+  @apply scrollbar-thin scrollbar-track-base-100 scrollbar-thumb-primary;
 }

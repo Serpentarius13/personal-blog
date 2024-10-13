@@ -8,7 +8,8 @@
     "build": "pnpm prisma generate && astro check && pnpm prisma migrate deploy && astro build",
     "preview": "astro preview",
     "preview:local": "IS_LOCAL=true astro build && IS_LOCAL=true astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "postinstall": "pnpm astro sync"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

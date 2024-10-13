@@ -14,11 +14,11 @@ const { next, prev } = Astro.props;
 
   <a href={next} class="link">
     <slot name="next" />
-    <Icon className="rotate-90 line-md--arrow-left" />
+    <Icon className="arrow-right line-md--arrow-right" />
   </a>
 
   <a href={prev} class="link">
-    <Icon className="-rotate-90 line-md--arrow-right" />
+    <Icon className="arrow-left line-md--arrow-left" />
     <slot name="prev" />
   </a>
 </div>
@@ -26,17 +26,17 @@ const { next, prev } = Astro.props;
 <style lang="postcss">
   .link {
     @apply btn btn-md w-full btn-outline disabled:btn-ghost disabled:pointer-events-none disabled:cursor-not-allowed;
-
-    [data-icon] {
-        @apply transition-all duration-500;
+ 
+   .iconify {
+        transition: color 0.2s, transform 0.5s;
     }
 
     &:hover .arrow-right {
-      @apply -translate-x-2;
+      @apply translate-x-2;
     }
 
     &:hover .arrow-left {
-      @apply translate-x-2;
+      @apply -translate-x-2;
     }
     
 

@@ -3,11 +3,12 @@ import typography from "@tailwindcss/typography";
 import daisyui, { type Config as DaisyConfig } from "daisyui";
 import scrollbar from "tailwind-scrollbar";
 import { type Config } from "tailwindcss";
-import { DARK_THEMES, THEMES } from "./config";
+import { DARK_THEMES, SOCIAL_LINKS, THEMES } from "./config";
 
 const config: Config = {
   darkMode: ["variant", Object.values(DARK_THEMES).map((theme) => `[data-theme='${theme}'] &`)],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  safelist: [...Object.values(SOCIAL_LINKS).map(({ icon }) => icon)],
   theme: {
     extend: {
       screens: {
@@ -22,9 +23,10 @@ const config: Config = {
   plugins: [
     daisyui,
     typography,
-    addIconSelectors(["line-md", "logos", "la", "game-icons"]),
+    addIconSelectors({
+      prefixes: ["line-md", "logos", "la", "game-icons"],
+    }),
     scrollbar,
-    
   ],
 
   daisyui: {

@@ -43,7 +43,7 @@ export const SOCIAL_LINKS = {
   },
   twitter: {
     label: "Twitter",
-    icon: "line-md--twitter",
+    icon: "line-md--twitter-x",
     url: "https://twitter.com/numinosityy",
   },
   telegram: {

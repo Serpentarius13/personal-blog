@@ -18,9 +18,13 @@ const {
 ---
 
 <div data-pagefind-body>
-  <h1 class="mx-auto mb-8 mt-4 w-fit text-6xl font-extrabold">
+  <h1 class="mx-auto mb-4 mt-4 w-fit text-6xl font-extrabold">
     {post.data.title}
   </h1>
+
+  <h2 class="mx-auto mb-6 block w-fit text-lg">
+    {post.data.description}
+  </h2>
 
   <div class="mx-auto">
     <Image
@@ -54,7 +58,7 @@ const {
     <TableOfContents
       headings={headings}
       data-pagefind-ignore="all"
-      class="fixed left-6 top-3 mx-auto w-full max-w-[95%] md:max-w-[85%] lg:sticky lg:top-24 lg:mx-0 lg:max-w-full"
+      class="fixed left-6 top-3 mx-auto lg:sticky lg:top-24 lg:mx-0"
     />
 
     <div class="max-w-full md:mx-auto lg:mx-0">

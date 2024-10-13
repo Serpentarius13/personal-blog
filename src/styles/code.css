@@ -1,6 +1,6 @@
 pre {
   font-family: "JetBrains Mono Variable", monospace !important;
-  @apply scrollbar-thin !important;
+  @apply scrollbar-thin;
 
   code {
     font-family: inherit !important;

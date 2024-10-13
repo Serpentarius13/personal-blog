@@ -1,0 +1,38 @@
+---
+import { Icon } from "@/components/preact/Icon";
+---
+
+<button
+  id="scroll-top-btn"
+  class="btn btn-primary fixed bottom-2 right-2 z-[10] translate-y-[120px] text-2xl opacity-0 [&.visible]:translate-y-0 [&.visible]:opacity-100"
+>
+  <Icon className="line-md--arrow-up" />
+</button>
+
+<script>
+  import { debounce } from "@/lib/utils";
+
+  const button = document.querySelector("#scroll-top-btn");
+
+  button?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  let prevScroll = 0;
+
+  const handleScroll = debounce(() => {
+    if (!prevScroll) {
+      prevScroll = window.scrollY;
+      return;
+    }
+
+    if (window.scrollY > prevScroll) {
+      button?.classList.remove("visible");
+    } else {
+      button?.classList.add("visible");
+      prevScroll = window.scrollY;
+    }
+  }, 100);
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+</script>

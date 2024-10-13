@@ -1,13 +1,12 @@
 ---
+import ScrollTopButton from "@/components/astro/ScrollTopButton.astro";
 import CatButton from "@/components/astro/posts/CatButton.astro";
 import PostNavigation from "@/components/astro/posts/PostNavigation.astro";
 import PostPage from "@/components/astro/posts/PostPage.astro";
-import { Icon } from "@/components/preact/Icon";
 import Layout from "@/layouts/Layout.astro";
 import { getPosts } from "@/lib/posts";
 import "@fontsource-variable/jetbrains-mono";
 import type { GetStaticPaths, InferGetStaticParamsType, InferGetStaticPropsType } from "astro";
-import type { CollectionEntry } from "astro:content";
 
 export const getStaticPaths = (async () => {
   const posts = await getPosts();
@@ -32,9 +31,7 @@ export const getStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
-interface Props extends InferGetStaticPropsType<typeof getStaticPaths> {
-  post: CollectionEntry<"posts">;
-}
+interface Props extends InferGetStaticPropsType<typeof getStaticPaths> {}
 //@ts-expect-error
 interface Params extends InferGetStaticParamsType<typeof getStaticPaths> {
   slug: string;
@@ -84,12 +81,7 @@ const { post, nextPost, prevPost } = Astro.props;
 
   <div class="hidden" id="slug-holder" data-slug={post.slug}></div>
 
-  <button
-    id="scroll-top-btn"
-    class="btn btn-primary fixed bottom-2 right-2 z-[10] translate-y-[120px] text-2xl opacity-0 [&.visible]:translate-y-0 [&.visible]:opacity-100"
-  >
-    <Icon className="line-md--arrow-up" />
-  </button>
+  <ScrollTopButton />
 </Layout>
 
 <script>
@@ -139,34 +131,6 @@ const { post, nextPost, prevPost } = Astro.props;
     }
   }
   main();
-</script>
-
-<script>
-  import { debounce } from "@/lib/utils";
-
-  const button = document.querySelector("#scroll-top-btn");
-
-  button?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-
-  let prevScroll = 0;
-
-  const handleScroll = debounce(() => {
-    if (!prevScroll) {
-      prevScroll = window.scrollY;
-      return;
-    }
-
-    if (window.scrollY - prevScroll > 250) {
-      button?.classList.remove("visible");
-    } else {
-      button?.classList.add("visible");
-      prevScroll = window.scrollY;
-    }
-  }, 150);
-
-  window.addEventListener("scroll", handleScroll, { passive: true });
 </script>
 
 <style is:global>

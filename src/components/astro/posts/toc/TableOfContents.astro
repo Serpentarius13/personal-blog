@@ -42,7 +42,7 @@ function buildToc(headings: MarkdownHeading[]): TocHeading[] {
 const toc = buildToc(headings.filter((h) => h.depth !== 1));
 ---
 
-<aside {...props} class={cn("z-[120]", className)} id="toc">
+<aside {...props} class={cn("z-[120] ", className)} id="toc">
   <button id="toc-close-btn" aria-labelledby="toc-close-btn-label">
     <Icon className="toc-close-icon toc-close-icon--close line-md--close" />
     <Icon className="toc-close-icon toc-close-icon--open line-md--list" />
@@ -52,9 +52,9 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
   <div
     class="ring-3 peer absolute origin-top-left rounded-box bg-base-100 shadow-md shadow-primary backdrop-blur-xl transition-all"
     id="toc-inner"
-    data-open="true"
+    data-open="false"
   >
-    <ul class="custom-scrollbar menu menu-xs max-h-[500px] w-full flex-nowrap overflow-auto p-2">
+    <ul class="custom-scrollbar menu menu-xs max-h-[60vh] w-full flex-nowrap overflow-auto p-2">
       {toc.map((heading, index) => <TocItem heading={heading} index={index} />)}
     </ul>
   </div>
@@ -67,7 +67,7 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
 
   #toc-close-btn {
     @apply bg-base-100 transition-all p-0 border-primary btn-ghost btn btn-sm w-10 h-10 flex items-center justify-center rounded-full;
-    @apply hover:border-primary hover:bg-primary hover:text-primary-content focus:outline-none focus:ring-2 focus:ring-secondary;
+    @apply hover:border-primary hover:bg-primary hover:text-primary-content focus:outline-none focus:ring-2 focus:ring-primary;
 
     &:has(~ #toc-inner[data-open="false"]) {
       & .toc-close-icon--open {
@@ -102,6 +102,29 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
 
     closeButton.addEventListener("click", () => {
       toc.dataset.open = toc.dataset.open === "true" ? "false" : "true";
+    });
+
+    toc.addEventListener("focusout", function (event) {
+      if (
+        // We are still inside the dialog so don't close
+        toc.contains(event.relatedTarget as any) ||
+        // We have switched to another tab so probably don't want to close
+        !document.hasFocus()
+      ) {
+        return;
+      }
+      toc.dataset.open = "false";
+    });
+
+    document.addEventListener("click", function (event) {
+      if (
+        toc.contains(event.target as any) ||
+        event.target === closeButton ||
+        closeButton.contains(event.target as any)
+      ) {
+        return;
+      }
+      toc.dataset.open = "false";
     });
   }
 
