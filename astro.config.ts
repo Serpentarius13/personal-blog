@@ -30,8 +30,7 @@ import rehypeAutolink from "rehype-autolink-headings";
 import { remarkReadingTime } from "./plugins/remark-reading-time";
 
 // adapter
-import node from "@astrojs/node";
-import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel/static";
 
 // conf
 import { CODE_THEMES, CONFIG } from "./config";
@@ -78,12 +77,8 @@ export default defineConfig({
     ],
   },
 
-  adapter: process.env.IS_LOCAL
-    ? node({
-        mode: "standalone",
-      })
-    : vercel(),
-  output: "hybrid",
+  adapter: vercel(),
+  output: "static",
 
   devToolbar: {
     enabled: false,

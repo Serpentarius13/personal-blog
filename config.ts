@@ -61,6 +61,9 @@ export const SOCIAL_LINKS = {
 >;
 
 const SITE_URL = import.meta.env.PROD ? "https://void-flower.vercel.app" : "http://localhost:4321";
+const API_URL = import.meta.env.PROD
+  ? "https://blog-server-pi-two.vercel.app/api"
+  : "http://localhost:3000/api";
 const SITE_TITLE = "Void Flower";
 
 export const CONFIG = {
@@ -68,5 +71,6 @@ export const CONFIG = {
   SITE_TITLE,
   SOCIAL_LINKS,
   SITE_URL,
+  API_URL,
   SEARCH_MODAL_ID: "page-search-modal",
 } as const;
