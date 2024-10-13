@@ -1,6 +1,7 @@
 # Astro Void Flower - My personal blog
 
 You can use this repo to learn about Astro or to setup your website - it's completely free to use.
+I would also be grateful if you submit issues about bugs or your ideas about how to make it better!
 
 Tech choices:
 

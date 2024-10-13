@@ -54,7 +54,9 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
     id="toc-inner"
     data-open="false"
   >
-    <ul class="custom-scrollbar menu menu-xs max-h-[60vh] w-full flex-nowrap overflow-auto p-2">
+    <ul
+      class="custom-scrollbar menu menu-xs max-h-[60vh] w-full max-w-[90vh] flex-nowrap overflow-auto p-2 lg:max-w-[340px]"
+    >
       {toc.map((heading, index) => <TocItem heading={heading} index={index} />)}
     </ul>
   </div>
