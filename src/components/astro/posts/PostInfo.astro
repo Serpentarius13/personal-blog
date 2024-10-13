@@ -49,12 +49,12 @@ const { post, readingTime } = Astro.props;
 
     postsApi
       .getPost(slug)
-      .then((postInfo) => {
-        count.textContent = String(postInfo.views);
+      .then(({ post }) => {
+        count.textContent = String(post.views);
 
         const cat = document.getElementById("cat-count") as HTMLElement | undefined;
         if (!cat) return;
-        cat.textContent = String(postInfo.likes);
+        cat.textContent = String(post.likes);
       })
       .finally(() => {
         badge.dataset.loading = "false";

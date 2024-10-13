@@ -24,7 +24,7 @@ type Post = {
 const client = new Client();
 
 const getPost = async (postId: string) => {
-  return client.request(`/post/${postId}`).then<Post>((res) => res.json());
+  return client.request(`/post/${postId}`).then<{post: Post}>((res) => res.json());
 };
 
 type UpdateResponse = Post | { error: string };

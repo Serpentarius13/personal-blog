@@ -42,7 +42,7 @@ function buildToc(headings: MarkdownHeading[]): TocHeading[] {
 const toc = buildToc(headings.filter((h) => h.depth !== 1));
 ---
 
-<aside {...props} class={cn("z-[120] ", className)} id="toc">
+<aside {...props} class={cn("z-[120] pl-4", className)} id="toc">
   <button id="toc-close-btn" aria-labelledby="toc-close-btn-label">
     <Icon className="toc-close-icon toc-close-icon--close line-md--close" />
     <Icon className="toc-close-icon toc-close-icon--open line-md--list" />
@@ -50,12 +50,12 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
   </button>
 
   <div
-    class="ring-3 peer absolute origin-top-left rounded-box bg-base-100 shadow-md shadow-primary backdrop-blur-xl transition-all"
+    class="ring-3 peer absolute right-0 origin-top-right rounded-box bg-base-100 shadow-md shadow-primary backdrop-blur-xl transition-all lg:right-auto lg:origin-top-left"
     id="toc-inner"
     data-open="false"
   >
     <ul
-      class="custom-scrollbar menu menu-xs max-h-[60vh] w-full max-w-[90vh] flex-nowrap overflow-auto p-2 lg:max-w-[340px]"
+      class="custom-scrollbar menu menu-xs max-h-[60vh] w-full max-w-[85vw] flex-nowrap overflow-auto p-2 lg:max-w-[340px]"
     >
       {toc.map((heading, index) => <TocItem heading={heading} index={index} />)}
     </ul>
