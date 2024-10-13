@@ -1,13 +1,13 @@
+import { getPosts } from "@/lib/posts";
 import rss from "@astrojs/rss";
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
 
 export const GET: APIRoute = async (context) => {
   if (!context.site) {
     throw new Error("No site specified in config");
   }
 
-  const posts = await getCollection("posts");
+  const posts = await getPosts();
 
   return rss({
     // `<title>` field in output xml
