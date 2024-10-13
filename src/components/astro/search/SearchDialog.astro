@@ -1,5 +1,6 @@
 ---
 import { Icon } from "@/components/preact/Icon";
+import Search from "astro-pagefind/components/Search";
 import { CONFIG } from "config";
 ---
 
@@ -12,7 +13,7 @@ import { CONFIG } from "config";
           <Icon className="text-xl line-md--close" />
         </button>
       </form>
-      <!-- <Search
+      <Search
         id="search"
         className="pagefind-ui"
         uiOptions={{
@@ -23,7 +24,7 @@ import { CONFIG } from "config";
             placeholder: "Search anything here!",
           },
         }}
-      /> -->
+      />
     </div>
   </div>
   <form method="dialog" class="modal-backdrop">
