@@ -13,6 +13,9 @@ import { Image } from 'astro:assets';
 
 import Counter from "./Counter.vue";
 
+import { HighlightCat } from "./HighlightCat.tsx";
+
+
 ## Introduction to the kitchen
 
 It's been a long time since I build any personal project and I've decided to build a personal site ~~so the internet would notice me~~
@@ -1065,11 +1068,10 @@ and make it adaptive. So, cheers to pagefind and [`Sergey Shishkin`](https://git
 
 ## A go to the cellar
    
-import HighlightCat from "./HighlightCat.astro";
 
 When I was looking for inspiration, I stumbled again upon [Josh Comeau's website](https://www.joshwcomeau.com/). It had this heart button
 with sound effects and my urge to steal was like never before. You may have seen the result of this, angry, or maybe happy now.
-<HighlightCat /> to see him! My personal orange 🐈
+<HighlightCat client:load/> to see him! My personal orange 🐈
 
 This guy is needed for the purpose of bullying out like clicks from people, there is no mistake. But how to store anything
 over one client session in a static website? Its honestly so cool that these days you can setup a thing like this in a span of one or two hours.

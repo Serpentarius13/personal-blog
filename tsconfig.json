@@ -5,10 +5,9 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact",
-    "traceResolution": false
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
   },
-  "exclude": ["dist/", "node_modules/"],
+  "exclude": ["dist/"],
   "include": ["src/**/*", "*config.ts"]
 }

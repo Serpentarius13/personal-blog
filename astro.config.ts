@@ -3,7 +3,6 @@ import { defineConfig } from "astro/config";
 
 // integrations
 import mdx from "@astrojs/mdx";
-import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import vue from "@astrojs/vue";
@@ -35,6 +34,8 @@ import vercel from "@astrojs/vercel/static";
 // conf
 import { CODE_THEMES, CONFIG } from "./config";
 
+import solidJs from "@astrojs/solid-js";
+
 // https://astro.build/config
 export default defineConfig({
   site: CONFIG.SITE_URL,
@@ -55,15 +56,12 @@ export default defineConfig({
     }),
     mdx(),
     tailwind({}),
-
     sitemap({
       filter: (page) => page !== "/404" && page !== "/500" && page !== "/test",
     }),
     vue(),
     pagefind(),
-    preact({
-      compat: true,
-    }),
+    solidJs(),
   ],
 
   markdown: {
