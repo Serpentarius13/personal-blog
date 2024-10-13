@@ -37,21 +37,26 @@ const {
     />
   </div>
 
-  <PostInfo post={post} readingTime={readingTime} />
+  <div class="flex flex-col gap-4">
+    <PostInfo post={post} readingTime={readingTime} />
 
-  {
-    post.data.tags && (
-      <ul class="mx-auto mt-4 flex w-fit max-w-xs flex-wrap justify-center gap-1.5">
-        {post.data.tags.map((tag) => {
-          return (
-            <li data-pagefind-filter={"Topics"} class="badge badge-primary badge-outline badge-sm">
-              {tag}
-            </li>
-          );
-        })}
-      </ul>
-    )
-  }
+    {
+      post.data.tags && (
+        <ul class="mx-auto flex w-fit max-w-xs flex-wrap justify-center gap-1.5">
+          {post.data.tags.map((tag) => {
+            return (
+              <li
+                data-pagefind-filter={"Topics"}
+                class="badge badge-primary badge-outline badge-sm"
+              >
+                {tag}
+              </li>
+            );
+          })}
+        </ul>
+      )
+    }
+  </div>
 
   <div class={"flex flex-col items-start  xl:grid xl:grid-cols-[0px_1fr] "}>
     <TableOfContents
