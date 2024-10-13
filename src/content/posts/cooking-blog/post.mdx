@@ -651,6 +651,27 @@ I used those four guys:
 Also, there's `rehype-pretty-code` for handling and styling code blocks which I tried to use, but it doesn't support multiple themes with `MDX` yet because
 of some unknown bug, so I had to put it down for something else: about this in the next section.
 
+To parse MDX itself there's an integration `@astrojs/mdx` that works with
+all remark and rehype plugins. When used, it receives all options passed to
+`markdown` property in the config, so there's no need to copy them:
+
+```ts title=astro.config.ts
+ markdown: {
+    syntaxHighlight: false,
+    remarkPlugins: [remarkReadingTime],
+    rehypePlugins: [
+      [rehypeSlug, rehypeSlugOptions],
+      rehypeSectionize,
+      [rehypeExternalLinks, { target: "_blank" }],
+      [rehypeAutolink, { behavior: "wrap" }],
+    ],
+  },
+
+  integrations: [
+    mdx(), // all plugins copied here automatically
+  ],
+```
+
 ## Exquisite solyanka
 
 ```rust title="main.rs"
