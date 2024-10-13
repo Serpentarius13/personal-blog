@@ -1,9 +1,9 @@
-import { type Component, type JSX } from "solid-js";
+import { type FC, type ReactNode } from "react";
 
 interface Props {
-  children?: JSX.Element;
+  children?: ReactNode;
 }
 
-export const H1Renderer: Component<Props> = ({}) => {
+export const H1Renderer: FC<Props> = ({}) => {
   return <></>;
 };

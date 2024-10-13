@@ -19,7 +19,7 @@ const { slug } = Astro.props;
     <div class="swap-off">😾</div>
   </div>
 
-  <span id="cat-count" class="mr-1 text-sm">0</span>
+  <span id="cat-count" class="mr-1 text-sm">...</span>
 
   <span id="cat-notes">🎶</span>
 </div>
@@ -57,8 +57,9 @@ const { slug } = Astro.props;
     notes.classList.add("active");
 
     postsApi.likePost(slug).then(() => {
-      localStorage.setItem(`pat-cat-${slug}`, "true");
       const count = document.querySelector("#cat-count") as HTMLElement;
+      console.log(count.textContent, String(Number(count.textContent) + 1));
+      localStorage.setItem(`pat-cat-${slug}`, "true");
       count.textContent = String(Number(count.textContent) + 1);
     });
   });

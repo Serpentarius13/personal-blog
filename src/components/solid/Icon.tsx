@@ -1,10 +1,10 @@
 import { cn } from "@/lib/cn";
-import { type Component, type JSX } from "solid-js";
+import { type FC, type HTMLAttributes, } from "react";
 
-interface Props extends JSX.HTMLAttributes<HTMLSpanElement> {
+interface Props extends HTMLAttributes<HTMLSpanElement> {
   className?: string;
 }
 
-export const Icon: Component<Props> = ({ className, ...rest }) => {
-  return <span {...rest} class={cn("iconify", className)} />;
+export const Icon: FC<Props> = ({ className, ...rest }) => {
+  return <span {...rest} className={cn("iconify", className)} />;
 };

@@ -1,11 +1,12 @@
-import { type Component, type JSX } from "solid-js";
+---
 
-interface Props {
-  children?: JSX.Element;
-}
+---
 
-export const HighlightCat: Component<Props> = ({}) => {
-  const handleClick = () => {
+<button id="cat-highlighter" class="btn btn-sm inline-block"> Click here </button>
+
+<script is:inline>
+  const catHighligher = document.querySelector("#cat-highlighter");
+  catHighligher?.addEventListener("click", () => {
     const catButton = document.querySelector("#cat-button");
 
     let classes = window.matchMedia("(prefers-reduced-motion)").matches
@@ -26,9 +27,5 @@ export const HighlightCat: Component<Props> = ({}) => {
     setTimeout(() => {
       catButton?.classList.remove(...classes);
     }, 2500);
-  }
-  return <button id="cat-highlighter" onClick={handleClick} class="btn btn-sm inline-block"> Click here </button>;
-};
-
-
-
+  });
+</script>

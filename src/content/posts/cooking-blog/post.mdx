@@ -11,9 +11,9 @@ draft: false
 
 import { Image } from 'astro:assets';
 
-import Counter from "./Counter.vue";
+import { Counter } from "./Counter.tsx";
 
-import { HighlightCat } from "./HighlightCat.tsx";
+import HighlightCat from "./HighlightCat.astro";
 
 
 ## Introduction to the kitchen
@@ -138,7 +138,7 @@ which may not be a good way to handle building `Websites`. And here's where Astr
 
 <Counter client:visible />
 
-Sorry for that bunch of Vue bundle I got into your browser right now 👀 However, you didn't actually download
+Sorry for that bunch of Preact bundle I got into your browser right now 👀 However, you didn't actually download
 it before you have seen it, because I added it like so, with a directive: `<Counter client:visible />`. It works
 with `IntersectionObserver` that tracks the element's visibility on the screen, and if it is visible, it will
 `hydrate it to the client`.
@@ -1071,7 +1071,7 @@ and make it adaptive. So, cheers to pagefind and [`Sergey Shishkin`](https://git
 
 When I was looking for inspiration, I stumbled again upon [Josh Comeau's website](https://www.joshwcomeau.com/). It had this heart button
 with sound effects and my urge to steal was like never before. You may have seen the result of this, angry, or maybe happy now.
-<HighlightCat client:load/> to see him! My personal orange 🐈
+<HighlightCat /> to see him! My personal orange 🐈
 
 This guy is needed for the purpose of bullying out like clicks from people, there is no mistake. But how to store anything
 over one client session in a static website? Its honestly so cool that these days you can setup a thing like this in a span of one or two hours.
