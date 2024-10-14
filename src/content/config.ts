@@ -13,9 +13,8 @@ const postsCollection = defineCollection({
           .max(155, "Description should be 155 characters or less for optimal Open Graph display."),
         date: z.coerce.date(),
         image: image(),
-        //.refine((image) => image.width === 1200 && image.height === 630, {
-        //   message: "The image must be exactly 1200px × 630px for Open Graph requirements.",
-        // })
+        imageAlt: z.string(),
+
         tags: z.array(z.string()).optional(),
         draft: z.boolean().optional(),
 

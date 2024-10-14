@@ -20,6 +20,8 @@ const { page: pageInfo } = Astro.props;
   title="Void Flower | Blog posts"
   description="Blog posts page of Void Flower blog"
   mainClassname="flex flex-col gap-4"
+  bodyClassname="h-[100svh] h-screen"
+  wrapperClassname="!h-auto min-h-full"
 >
   <PostGrid posts={pageInfo.data} />
   <Pagination page={pageInfo} baseUrl="/blog" />
