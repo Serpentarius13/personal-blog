@@ -35,6 +35,8 @@ import vercel from "@astrojs/vercel/static";
 // conf
 import { CODE_THEMES, CONFIG } from "./config";
 
+import css from "@pagefind/default-ui/css/ui.css?raw";
+
 // https://astro.build/config
 export default defineConfig({
   site: CONFIG.SITE_URL,
@@ -46,6 +48,23 @@ export default defineConfig({
   //     },
   //   },
   // },
+  vite: {
+    plugins: [
+      {
+        name: "a",
+        resolveId(id) {
+          if (id === "virtual:my-module") {
+            return "\0" + "virtual:my-module";
+          }
+        },
+        load(id) {
+          if (id === "\0" + "virtual:my-module") {
+            return `export const CSS = () => "${JSON.stringify(css).slice(1, -1)}";`;
+          }
+        },
+      },
+    ],
+  },
 
   integrations: [
     expressiveCode({
@@ -60,7 +79,7 @@ export default defineConfig({
     }),
     vue(),
     pagefind(),
-    preact({compat: true}),
+    preact({ compat: true }),
   ],
 
   markdown: {
