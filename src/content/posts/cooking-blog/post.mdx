@@ -836,7 +836,15 @@ So, here's what I've learned from that:
 - Plan, always!
 - Dont break the plan just because you had a new idea 🙄 Think it thoroughly first
 
+### Having sugarless cola
+
+At the same time, I could've used `preact` while having access to all React API's just for 5-10kb final production bundle. This is achieved through `preact/compat` compatibility layer [described here](https://docs.astro.build/en/guides/integrations-guide/preact/#compat).
+
+While React is about 100kb in prod, this tradeoff would've been minimal and less! `Svelte` could also be an option, because it compiles to pure native JavaScript with a client payload of less than 10 kilobytes even! Using those tools, I could've made all these script blocks much easier with inbuilt reactivity. So, using a framework is not always an overhead! Sometimes you don't want to `querySelector` all your stuff..
+
 ### Golden tickets made out of chocolate
+
+Let's talk about something else..
 
 For users to discover my content, I wanted to make two features: 
 
@@ -985,13 +993,13 @@ I was intersted to dive deep into documentation for SEO. For a long time I thoug
 
 - Do some testing with Lighthouse. It has helped me to figure out where I messed up my accessibility. For example links, which is a very important part of SEO ranking your site higher. I haven't included labels for screenreaders on icon buttons, have used bad link names, didn't add `rel="nofollow"` on external ones, and so on. It also pointed some performance issues. And at the end it gave me some dopamine with all 100's scores 🆒
 
-[ADDIMAGE]
+![Lighthouse scores](./Lighthouse.png)
 
 - I did not reap those accessibility rewards, and I don't know anyone personally who would use a screen reader, but at least consider another user who would use tab key for the sake of switching between buttons. Do not make links as `<button>`s. Do not make buttons as `<div>`s without `tabindex="0"`. And please, use `<dialog>` for modals, or at least think about what would happen, if user presses tab inside of them. Also, don't forget about contrast, it is quite important to read, y'know.
 
 - Look at network tab and performance tabs. Slow down your requests to slow 4g or even 3g and check how your site behaves under these conditions. Does it load fast, what content pops up first? Have you added `loading="eager"` to your big image so that there would not be a huge Largest Contentful Paint? In `performance` tab you could even slow down processor speeds artificially to see how website would perform on lower-grade devices like mobiles.
 
-[ADDIMAGE]
+![Performance tab](./Performance.png)
 
 - Make unique content. Some people claim AI can write for them - it's cool, but you should also write yourself, improve and cultivate style and taste. `If you can't think of something to write about something, then you should not be writing`. Do not write just for the sake of showing anything at all. At least tell how you feel. For example, after [this Daniel Roe's short story](https://roe.dev/blog/little-oak) I got pretty sad, but understood many things. So he healed me a bit, even though he didn't know me. That's probably because he healed himself with it at the time of writing, and that's what makes this post real.
 
