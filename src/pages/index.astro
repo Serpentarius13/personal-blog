@@ -1,7 +1,7 @@
 ---
 import IndexHeader from "@/components/astro/index/IndexHeader.astro";
-import PostCard from "@/components/astro/posts/PostCard.astro";
-import Layout from "@/layouts/Layout.astro";
+import IndexLatestPost from "@/components/astro/index/IndexLatestPost.astro";
+import Layout from "@/layouts/base";
 import { getPosts } from "@/lib/posts";
 
 const posts = await getPosts();
@@ -9,12 +9,12 @@ posts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).val
 const latestPost = posts[0];
 ---
 
-<Layout title="Void Flower" description="Void Flower is a blog about software engineering">
+<Layout
+  title="Void Flower"
+  description="Void Flower is a blog about software engineering"
+  bodyClassname="h-screen"
+  wrapperClassname="!h-auto min-h-full"
+>
   <IndexHeader />
-  <section class="box mt-8 flex flex-1 flex-col gap-4 lg:mt-4">
-    <h2 class="text-2xl font-bold">My latest post</h2>
-    <PostCard entry={latestPost} />
-
-    <a href="/blog" class="btn btn-outline btn-primary mx-auto w-fit">More blog posts </a>
-  </section>
+  <IndexLatestPost post={latestPost} />
 </Layout>

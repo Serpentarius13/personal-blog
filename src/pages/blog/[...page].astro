@@ -1,7 +1,7 @@
 ---
-import PostGridCard from "@/components/astro/posts/PostGridCard.astro";
-import Layout from "@/layouts/Layout.astro";
-import { cn } from "@/lib/cn";
+import Pagination from "@/components/astro/Pagination.astro";
+import PostGrid from "@/components/astro/posts/PostGrid.astro";
+import Layout from "@/layouts/base";
 import { getPosts } from "@/lib/posts";
 import type { PaginateFunction } from "astro";
 
@@ -14,15 +14,6 @@ export async function getStaticPaths({ paginate }: { paginate: PaginateFunction 
 }
 
 const { page: pageInfo } = Astro.props;
-
-const pages = Array.from({ length: pageInfo.lastPage }, (_, i) => i + 1);
-
-const baseUrl = "/blog";
-
-const getPageUrl = (page: number) => {
-  if (page === 1) return baseUrl;
-  return `${baseUrl}/${page}`;
-};
 ---
 
 <Layout
@@ -30,43 +21,6 @@ const getPageUrl = (page: number) => {
   description="Blog posts page of Void Flower blog"
   mainClassname="flex flex-col gap-4"
 >
-  <!-- class="h-full grid lg:grid-cols-3 content-center md:grid-cols-2 mx-auto max-w-[95%] lg:max-w-[1200px] gap-6"  -->
-  <div
-    class="mx-auto flex min-h-full max-w-[95%] flex-1 flex-wrap justify-center gap-8 lg:max-w-[1200px]"
-  >
-    {pageInfo.data.map((post) => <PostGridCard post={post} />)}
-  </div>
-
-  <div class="box box join mx-auto mt-auto flex flex-wrap justify-center">
-    <a
-      class={cn("btn join-item", {
-        ["pointer-events-none cursor-default"]: pageInfo.currentPage === 1,
-      })}
-      href={pageInfo.currentPage > 1 ? getPageUrl(pageInfo.currentPage - 1) : undefined}
-    >
-      &lt;
-    </a>
-    {
-      pages.map((page) => (
-        <a
-          href={getPageUrl(page)}
-          class={cn("btn join-item min-w-12", {
-            ["btn-primary"]: page === pageInfo.currentPage,
-          })}
-        >
-          {page}
-        </a>
-      ))
-    }
-    <a
-      class={cn("btn join-item", {
-        ["pointer-events-none cursor-default"]: pageInfo.currentPage === pageInfo.lastPage,
-      })}
-      href={pageInfo.currentPage < pageInfo.lastPage
-        ? getPageUrl(pageInfo.currentPage + 1)
-        : undefined}
-    >
-      &gt;
-    </a>
-  </div>
+  <PostGrid posts={pageInfo.data} />
+  <Pagination page={pageInfo} baseUrl="/blog" />
 </Layout>

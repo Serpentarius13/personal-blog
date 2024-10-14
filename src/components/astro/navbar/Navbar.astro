@@ -3,6 +3,7 @@ import ThemeDropdown from "@/components/astro/ThemeDropdown.astro";
 import SearchTrigger from "@/components/astro/search/SearchTrigger.astro";
 import { Icon } from "@/components/solid/Icon";
 import { CONFIG } from "config";
+import logo from "./logo.svg?raw";
 ---
 
 <header
@@ -11,30 +12,9 @@ import { CONFIG } from "config";
 >
   <div class="flex gap-2 shadow-xl"></div>
   <div class="navbar-start">
-    <!-- <div class="dropdown md:hidden">
-      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-        <AppIcon set={IconSet.LINE_MD} name="menu-fold-left" class="size-8" />
-      </div>
-      <ul
-        tabindex="0"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-      >
-        {
-          CONFIG.NAV_LINKS.map((link) => {
-            return (
-              <li>
-                <a class="py-4" href={link.href}>
-                  {link.title}
-                </a>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </div> -->
     <a class="flex items-center gap-1" href="/" id="page-title">
-      <img src="/logo.webp" alt="Logo" width={24} height={24} />
-      <span class="ml-2 hidden text-xl transition-all hover:underline sm:block">
+      <Fragment set:html={logo} src={logo} is:raw class="red" />
+      <span class="ml-2 text-xl transition-all hover:underline -sm:hidden">
         {CONFIG.SITE_TITLE}
       </span>
     </a>
@@ -62,6 +42,13 @@ import { CONFIG } from "config";
   </div>
 
   <style>
+    :global(#logo) {
+      width: 32px;
+      height: 32px;
+      @apply fill-primary;
+      animation: rotate 10s reverse linear infinite;
+    }
+
     :global(#icon-flower) {
       animation: rotate 10s linear infinite;
       @apply text-3xl;

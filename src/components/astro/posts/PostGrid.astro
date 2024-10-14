@@ -1,0 +1,16 @@
+---
+import type { CollectionEntry } from "astro:content";
+import PostGridCard from "./PostGridCard.astro";
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<div
+  class="mx-auto flex min-h-full max-w-[95%] flex-1 flex-wrap justify-center gap-8 lg:max-w-[1200px]"
+>
+  {posts.map((post) => <PostGridCard post={post} />)}
+</div>

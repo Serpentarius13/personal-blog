@@ -3,7 +3,7 @@ import ScrollTopButton from "@/components/astro/ScrollTopButton.astro";
 import CatButton from "@/components/astro/posts/CatButton.astro";
 import PostNavigation from "@/components/astro/posts/PostNavigation.astro";
 import PostPage from "@/components/astro/posts/PostPage.astro";
-import Layout from "@/layouts/Layout.astro";
+import Layout from "@/layouts/base";
 import { getPosts } from "@/lib/posts";
 import "@fontsource-variable/jetbrains-mono";
 import type { GetStaticPaths, InferGetStaticParamsType, InferGetStaticPropsType } from "astro";
@@ -72,7 +72,6 @@ const { post, nextPost, prevPost } = Astro.props;
     }
 
     {post.data.trackName && <span slot="next">Check out next track article</span>}
-
     {post.data.trackName && <span slot="prev">Check out previous track article</span>}
 
     {!post.data.trackName && <span slot="next">Read next article</span>}
@@ -85,7 +84,7 @@ const { post, nextPost, prevPost } = Astro.props;
 </Layout>
 
 <script>
-  import { postsApi } from "@/lib/api";
+  import { handleViewAndReadPosts } from "@/lib/posts";
 
   function main() {
     const slugHolder = document.querySelector("#slug-holder") as HTMLElement | undefined;
@@ -93,42 +92,10 @@ const { post, nextPost, prevPost } = Astro.props;
 
     const slug = slugHolder.dataset.slug!;
 
-    let hasViewed = !!localStorage.getItem(`view-post-${slug}`);
-    let hasRead = !!localStorage.getItem(`read-post-${slug}`);
-
-    if (!hasRead) {
-      const footer = document.querySelector("#footer");
-      if (!footer) return;
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(async (entry) => {
-            if (entry.isIntersecting && !hasRead) {
-              await postsApi.readPost(slug).then((res) => {
-                if ("error" in res) {
-                  return;
-                }
-                localStorage.setItem(`read-post-${slug}`, "true");
-                hasRead = true;
-              });
-
-              observer.disconnect();
-            }
-          });
-        },
-        { rootMargin: "200px" },
-      );
-      observer.observe(footer);
-    }
-
-    if (!hasViewed) {
-      postsApi.viewPost(slug).then((res) => {
-        if ("error" in res) {
-          return;
-        }
-        localStorage.setItem(`view-post-${slug}`, "true");
-        hasViewed = true;
-      });
-    }
+    handleViewAndReadPosts({
+      intersectionPoint: "#footer",
+      slug,
+    });
   }
   main();
 </script>

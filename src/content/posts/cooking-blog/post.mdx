@@ -6,10 +6,10 @@ date: 2024-06-10
 image: "./Preview.jpg"
 imageAlt: "A Vitruvian man with head as Astro logo and Penis as Vanilla JS script holding Tailwind, Daisy, Solid and Shiki, with legs as Lighthouse & Robots.txt logo"
 tags: ["astro", "shiki", "markdown", "seo", "tailwind", "lighthouse", "mdx"]
-draft: true
+draft: false
 ---
+import MdxImage from "@/components/mdx/MdxImage.astro";
 
-import { Image } from 'astro:assets';
 
 import { Counter } from "./Counter.tsx";
 
@@ -61,7 +61,7 @@ This is a Web App ([By freepik](https://www.freepik.com/free-vector/dashboard-us
 
 import webapp from './Webapp.jpg';
 
-<Image src={webapp}  alt="Web app" widths={[400, 700]} sizes="(max-width: 1024px) 400px, 700px" />  
+<MdxImage src={webapp}  alt="Web app" />  
 
 And on the other side of the coin is `Websites`. Those are news magazines, personal portfolio pages, blog sites,
 even e-commerce, documentation pages and so on. There are no complex logic behind them. They may include few widgets
@@ -69,8 +69,10 @@ like a small calendar or rss feed button, but ultimately they may use Wordpress 
 with native JavaScript, as most of the content is really just HTML & CSS. Those may have at best a custom mobile burger
 and some carousel with one Call to Action modal or a form.
 
+import website from './Website.jpg';
+
 This is a Website ([By freepik](https://www.freepik.com/free-vector/liquid-effect-landing-page_4335546.htm#fromView=search&page=1&position=4&uuid=df62a421-566a-4411-a2a3-96f7f2f74b78)):
-![Website](./Website.jpg)
+<MdxImage src={website}  alt="Website" />  
 
 `Websites` may not even require build step. There is not much dynamic info on them, so they could be easily cached.
 `Web apps` may update data each millisecond you would keep track of your ad revenue. They may show you tens of dozens

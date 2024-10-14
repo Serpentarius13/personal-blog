@@ -26,7 +26,7 @@ const { slug } = Astro.props;
 
 <script>
   import { postsApi } from "@/lib/api";
-  import { debounce } from "@/lib/utils";
+import { debounce } from "@/lib/utils";
 
   const catButton = document.querySelector("#cat-button") as HTMLDivElement;
   const notes = document.querySelector("#cat-notes")!;
@@ -58,7 +58,6 @@ const { slug } = Astro.props;
 
     postsApi.likePost(slug).then(() => {
       const count = document.querySelector("#cat-count") as HTMLElement;
-      console.log(count.textContent, String(Number(count.textContent) + 1));
       localStorage.setItem(`pat-cat-${slug}`, "true");
       count.textContent = String(Number(count.textContent) + 1);
     });

@@ -1,0 +1,59 @@
+---
+
+---
+
+<script is:inline>
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  const darkThemes = {
+    night: "night",
+    luxury: "luxury",
+  };
+
+  const THEME_KEY = "theme";
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined") {
+      const theme = localStorage.getItem(THEME_KEY);
+
+      if (theme) {
+        return theme;
+      }
+    }
+    // must be synced on its own because I don't wanna import themes into head on page load
+    return prefersDark ? darkThemes.night : "autumn";
+  };
+
+  const getCodeTheme = (theme) => {
+    const codeTheme = theme in darkThemes ? "ayu-dark" : "rose-pine-dawn";
+    return codeTheme;
+  };
+
+  const getDocumentTheme = () => {
+    return document.documentElement.dataset.theme;
+  };
+
+  const setDarkMode = (document) => {
+    const theme = getThemePreference();
+    const codeTheme = getCodeTheme(theme);
+
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.codeTheme = codeTheme;
+  };
+
+  setDarkMode(document);
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const theme = getDocumentTheme();
+      if (!theme) return;
+      const codeTheme = getCodeTheme(theme);
+      document.documentElement.dataset.codeTheme = codeTheme;
+      localStorage.setItem(THEME_KEY, theme);
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+  }
+</script>

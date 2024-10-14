@@ -1,0 +1,48 @@
+---
+import { cn } from "@/lib/cn";
+import type { Page } from "astro";
+
+interface Props {
+  page: Page;
+  baseUrl: string;
+}
+
+const { page, baseUrl } = Astro.props;
+
+const pages = Array.from({ length: page.lastPage }, (_, i) => i + 1);
+const getPageUrl = (page: number) => {
+  if (page === 1) return baseUrl;
+  return `${baseUrl}/${page}`;
+};
+---
+
+<div class="box box join mx-auto mt-auto flex flex-wrap justify-center">
+  <a
+    class={cn("btn join-item", {
+      ["pointer-events-none cursor-default"]: page.currentPage === 1,
+    })}
+    href={page.currentPage > 1 ? getPageUrl(page.currentPage - 1) : undefined}
+  >
+    &lt;
+  </a>
+  {
+    pages.map((p) => (
+      <a
+        href={getPageUrl(p)}
+        class={cn("btn join-item min-w-12", {
+          ["btn-primary"]: p === page.currentPage,
+        })}
+      >
+        {page}
+      </a>
+    ))
+  }
+  <a
+    class={cn("btn join-item", {
+      ["pointer-events-none cursor-default"]: page.currentPage === page.lastPage,
+    })}
+    href={page.currentPage < page.lastPage ? getPageUrl(page.currentPage + 1) : undefined}
+  >
+    &gt;
+  </a>
+</div>

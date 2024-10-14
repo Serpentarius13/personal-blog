@@ -1,6 +1,6 @@
 ---
 import PostPage from "@/components/astro/posts/PostPage.astro";
-import Layout from "@/layouts/Layout.astro";
+import Layout from "@/layouts/base";
 import { getCollection } from "astro:content";
 
 if (import.meta.env.PROD) return Astro.redirect("/");

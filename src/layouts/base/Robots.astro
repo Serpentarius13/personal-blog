@@ -1,0 +1,9 @@
+---
+import type { LayoutProps } from "./types";
+
+interface Props extends Pick<LayoutProps, "noIndex"> {}
+const { noIndex } = Astro.props;
+---
+
+<link rel="sitemap" href="/sitemap-index.xml" />
+{noIndex && <meta name="robots" content="noindex" />}

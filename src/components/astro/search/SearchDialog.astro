@@ -1,6 +1,5 @@
 ---
 import { Icon } from "@/components/solid/Icon";
-import Search from "astro-pagefind/components/Search";
 import { CONFIG } from "config";
 ---
 
@@ -13,7 +12,8 @@ import { CONFIG } from "config";
           <Icon className="text-xl line-md--close" />
         </button>
       </form>
-      <Search
+      <div id="search-outlet"></div>
+      <!-- <Search
         id="search"
         className="pagefind-ui"
         uiOptions={{
@@ -24,7 +24,7 @@ import { CONFIG } from "config";
             placeholder: "Search anything here!",
           },
         }}
-      />
+      /> -->
     </div>
   </div>
   <form method="dialog" class="modal-backdrop">
@@ -75,7 +75,7 @@ import { CONFIG } from "config";
   :root {
     --pagefind-ui-scale: 0.9;
     --pagefind-ui-primary: oklch(var(--p));
-    --pagefind-ui-text: oklch(var(--bc));
+    --pagefind-ui-text: oklch(var(--bc)) !important;
     --pagefind-ui-background: oklch(var(--b1));
     --pagefind-ui-border: oklch(var(--p));
     --pagefind-ui-tag: oklch(var(--p));

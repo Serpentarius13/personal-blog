@@ -1,14 +1,90 @@
 ---
 import { Icon } from "@/components/solid/Icon";
-import { CONFIG } from "config";
+const bundlePath = `${Astro.url.origin}/pagefind/`;
 ---
 
 <button
   class="btn btn-ghost btn-sm"
   id="search-trigger"
-  onclick={`document.getElementById("${CONFIG.SEARCH_MODAL_ID}").showModal()`}
   aria-labelledby="search-btn-label"
+  data-bundle-path={bundlePath}
 >
   <Icon className="text-xl line-md--search" />
   <span id="search-btn-label" class="sr-only"> Opens dialog window for global article search </span>
 </button>
+
+<script>
+  import { CONFIG } from "config";
+
+  const trigger = document.getElementById("search-trigger")!;
+  let hasLoadedUi = false;
+
+  trigger.addEventListener("click", async (ev) => {
+    const modal = document.getElementById(CONFIG.SEARCH_MODAL_ID) as HTMLDialogElement | undefined;
+    if (!modal) return;
+
+    const bundlePath = (ev.target as HTMLButtonElement)["dataset"]["bundlePath"];
+
+    if (!hasLoadedUi) {
+      const [ui] = await Promise.all([
+        //@ts-ignore
+        import("@pagefind/default-ui") as {
+          PagefindUI: new (options: PagefindUIOptions) => any;
+        },
+        import("@pagefind/default-ui/css/ui.css"),
+      ]);
+
+      new ui.PagefindUI({
+        showImages: true,
+        showSubResults: true,
+        showEmptyFilters: true,
+        translations: {
+          placeholder: "Search anything here!",
+        },
+        bundlePath,
+        element: "#search-outlet",
+      });
+
+      hasLoadedUi = true;
+    }
+
+    modal.showModal();
+  });
+
+  interface PagefindUIOptions {
+    element: string;
+    pageSize?: number;
+    showSubResults?: boolean;
+    showImages?: boolean;
+    excerptLength?: number;
+    processTerm?: (term: string) => string;
+    processResult?: (result: any) => any;
+    showEmptyFilters?: boolean;
+    openFilters?: string[];
+    resetStyles?: boolean;
+    bundlePath?: string;
+    debounceTimeoutMs?: number;
+    translations?: Partial<PagefindUITranslations>;
+    autofocus?: boolean;
+    sort?: {
+      [key: string]: "asc" | "desc";
+    };
+  }
+
+  interface PagefindUITranslations {
+    thanksTo: string;
+    comments: string;
+    direction: "ltr" | "rtl";
+    placeholder: string;
+    clearSearch: string;
+    loadMore: string;
+    searchLabel: string;
+    filtersLabel: string;
+    zeroResults: string;
+    manyResults: string;
+    oneResult: string;
+    altSearch: string;
+    searchSuggestion: string;
+    searching: string;
+  }
+</script>
