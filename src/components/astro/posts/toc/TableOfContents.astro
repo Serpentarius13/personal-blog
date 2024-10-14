@@ -101,15 +101,12 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
   function main() {
     const closeButton = document.querySelector("#toc-close-btn")!;
     const toc = document.querySelector("#toc-inner")! as HTMLElement;
-
-    closeButton.addEventListener("click", () => {
-      toc.dataset.open = toc.dataset.open === "true" ? "false" : "true";
-    });
+    const tocPapa = document.querySelector("#toc")! as HTMLElement;
 
     toc.addEventListener("focusout", function (event) {
       if (
         // We are still inside the dialog so don't close
-        toc.contains(event.relatedTarget as any) ||
+        tocPapa.contains(event.relatedTarget as any) ||
         // We have switched to another tab so probably don't want to close
         !document.hasFocus()
       ) {
@@ -127,6 +124,10 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
         return;
       }
       toc.dataset.open = "false";
+    });
+
+    closeButton.addEventListener("click", () => {
+      toc.dataset.open = toc.dataset.open === "true" ? "false" : "true";
     });
   }
 
