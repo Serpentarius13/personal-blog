@@ -12,12 +12,12 @@ const { next, prev } = Astro.props;
 <div class="box mt-12 flex flex-col gap-2">
   <slot name="title" />
 
-  <a href={next} class="link">
+  <a href={next} class="link" rel="nofollow">
     <slot name="next" />
     <Icon className="arrow-right line-md--arrow-right" />
   </a>
 
-  <a href={prev} class="link">
+  <a href={prev} class="link" rel="nofollow">
     <Icon className="arrow-left line-md--arrow-left" />
     <slot name="prev" />
   </a>
