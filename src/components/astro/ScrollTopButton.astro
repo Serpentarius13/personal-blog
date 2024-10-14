@@ -1,5 +1,5 @@
 ---
-import { Icon } from "@/components/solid/Icon";
+import { Icon } from "@/components/react/Icon";
 ---
 
 <button
@@ -21,6 +21,7 @@ import { Icon } from "@/components/solid/Icon";
   });
 
   let prevScroll = 0;
+  let distanceToTop = 0;
 
   const handleScroll = debounce(() => {
     if (!prevScroll) {
@@ -30,11 +31,18 @@ import { Icon } from "@/components/solid/Icon";
 
     if (window.scrollY > prevScroll) {
       button?.classList.remove("visible");
+      distanceToTop = 0;
     } else {
-      button?.classList.add("visible");
-      prevScroll = window.scrollY;
+      if (distanceToTop > 1000) {
+        button?.classList.add("visible");
+        distanceToTop = 0;
+      } else {
+        distanceToTop += prevScroll - window.scrollY;
+      }
     }
-  }, 100);
+
+    prevScroll = window.scrollY;
+  }, 50);
 
   window.addEventListener("scroll", handleScroll, { passive: true });
 </script>

@@ -26,7 +26,7 @@ const { slug } = Astro.props;
 
 <script>
   import { postsApi } from "@/lib/api";
-import { debounce } from "@/lib/utils";
+  import { debounce } from "@/lib/utils";
 
   const catButton = document.querySelector("#cat-button") as HTMLDivElement;
   const notes = document.querySelector("#cat-notes")!;
@@ -65,7 +65,7 @@ import { debounce } from "@/lib/utils";
 
   let hasShownCat = false;
 
-  if (window.scrollY > 1200 || hasPat) {
+  if (window.scrollY > 250 || hasPat) {
     hasShownCat = true;
     catButton.classList.add("visible");
   }
@@ -73,7 +73,7 @@ import { debounce } from "@/lib/utils";
   const handleScroll = debounce(() => {
     if (hasShownCat) return;
 
-    if (window.scrollY > 1200) {
+    if (window.scrollY > 250) {
       hasShownCat = true;
       catButton.classList.add("visible");
       return;

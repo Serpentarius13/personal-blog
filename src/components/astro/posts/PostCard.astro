@@ -1,7 +1,6 @@
 ---
-import { Icon } from "@/components/solid/Icon";
+import { Icon } from "@/components/react/Icon";
 import { formatDate } from "@/lib/date";
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
 type Props = {
@@ -21,20 +20,7 @@ const {
 <div
   class="not-prose group card relative rounded-box border transition-all ease-in-out hover:shadow-xl dark:hover:ring-4 dark:hover:ring-primary"
 >
-  <a href={`/blog/${entry.slug}`} class="card-body flex flex-col gap-4 sm:flex-row sm:items-center">
-    {
-      entry.data.image && (
-        <div class="max-w-[200px] sm:flex-shrink-0">
-          <Image
-            src={entry.data.image}
-            alt={entry.data.title}
-            widths={[130, 200]}
-            sizes={`(max-width: 600px) 130px, (min-width: 600px) 200px`}
-            class="object-cover"
-          />
-        </div>
-      )
-    }
+  <a href={`/blog/${entry.slug}`} class="card-body flex flex-col gap-4">
     <div class="flex flex-grow flex-col gap-1">
       <h3 class="text-lg">
         {entry.data.title}

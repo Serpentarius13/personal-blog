@@ -1,12 +1,12 @@
 ---
-import { Icon } from "@/components/solid/Icon";
+import { Icon } from "@/components/react/Icon";
 import Search from "astro-pagefind/components/Search";
 import { CONFIG } from "config";
 ---
 
 <dialog id={CONFIG.SEARCH_MODAL_ID} class="modal">
-  <div class="modal-box max-w-2xl overflow-visible">
-    <div class="mx-auto h-[min(600px,100vh)] overflow-auto px-4 md:overflow-hidden">
+  <div class="modal-box max-w-2xl overflow-visible -md:p-2">
+    <div class="mx-auto h-[80dvh] overflow-auto px-4 md:overflow-hidden -md:px-1">
       <form method="dialog" class="absolute -right-4 -top-4 z-[20]">
         <button class="btn btn-primary" aria-labelledby="search-btn-label">
           <span class="sr-only"> Close search modal </span>
@@ -21,7 +21,7 @@ import { CONFIG } from "config";
           showSubResults: true,
           showEmptyFilters: true,
           translations: {
-            placeholder: "Search anything here!",
+            placeholder: "Search anything!",
           },
         }}
       />

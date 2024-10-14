@@ -1,7 +1,7 @@
 ---
 import ThemeDropdown from "@/components/astro/ThemeDropdown.astro";
 import SearchTrigger from "@/components/astro/search/SearchTrigger.astro";
-import { Icon } from "@/components/solid/Icon";
+import { Icon } from "@/components/react/Icon";
 import { CONFIG } from "config";
 import logo from "./logo.svg?raw";
 ---
@@ -12,11 +12,12 @@ import logo from "./logo.svg?raw";
 >
   <div class="flex gap-2 shadow-xl"></div>
   <div class="navbar-start">
-    <a class="flex items-center gap-1" href="/" id="page-title">
+    <a class="flex items-center gap-1" href="/" id="page-title" aria-labelledby="navbar-link-label">
       <Fragment set:html={logo} src={logo} is:raw class="red" />
       <span class="ml-2 text-xl transition-all hover:underline -sm:hidden">
         {CONFIG.SITE_TITLE}
       </span>
+      <span class="sr-only" id="navbar-link-label"> Go to the home page </span>
     </a>
   </div>
   <div class="ml-auto w-fit">

@@ -1,6 +1,4 @@
 ---
-import { H1Renderer } from "@/components/solid/H1Renderer";
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import PostInfo from "./PostInfo.astro";
 import TableOfContents from "./toc/TableOfContents.astro";
@@ -18,24 +16,13 @@ const {
 ---
 
 <div data-pagefind-body>
-  <h1 class="mx-auto mb-4 mt-4 w-fit text-6xl font-extrabold">
+  <h1 class="mx-auto mb-4 mt-4 w-fit text-center text-6xl font-extrabold">
     {post.data.title}
   </h1>
 
-  <h2 class="mx-auto mb-6 block w-fit text-lg">
+  <h2 class="mx-auto block w-fit max-w-lg text-center text-lg font-bold italic">
     {post.data.description}
   </h2>
-
-  <div class="mx-auto">
-    <Image
-      src={post.data.image}
-      alt={post.data.imageAlt}
-      loading="eager"
-      widths={[240, 540, 720, 1200]}
-      sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1200px) 720px, 1200px`}
-      class="mx-auto h-[450px] w-full max-w-[1200px] object-cover md:object-contain"
-    />
-  </div>
 
   <div class="flex flex-col gap-4">
     <PostInfo post={post} readingTime={readingTime} />
@@ -67,7 +54,7 @@ const {
 
     <div class="mx-auto max-w-full">
       <div class="prose-md prose-code:not-prose prose justify-self-center xl:prose-lg">
-        <Content components={{ h1: H1Renderer }} />
+        <Content />
       </div>
     </div>
   </div>

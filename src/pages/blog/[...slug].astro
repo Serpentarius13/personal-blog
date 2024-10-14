@@ -84,18 +84,52 @@ const { post, nextPost, prevPost } = Astro.props;
 </Layout>
 
 <script>
-  import { handleViewAndReadPosts } from "@/lib/posts";
+  import { postsApi } from "@/lib/api";
 
   function main() {
     const slugHolder = document.querySelector("#slug-holder") as HTMLElement | undefined;
     if (!slugHolder) return;
 
-    const slug = slugHolder.dataset.slug!;
+    const slug = slugHolder.dataset.slug;
+    if (!slug) return;
 
-    handleViewAndReadPosts({
-      intersectionPoint: "#footer",
-      slug,
-    });
+    let hasViewed = !!localStorage.getItem(`view-post-${slug}`);
+    let hasRead = !!localStorage.getItem(`read-post-${slug}`);
+
+    if (!hasRead) {
+      const footer = document.querySelector("#footer");
+      if (!footer) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(async (entry) => {
+            if (entry.isIntersecting && !hasRead) {
+              await postsApi.readPost(slug).then((res) => {
+                if ("error" in res) {
+                  return;
+                }
+                localStorage.setItem(`read-post-${slug}`, "true");
+                hasRead = true;
+              });
+
+              observer.disconnect();
+            }
+          });
+        },
+        { rootMargin: "200px" },
+      );
+      observer.observe(footer);
+    }
+
+    if (!hasViewed) {
+      postsApi.viewPost(slug).then((res) => {
+        if ("error" in res) {
+          return;
+        }
+        localStorage.setItem(`view-post-${slug}`, "true");
+        hasViewed = true;
+      });
+    }
   }
   main();
 </script>
