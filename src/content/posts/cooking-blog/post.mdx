@@ -277,7 +277,9 @@ Script loaded in the document watches the changes and reacts with localStorage s
 
 This is way too cool! 😎
 
-One important thing about this approach is that I had to make script `inline` and put it in the `<head>`, so the website would not ~~FART~~ flicker when loading initially as it would load the script ahead before rendering the page. `Inline` means that Astro would not optimize my script and bundle it as a `module`, but leave it as-is. It removes the ability to use TypeScript and import utilities from other parts of the project, but the importance here is to provide small as possible way to load the theme without any flickers.
+One important thing about this approach is that I had to make script `inline` and put it at the start of `<body>`, so the website would not ~~FART~~ flicker when loading initially as it would load the script ahead before rendering the page.
+
+`Inline` means that Astro would not optimize my script and bundle it as a `module`, but leave it as-is. It removes the ability to use TypeScript and import utilities from other parts of the project, but the importance here is to provide small as possible way to load the theme without any flickers.
 
 I've got into a rut with this issue because I didn't really know how page loading was done deep down, so I was putting the script below body, above body and finally at the end of the head to figure out what did not mess my page load and would not flicker. This highlights how important it is to get good with the basics.
 
@@ -634,10 +636,9 @@ const explanation: &'static str = r#"
 As a programmer's education resource, I was of course obliged (unlike certain `linkedin` fella) to make working with code blocks
 as smooth as possible. That meant syntax highlighting, line numbers, diffing, copy button and so on.
 
-For highlighting code there exist two libraries that I know of: `Prism` and `Shiki`. First of all, Shiki is a cool name,
-second of all, Prism seemed quite outdated and abandoned, and third of all, [this Anthony Fu's article](https://nuxt.com/blog/shiki-v1) convinced me that it was great.
-Shiki, contrary to Prism, works not only at the client, but ahead of the time compiling at the server too,
-and it is actually used in `VSCode` as a highlighter, so great support and high amount of themes to choose is imminent.
+For highlighting code there exist two libraries that I know of: `Prism` and `Shiki`. First of all, Shiki is a cool name, second of all, Prism seemed quite outdated and abandoned, and third of all, [this Anthony Fu's article](https://nuxt.com/blog/shiki-v1) convinced me that it was great.
+
+Shiki, contrary to Prism, works not only at the client, but ahead of the time compiling at the server too, and it is actually used in `VSCode` as a highlighter, so great support and high amount of themes to choose is imminent.
 
 You could write a plugin yourself, but it would be a lot of work of course.
 `rehype-pretty-code` plugin I mentioned above is a great one as it provides
@@ -749,6 +750,26 @@ import { pluginBlurLines } from "./plugins/expressive-code-blur";
 
 [Full API example is referenced here](https://expressive-code.com/reference/plugin-api/)
 
+To add multiple themes, I just modified my script that was setting the main theme to support dark/light modes with another data attribute on `<html>`:
+
+```ts
+
+const getCodeTheme = (theme) => {
+    const codeTheme = theme in darkThemes ? "ayu-dark" : "rose-pine-dawn";
+    return codeTheme;
+};
+
+// when setting the theme
+{
+  const theme = getDocumentTheme();
+  if (!theme) return;
+  const codeTheme = getCodeTheme(theme);
+  // set code-theme data attribute
+  document.documentElement.dataset.codeTheme = codeTheme;
+  localStorage.setItem(THEME_KEY, theme);
+}
+```
+
 `expressive-code` gave me highlights, line numbers, diffing, copy button and pretty wrappers for blocks instantly without any investment, which I liked and went along with it. The library may miss some extended features, but it is amendable with plugin API and explanations the docs provide.
 
 One more thing about code blocks: They have `Jetbrains Mono` font, which I think makes code a bit more readable, provided by `fontsource` like so:
@@ -843,7 +864,36 @@ At the same time, I could've used `preact` while having access to all React API'
 
 While React is about 100kb in prod, this tradeoff would've been minimal and less! `Svelte` could also be an option, because it compiles to pure native JavaScript with a client payload of less than 10 kilobytes even! Using those tools, I could've made all these script blocks much easier with inbuilt reactivity. So, using a framework is not always an overhead! Sometimes you don't want to `querySelector` all your stuff..
 
-Pushing that aside, when I was making this configuration button, I had wanted to finally use some `preact`. I heard about `nanostores`(ADDLINK) and their lightweightness, and thought why not. But in the end, I figured having to import state management into my script tags everywhere was not much of a goal as I could've perfectly used `MutationObserver` the same way I did it with theme picker. I've screwed some css variables and have gotten pretty simple solution.
+Pushing that aside, when I was making this configuration button, I had wanted to finally use some `preact`. I heard about `nanostores`(ADDLINK) and their lightweightness, and thought why not. But in the end, I figured having to import state management into my script tags everywhere was not much of a goal as I could've perfectly used `MutationObserver` the same way I did it with theme picker. I just added a loop and switch statement to check what attribute changed:
+
+```js
+const observer = new MutationObserver((records) => {
+    for (const record of records) {
+      console.log(record.attributeName);
+      switch (record.attributeName) {
+        case "data-theme": {
+          const theme = getDocumentTheme();
+          if (!theme) return;
+          const codeTheme = getCodeTheme(theme);
+          document.documentElement.dataset.codeTheme = codeTheme;
+          localStorage.setItem(THEME_KEY, theme);
+        }
+
+        case "data-config_width": {
+          const configWidth = document.documentElement.dataset.config_width;
+          if (!configWidth) return;
+          localStorage.setItem(configKeys.width, configWidth);
+        }
+
+        case "data-config_font-size": {
+          const configFontSize = document.documentElement.dataset["config_fontSize"];
+          if (!configFontSize) return;
+          localStorage.setItem(configKeys.fontSize, configFontSize);
+        }
+      }
+    }
+  });
+```
 
 The html part is about the same as `ThemeDropdown`, just render all options and assign `dataset` to them:
 ```astro 
@@ -924,7 +974,7 @@ const widthButtons = document.querySelectorAll(
   }
 ```
 
-And as for styles, I thought it would be okay to use `is:global`, because when `ConfigDropdown` appears on the page, it should be accompanied by them anyway. And it was easier to style buttons to be `btn-active` with that. Tailwind is complicated in it, and I couldn't make it work however I tried, even putting `class="group/html"` at `<html>`. It is pretty repetetive, but very simple and contained in one place:
+And then I've screwed some css variables and have gotten pretty simple solution.I thought it would be okay to use `is:global`, since `ConfigDropdown` appears everywhere in navbar anyway, and it should be accompanied by them. It was easier to style buttons to be `btn-active` with that. Tailwind is complicated in it, and I couldn't make it work however I tried, even putting `class="group/html"` at `<html>`. It is pretty repetetive, but very simple and contained in one place:
 
 ```css
 <style is:global>
@@ -980,7 +1030,7 @@ And as for styles, I thought it would be okay to use `is:global`, because when `
 </style>
 ```
 
-So, when choosing a technology, don't bother much (unless explicitly very required) with all the intricacies of bundle size, because you must make it simple and get it working first. And when you're done, you can optimize it anyways.
+So, when choosing a technology, don't bother much (unless explicitly very much required) with all the intricacies of bundle size, because you must make it simple and get it working first. And when you're done, you can optimize it anyways.
 
 ### Golden tickets made out of chocolate
 
@@ -1097,7 +1147,7 @@ Here, I thought it would be a fun experiment of trying out plan number two, whic
 
 ### Poor man's bread
 
-[`Vercel`](https://vercel.com/home) was my pick, because it is easy and free to publish any project of yours. Just host on Github, link it in dashboard and get free CI/CD, probably not the worst domain name according to your project name, SSL is handled for you and so on. Free plan is awesome!
+[`Vercel`](https://vercel.com/home) was my pick, because it is easy and free to publish any project of yours. Just host on Github, link it in dashboard and get free CI/CD, probably not the worst domain name according to your project name if its unique enough (last minute I decided to grab the current domain at [Namecheap](https://www.namecheap.com/), since it was, well, cheap), SSL is handled for you and so on. Free plan is awesome!
 
 And as I found out, Vercel could host your backend as `Serverless functions`. You may make a Node.js project from their template or you can just deploy a `Next.js` app with [`Route handlers`](https://nextjs.org/docs/app/building-your-application/routing/route-handlers). These are just HTTP verbs exported from `app/api` folder in the latest Next versions and you could write them like so:
 
