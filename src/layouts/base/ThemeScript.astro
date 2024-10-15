@@ -3,6 +3,8 @@
 ---
 
 <script is:inline>
+  // themes
+
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   const darkThemes = {
@@ -12,12 +14,10 @@
 
   const THEME_KEY = "theme";
   const getThemePreference = () => {
-    if (typeof localStorage !== "undefined") {
-      const theme = localStorage.getItem(THEME_KEY);
+    const theme = localStorage.getItem(THEME_KEY);
 
-      if (theme) {
-        return theme;
-      }
+    if (theme) {
+      return theme;
     }
     // must be synced on its own because I don't wanna import themes into head on page load
     return prefersDark ? darkThemes.night : "autumn";
@@ -32,7 +32,7 @@
     return document.documentElement.dataset.theme;
   };
 
-  const setDarkMode = (document) => {
+  const setDarkMode = () => {
     const theme = getThemePreference();
     const codeTheme = getCodeTheme(theme);
 
@@ -40,20 +40,53 @@
     document.documentElement.dataset.codeTheme = codeTheme;
   };
 
-  setDarkMode(document);
+  setDarkMode();
 
-  if (typeof localStorage !== "undefined") {
-    const observer = new MutationObserver(() => {
-      const theme = getDocumentTheme();
-      if (!theme) return;
-      const codeTheme = getCodeTheme(theme);
-      document.documentElement.dataset.codeTheme = codeTheme;
-      localStorage.setItem(THEME_KEY, theme);
-    });
+  // config
+  const configKeys = {
+    width: "config:width",
+    fontSize: "config:fontSize",
+  };
 
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-  }
+  const setConfig = () => {
+    for (const [key, localStorageKey] of Object.entries(configKeys)) {
+      const value = localStorage.getItem(localStorageKey) || "def";
+      document.documentElement.dataset[`config_${key}`] = value;
+    }
+  };
+
+  setConfig();
+
+  // observer
+
+  const observer = new MutationObserver((records) => {
+    for (const record of records) {
+      switch (record.attributeName) {
+        case "data-theme": {
+          const theme = getDocumentTheme();
+          if (!theme) return;
+          const codeTheme = getCodeTheme(theme);
+          document.documentElement.dataset.codeTheme = codeTheme;
+          localStorage.setItem(THEME_KEY, theme);
+        }
+
+        case "data-config_width": {
+          const configWidth = document.documentElement.dataset.config_width;
+          if (!configWidth) return;
+          localStorage.setItem(configKeys.width, configWidth);
+        }
+
+        case "data-config_font-size": {
+          const configFontSize = document.documentElement.dataset["config_font-size"];
+          if (!configFontSize) return;
+          localStorage.setItem(configKeys.fontSize, configFontSize);
+        }
+      }
+    }
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme", "data-config_width", "data-config_font-size"],
+  });
 </script>
