@@ -33,11 +33,12 @@ const { mainClassname, bodyClassname, wrapperClassname, ...props } = Astro.props
     <OpenGraph {...props} />
     <Robots noIndex={props.noIndex} />
     <RSS />
-    <ThemeScript />
-    <ConfigScript />
+
     <slot name="head" slot="default" />
   </Head>
   <body class={cn("px-3 md:px-2 lg:px-1", bodyClassname)}>
+    <ThemeScript />
+    <ConfigScript />
     <div class={cn("flex h-full max-w-full flex-col", wrapperClassname)} id="app">
       <Navbar>
         <slot name="navbar" slot="default" />
