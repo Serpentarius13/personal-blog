@@ -25,19 +25,21 @@ If you want to learn Astro, open the docs and follow the tutorial!*
 
 I've heard about Astro a lot before and even used it in one of my work projects, but I have never dived deep enough to figure out why people even need static sites and why not just build everything in React.
 
-There are frameworks which provide Static Site Generation (SSG) and Server Side Rendering (SSR) like `Next.js`, `Nuxt`, `Remix`, `SvelteKit` and the good-ol `Gatsby`, but I feel Astro is a frontier in pushing SSG to more like a web standard. Apart from the fact that it provides
-very comforting Developer Experience with native `Markdown` and `MDX` parsing and many integrations with `CMS` tools, it also builds upon the new approach to web-development: `Islands Architecture`
+There are frameworks which provide Static Site Generation (SSG) and Server Side Rendering (SSR) like `Next.js`, `Nuxt`, `Remix`, `SvelteKit` and the good-ol `Gatsby`, but I felt Astro is a frontier in pushing SSG to more like a web standard and wanted to learn about it more. Apart from the fact that it provides very comforting Developer Experience with native `Markdown` and `MDX` parsing and many integrations with plug and use approach for all things content, it also builds upon the new to web-development approach: `Islands Architecture`
 
-### A history lesson
+### Old cheese's history
 
-From the ancient times of PHP and very early releases of Netscape, people were thinking about interactivity. It made websites alive! And JavaScript provided that, even while being a tricky language. But as everybody probably think and know now as it is a hot topic, JavaScript could actually slow down the website. It is especially aparent on mobile devices as parsing and executing even gzipped code is consuming battery charge and taking the small network speed they have. And as many would cite, if the page is slow, your business will feel that in suffering of losing its audience as it feels that website is cheap and maybe even a scam.
+People were thinking about interactivity from the start. It made websites alive! And JavaScript provided that, even while being a tricky language. But as everybody probably thinks now, JavaScript could actually slow down user's experience. It is especially aparent on mobile devices as parsing and executing code eben highly optimized by bundlers is consuming battery charge and taking the small network resources they have. Unlike images which are cached, JavaScript must be re-executed each time it loads.
 
-Plus to that, when using just Client-Side rendering like Vue or React provides you with, 
-your website may not be as SEO-friendly and crawlable by Googlebot (although it betters over time). On the other hand, when loading a webpage, your users may see a sudden flash, maybe even prolonged one while any scripts load at all, which could ruin every experience.
+And as many would cite, if the page is slow, any website owner would suffer from losing its audience as it feels that the page is cheap and maybe even a scam. Plus to that, when using just Client-Side rendering like Vue or React provides you with, your website may not be as SEO-friendly and crawlable by Googlebot (although it betters over time).
+
+Another drawback is, when loading a webpage, your users may see a sudden flash, maybe even prolonged one while any scripts load at all, which could ruin every experience.
 
 Here I want you to understand a difference between two terms: `Website` and `Web applications`. 
 
-Client-side frameworks have received their growth because it became trendy and actually very   efficient to build `Web applications` that are no less than real computer apps that you download an installer for, while being much more easy to work with. Even so, there are apps that ship to desktop while running Frontend WebView under the hood, like Electron and Tauri. They are in the demand, and VSCode, Discord, Spotify, even FeedTheBeast Minecraft launcher are running Electron because it is easy to build after having experience with using these tools on frontend. Those have a very high degree of interactivity.
+Client-side frameworks have received their growth because it became trendy to build `Web applications` that are no less than real computer apps that you download an installer for, while being much more easy to work with. They were efficient at that: many approaches at reactivity made sure every new tool got better (for example modern approaching switch from VDOM to compilers)
+
+Even more, there are apps that ship to desktop while running Frontend WebView under the hood, like Electron and Tauri. They are in the demand, and VSCode, Discord, Spotify, even FeedTheBeast Minecraft launcher are running Electron because it is easy to build after having experience with using these tools on frontend. Those have a very high degree of interactivity.
 
 This is a Web Applications ([By freepik](https://www.freepik.com/free-vector/dashboard-user-panel-template_6144806.htm#fromView=search&page=1&position=1&uuid=d5fb43c7-d255-44ab-b398-10ed05df0c04)):
 
@@ -45,7 +47,7 @@ import webapp from './Webapp.jpg';
 
 <MdxImage src={webapp}  alt="Web app" />  
 
-And on the other side of the coin is `Websites`. Those are news magazines, personal portfolio pages, blog sites, even e-commerce, documentation pages and so on. There are no complex logic behind them. They may include few widgets like a small calendar or rss feed button, but ultimately they may use Wordpress or some other CMS, or even build with native JavaScript, as most of the content is really just HTML & CSS. Those may have at best a custom mobile burger and some carousel with one Call to Action modal or a form.
+And on the other side of the coin is `Websites`. Those are news magazines, personal portfolio pages, blog sites, even e-commerce, documentation pages and so on. There are no complex logic behind them. They may use Wordpress or some other CMS, and even build with native JavaScript, as most of the content is really just HTML & CSS. At best, they may a custom mobile burger and some carousel with one Call to Action modal or a form that they don't need huge Vue package for.
 
 import website from './Website.jpg';
 
@@ -99,12 +101,11 @@ Also, all Astro components are purely static and run on the server, so you have 
 
 So, unless you specify explicitly to send component to the client, it would not be interactive. In SSR, that is reversed, which may not be a good way to handle building `Websites`. And here's where Astro shines.
 
-
 **Grab that!**
 
 <Counter client:visible />
 
-Sorry for that bunch of Preact bundle I got into your browser right now 👀 However, you didn't actually download it before you have seen it, because I added it like so, with a directive: `<Counter client:visible />`. It works with `IntersectionObserver` that tracks the element's visibility on the screen, and if it is visible, it will `hydrate it to the client`.
+Sorry for that bunch of Vue bundle I got into your browser right now 👀 However, you didn't actually download it before you have seen it, because I added it like so, with a directive: `<Counter client:visible />`. It works with `IntersectionObserver` that tracks the element's visibility on the screen, and if it is visible, it will `hydrate it to the client`.
 
 That makes Astro a meta-framework for every UI-library there is: `Solid`, `Svelte`, `Preact` are no exceptions. It is simple and efficient, easily landing you all 100's on Lighthouse score.
 
@@ -849,7 +850,7 @@ Let's talk about something else..
 For users to discover my content, I wanted to make two features: 
 
 - A paginated blog to "encounter" content, which you could find <a href="/blog"> at this page </a>
-- A global search bar to "precisely look for" content <HighlightSearch> which is here) </HighlightSearch>
+- A global search bar to "precisely look for" content <HighlightSearch> which is here </HighlightSearch>
 
 It would be openable from anywhere and would give user ability to search for any content or keyword.
 
@@ -991,7 +992,7 @@ I was intersted to dive deep into documentation for SEO. For a long time I thoug
 
 - Performance and adaptivity matters most. At final steps of this project, I have even removed images from blog posts, because it smoothed loading times so much. Blogs should not be about much cosmetic, but rather about content. And as it is very easy to make text content fluid and very fast in HTML, it is also easy to stamp a lot of features to make it load 10 seconds and fail all Lighthouse audits. Look at [this fella](https://perfectsite.neocities.org/). It is sure perfect.
 
-- Do some testing with Lighthouse. It has helped me to figure out where I messed up my accessibility. For example links, which is a very important part of SEO ranking your site higher. I haven't included labels for screenreaders on icon buttons, have used bad link names, didn't add `rel="nofollow"` on external ones, and so on. It also pointed some performance issues. And at the end it gave me some dopamine with all 100's scores 🆒
+- Do some testing with Lighthouse. It has helped me to figure out where I messed up my accessibility. For example links, which is a very important part of SEO ranking your site higher. I haven't included labels for screenreaders on icon buttons, have used bad link names, didn't add `rel="nofollow"` on external ones, and so on. It also pointed some performance issues. And at the end it gave me some dopamine with all 100's scores 🆒 But do not overdo it. Sometimes its better to not have it all perfect.
 
 ![Lighthouse scores](./Lighthouse.png)
 

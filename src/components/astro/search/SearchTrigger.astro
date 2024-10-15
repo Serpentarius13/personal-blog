@@ -7,6 +7,7 @@ import { CONFIG } from "config";
   class="btn btn-ghost btn-sm"
   onclick={`document.getElementById("${CONFIG.SEARCH_MODAL_ID}").showModal()`}
   aria-labelledby="search-btn-label"
+  id="search-trigger"
 >
   <Icon className="text-xl line-md--search" />
   <span id="search-btn-label" class="sr-only"> Opens dialog window for global article search </span>

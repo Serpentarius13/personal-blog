@@ -4,27 +4,30 @@
 
 <button id="cooking-search-highligher" class="btn btn-sm inline-block"> <slot /> </button>
 
-<script>
-  // const searchButton = document.querySelector("#cooking-search-highligher");
-  // searchButton?.addEventListener("click", (ev) => {
-  //   ev.stopPropagation();
+<script is:inline>
+  function main() {
+    const searchButton = document.querySelector("#cooking-search-highligher");
+    searchButton?.addEventListener("click", (ev) => {
+      ev.stopPropagation();
 
-  //   const trigger = document.querySelector("#search-trigger");
+      const trigger = document.querySelector("#search-trigger");
 
-  //   if (window.matchMedia("(prefers-reduced-motion)").matches) {
-  //     const classes = ["ring-2", "ring-red-500"];
-  //     trigger?.classList.add(...classes);
-  //     setTimeout(() => {
-  //       trigger?.classList.remove(...classes);
-  //     }, 2500);
-  //     return;
-  //   }
+      if (window.matchMedia("(prefers-reduced-motion)").matches) {
+        const classes = ["ring-2", "ring-red-500"];
+        trigger?.classList.add(...classes);
+        setTimeout(() => {
+          trigger?.classList.remove(...classes);
+        }, 2500);
+        return;
+      }
 
-  //   const classes = ["ring-2", "ring-red-500", "scale-[2]", "bg-base-100", "z-[20]"];
-  //   trigger?.classList.add(...classes);
+      const classes = ["ring-2", "ring-red-500", "scale-[2]", "bg-base-100", "z-[20]"];
+      trigger?.classList.add(...classes);
 
-  //   setTimeout(() => {
-  //     trigger?.classList.remove(...classes);
-  //   }, 2500);
-  // });
+      setTimeout(() => {
+        trigger?.classList.remove(...classes);
+      }, 2500);
+    });
+  }
+  main();
 </script>

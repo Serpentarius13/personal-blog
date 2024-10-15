@@ -5,7 +5,8 @@
 <button id="cat-highlighter" class="btn btn-sm inline-block"> Click here </button>
 
 <script is:inline>
-  const catHighligher = document.querySelector("#cat-highlighter");
+  function main() {
+    const catHighligher = document.querySelector("#cat-highlighter");
   catHighligher?.addEventListener("click", () => {
     const catButton = document.querySelector("#cat-button");
 
@@ -28,4 +29,6 @@
       catButton?.classList.remove(...classes);
     }, 2500);
   });
+  }
+  main()
 </script>

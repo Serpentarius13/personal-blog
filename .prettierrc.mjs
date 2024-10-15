@@ -17,12 +17,7 @@ export default {
         parser: "astro",
       },
     },
-    {
-      files: "*.vue",
-      options: {
-        parser: "vue",
-      },
-    },
+
     {
       files: "*.sh",
       options: {
