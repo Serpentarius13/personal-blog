@@ -864,7 +864,9 @@ At the same time, I could've used `preact` while having access to all React API'
 
 While React is about 100kb in prod, this tradeoff would've been minimal and less! `Svelte` could also be an option, because it compiles to pure native JavaScript with a client payload of less than 10 kilobytes even! Using those tools, I could've made all these script blocks much easier with inbuilt reactivity. So, using a framework is not always an overhead! Sometimes you don't want to `querySelector` all your stuff..
 
-Pushing that aside, when I was making this configuration button, I had wanted to finally use some `preact`. I heard about `nanostores`(ADDLINK) and their lightweightness, and thought why not. But in the end, I figured having to import state management into my script tags everywhere was not much of a goal as I could've perfectly used `MutationObserver` the same way I did it with theme picker. I just added a loop and switch statement to check what attribute changed:
+import HighlightConfig from './HighlightConfig.astro';
+
+Pushing that aside, when I was making <HighlightConfig />, I had wanted to finally use some `preact`. I heard about `nanostores`(ADDLINK) and their lightweightness, and thought why not. But in the end, I figured having to import state management into my script tags everywhere was not much of a goal as I could've perfectly used `MutationObserver` the same way I did it with theme picker. I just added a loop and switch statement to check what attribute changed:
 
 ```js
 const observer = new MutationObserver((records) => {

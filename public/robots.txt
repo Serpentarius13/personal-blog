@@ -4,4 +4,4 @@ Disallow: /404
 Disallow: /test
 Disallow: /500
 
-Sitemap: https://void-flower.vercel.app/sitemap-index.xml
+Sitemap: https://voidflower.dev/sitemap-index.xml

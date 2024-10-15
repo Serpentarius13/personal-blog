@@ -1,0 +1,32 @@
+---
+
+---
+
+<button id="config-highligher" class="btn btn-sm inline-block"> this configuration button </button>
+
+<script is:inline>
+  function main() {
+    const configHighligher = document.querySelector("#config-highligher");
+    configHighligher?.addEventListener("click", () => {
+      const configButton = document.querySelector("#prose-config-button");
+
+      let classes = window.matchMedia("(prefers-reduced-motion)").matches
+        ? ["ring-2", "ring-red-500"]
+        : [
+            "ring-2",
+            "ring-red-500",
+            "scale-[3]",
+            "-translate-x-[60px]",
+            "translate-y-[120px]",
+            "bg-base-100",
+          ];
+
+      configButton?.classList.add(...classes);
+
+      setTimeout(() => {
+        configButton?.classList.remove(...classes);
+      }, 2500);
+    });
+  }
+  main();
+</script>

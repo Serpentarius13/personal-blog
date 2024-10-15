@@ -25,13 +25,12 @@ const decrement = () => {
           <p class="text-center" :key="value">{{ value }}</p>
         </Transition>
       </div>
-
       <button class="btn btn-primary btn-sm" @click="increment">+</button>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style>
 .fade-up-enter-active,  
  .fade-up-leave-active,
  .fade-down-enter-active,  

@@ -16,10 +16,11 @@ const { class: className, contentClassname } = Astro.props;
     tabindex="0"
     role="button"
     class="btn btn-ghost btn-sm"
-    aria-labelledby="prose-config-button"
+    aria-labelledby="prose-config-label"
+    id="prose-config-button"
   >
     <Icon className="text-xl la--cog" />
-    <span class="sr-only" id="prose-config-button"> Open text configuration </span>
+    <span class="sr-only" id="prose-config-label"> Open text configuration </span>
   </div>
   <ul
     tabindex="0"
