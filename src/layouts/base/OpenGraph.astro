@@ -1,4 +1,5 @@
 ---
+import { CONFIG } from "config";
 import type { LayoutProps } from "./types";
 
 interface Props extends LayoutProps {}
@@ -9,7 +10,7 @@ const imageUrl = image && new URL(image, Astro.url);
 
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:site_name" content="Void Flower" />
+<meta property="og:site_name" content={CONFIG.SITE_TITLE} />
 <meta property="og:locale" content="en_US" />
 <meta property="og:url" content={Astro.url} />
 <meta property="twitter:url" content={Astro.url} />
