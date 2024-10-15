@@ -23,7 +23,7 @@ export const getStaticPaths = (async () => {
       params: { slug: post.slug },
       props: {
         post,
-        nextPost,
+        nextPost: nextPost && nextPost?.slug === post.slug ? undefined : nextPost,
         prevPost: prevPost?.slug === nextPost?.slug || !post ? undefined : prevPost,
         track: post.data.trackName,
       },

@@ -29,7 +29,7 @@ There are frameworks which provide Static Site Generation (SSG) and Server Side 
 
 ### Old cheese's history
 
-People were thinking about interactivity from the start. It made websites alive! And JavaScript provided that, even while being a tricky language. But as everybody probably thinks now, JavaScript could actually slow down user's experience. It is especially aparent on mobile devices as parsing and executing code eben highly optimized by bundlers is consuming battery charge and taking the small network resources they have. Unlike images which are cached, JavaScript must be re-executed each time it loads.
+People were thinking about interactivity from the start. It made websites alive! And JavaScript provided that, even while being a tricky language. But as everybody probably thinks now, JavaScript could actually slow down user's experience. It is especially aparent on mobile devices as parsing and executing code eben highly optimized by bundlers is consuming battery charge and taking the small network resources they have. Unlike images and static HTML which could be cached, [JavaScript must be re-used and re-executed each time it loads](https://webperf.tips/tip/cached-js-misconceptions/)
 
 And as many would cite, if the page is slow, any website owner would suffer from losing its audience as it feels that the page is cheap and maybe even a scam. Plus to that, when using just Client-Side rendering like Vue or React provides you with, your website may not be as SEO-friendly and crawlable by Googlebot (although it betters over time).
 
@@ -58,8 +58,6 @@ This is a Website ([By freepik](https://www.freepik.com/free-vector/liquid-effec
 
 `Web applications` may update data each millisecond so you would keep track of your ad revenue. They may show you tens of dozens complex charts that you could look at, while running in your browser.
 
-### Why Astro?
-
 And so, to use React, Vue and other rendering libraries for the purpose of building websites, people have introduced `Meta frameworks` like `Next.js` for React and `Nuxt` for Vue. Those meta frameworks are responsible for making experience with the technology applicable to build a landing page for your web app with providing developer to `Server-Side render` their app, and then `hydrate` every interactive part to the client. That means, instead of sending empty `HTML` pages with modules to bootstrap the application at user's device expense, there would be a `server-entry.js` file generated with `express` or `Nitro` under the hood to serve requests from `Node` or other runtime.
 
 It makes app faster to serve: your database and file system is much closer to the server, which reduces latency rather than fetching it from outside. Plus, server-side environment provides an ability to have secrets in it without them being easily leaked like it happens on the client. So, the app becomes more coupled and `universal`.
@@ -75,6 +73,8 @@ With Meta frameworks, all problems related with Time-To-Interactive metric, Seo,
 > Is it safe here?
 
 And it is easy to make mistakes, just how it may be easy to ruin your memory handling in C or run into undefined behaviour, while mistake could go unnoticed until it ruins someone else's (or even yours) experience.
+
+### Molecular dishes at the rescue
 
 Astro is different. There is a clear separation between what runs where. It is achieved through
 that paradigm:
@@ -124,7 +124,7 @@ I wanted to learn more about Astro after finishing rebuilding this template, but
 
 So, here's my take on Astro. You can get all the source snippets from [the repo](https://github.com/Serpentarius13/personal-blog). Note that sometimes I'm citing partial snippets to show the main ideas, but the full code is always available there. Also, I use `Astro v4.15.11`, so check your version to avoid inconcistencies and misinformation about newest practices.
 
-## Tasty menu
+## Menu at the table!
 
 To build a static website, you will come at some issues right away and some will come later.
 Here's my full list (aside from the Astro itself, that the documentation help you will for):
@@ -163,7 +163,7 @@ For the UI-library, as I mentioned, I took [`daisyUI`](https://daisyui.com/) whi
 
 import ThemeDropdown from "@/components/astro/ThemeDropdown.astro";
 
-### Multiple dressings for choice
+### Multiple icecream dressings
 
 One of the most enjoyable things about Daisy is its inbuilt themes support. Take a look at the theme picker right here:
 
@@ -315,7 +315,7 @@ since it is a live-saver as it does two things:
 
 Well, anyway, some may find it worse than `&&`'s, but to each their own 🐈
 
-### Looking for stickers 
+### Looking for jar stickers 
 
 Every website probably needs icons, and almost every time I start a new project I look for a way to get them.
 Some people make a map like that:
@@ -934,7 +934,7 @@ import HighlightSearch from "./HighlightSearch.astro";
 
 <HighlightSearch> Anyway, here's the result! </HighlightSearch>
 
-## Storing wine and launching rockets
+## Storing wine
 
 When I was looking for inspiration, I stumbled again upon [Josh Comeau's website](https://www.joshwcomeau.com/). It had this heart button with sound effects and my urge to steal was like never before. You may have seen the result of this, angry, or maybe happy now. <HighlightCat /> to see him! My personal orange! 🐈
 
@@ -956,7 +956,7 @@ I've setup a new project and apparently with almost the same config the app was 
 
 Here, I thought it would be a fun experiment of trying out plan number two, which included a constraint of staying hosting-fee free.
 
-### On rockets 
+### Poor man's bread
 
 [`Vercel`](https://vercel.com/home) was my pick, because it is easy and free to publish any project of yours. Just host on Github, link it in dashboard and get free CI/CD, probably not the worst domain name according to your project name, SSL is handled for you and so on. Free plan is awesome!
 
