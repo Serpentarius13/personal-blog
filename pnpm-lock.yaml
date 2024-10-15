@@ -50,6 +50,9 @@ importers:
       '@iconify-json/catppuccin':
         specifier: ^1.2.4
         version: 1.2.4
+      '@iconify-json/fluent':
+        specifier: ^1.2.4
+        version: 1.2.4
       '@iconify-json/game-icons':
         specifier: ^1.2.0
         version: 1.2.0
@@ -619,6 +622,9 @@ packages:
 
   '@iconify-json/catppuccin@1.2.4':
     resolution: {integrity: sha512-yirVaJjjNwcqD5U7RFodXdkI3aBfp8MGFrRY/OA3UyisIwhydniWaeyn8MUpOnR865qRinEyKwUh57b5yQQfoA==}
+
+  '@iconify-json/fluent@1.2.4':
+    resolution: {integrity: sha512-DsK5rzwcCFgGlqgqRz2Dj34lXO6V9xHxA6drgGC/ncsaR9aQ+RwmzcbXiOEQMv/smSPVuzHjFZGl9kQU0ahBkw==}
 
   '@iconify-json/game-icons@1.2.0':
     resolution: {integrity: sha512-9M0VrC2P9HOcGWyRwbpt2W9kBaZ8CBWKvLp9UCiKN8CmCpKxXJ15jL4yTOMAjEQMGt5yTv/uuMKgSuzKUNedpA==}
@@ -4400,6 +4406,10 @@ snapshots:
       rehype: 12.0.1
 
   '@iconify-json/catppuccin@1.2.4':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/fluent@1.2.4':
     dependencies:
       '@iconify/types': 2.0.0
 

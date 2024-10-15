@@ -17,7 +17,7 @@ const decrement = () => {
 
 <template>
   <div>
-    <h4 class="!mb-0">Simple animated counter that works!</h4>
+    <h4 class="!mb-0">Simple counter that works!</h4>
     <div class="flex items-center gap-4">
       <button class="btn btn-primary btn-sm" @click="decrement">-</button>
       <div class="relative w-[24px]">

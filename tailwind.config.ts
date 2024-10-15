@@ -24,7 +24,7 @@ const config: Config = {
     daisyui,
     typography,
     addIconSelectors({
-      prefixes: ["line-md", "logos", "la", "game-icons"],
+      prefixes: ["line-md", "logos", "la", "game-icons", "fluent"],
     }),
     scrollbar,
   ],

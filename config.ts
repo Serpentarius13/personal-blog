@@ -73,4 +73,5 @@ export const CONFIG = {
   SITE_URL,
   API_URL,
   SEARCH_MODAL_ID: "page-search-modal",
+  ARTICLE_BODY_ID: "article-body",
 } as const;

@@ -26,6 +26,7 @@
     "@fontsource-variable/jetbrains-mono": "^5.1.1",
     "@hbsnow/rehype-sectionize": "^1.0.7",
     "@iconify-json/catppuccin": "^1.2.4",
+    "@iconify-json/fluent": "^1.2.4",
     "@iconify-json/game-icons": "^1.2.0",
     "@iconify-json/la": "^1.2.0",
     "@iconify-json/line-md": "^1.2.1",

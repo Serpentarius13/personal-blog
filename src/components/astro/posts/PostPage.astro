@@ -1,4 +1,5 @@
 ---
+import { cn } from "@/lib/cn";
 import type { CollectionEntry } from "astro:content";
 import PostInfo from "./PostInfo.astro";
 import TableOfContents from "./toc/TableOfContents.astro";
@@ -53,7 +54,11 @@ const {
     />
 
     <div class="mx-auto max-w-full">
-      <div class="prose-md prose-code:not-prose prose justify-self-center xl:prose-lg">
+      <div
+        class={cn(
+          "prose-code:not-prose prose  justify-self-center w-[--article-width] max-w-full article-body",
+        )}
+      >
         <Content />
       </div>
     </div>

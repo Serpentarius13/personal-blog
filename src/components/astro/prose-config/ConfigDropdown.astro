@@ -1,0 +1,137 @@
+---
+import { Icon } from "@/components/react/Icon";
+import { cn } from "@/lib/cn";
+import { FontSizeLabelsMap, WidthSizeLabelsMap } from "./prose-config";
+
+interface Props {
+  class?: string;
+  contentClassname?: string;
+}
+
+const { class: className, contentClassname } = Astro.props;
+---
+
+<div class={cn("dropdown dropdown-bottom dropdown-left", className)}>
+  <div
+    tabindex="0"
+    role="button"
+    class="btn btn-ghost btn-sm"
+    aria-labelledby="prose-config-button"
+  >
+    <Icon className="text-xl la--cog" />
+    <span class="sr-only" id="prose-config-button"> Open text configuration </span>
+  </div>
+  <ul
+    tabindex="0"
+    class={cn(
+      "dropdown-content z-[1] w-[320px] flex flex-col gap-6 rounded-box mt-4 bg-base-100 p-3 shadow ring-2 ring-primary-content transition-all",
+      contentClassname,
+    )}
+  >
+    <li>
+      <span class="mb-2 flex items-center gap-2 text-lg"
+        ><span class="font-bold"> Text width</span>
+        <Icon className="align-middle la--text-width" /></span
+      >
+      <div class="flex flex-wrap items-center gap-2">
+        {
+          Object.entries(WidthSizeLabelsMap).map(([key, label]) => (
+            <button data-value={key} class={cn("config-width-btn btn btn-ghost btn-sm")}>
+              {label}
+            </button>
+          ))
+        }
+      </div>
+    </li>
+
+    <li>
+      <span class="mb-2 flex items-center gap-2 text-lg"
+        ><span class="font-bold"> Font size</span>
+        <Icon className="fluent--text-font-size-20-regular align-middle" />
+      </span>
+      <div class="flex flex-wrap items-center gap-2">
+        {
+          Object.entries(FontSizeLabelsMap).map(([key, label]) => (
+            <button data-value={key} class={cn("config-fontSize-btn btn btn-ghost btn-sm")}>
+              {label}
+            </button>
+          ))
+        }
+      </div>
+    </li>
+  </ul>
+</div>
+
+<script>
+  const widthButtons = document.querySelectorAll(
+    ".config-width-btn",
+  ) as NodeListOf<HTMLButtonElement>;
+  for (const btn of widthButtons) {
+    btn.addEventListener("click", () => {
+      const value = btn.dataset.value;
+      document.documentElement.dataset.config_width = value;
+    });
+  }
+
+  const fontSizeButtons = document.querySelectorAll(
+    ".config-fontSize-btn",
+  ) as NodeListOf<HTMLButtonElement>;
+  for (const btn of fontSizeButtons) {
+    btn.addEventListener("click", () => {
+      const value = btn.dataset.value;
+      document.documentElement.dataset.config_fontSize = value;
+    });
+  }
+</script>
+
+<style is:global>
+  html[data-config_width="sm"] {
+    --article-width: 55ch;
+
+    .config-width-btn[data-value="sm"] {
+      @apply btn-active;
+    }
+  }
+
+  html[data-config_width="def"] {
+    --article-width: 65ch;
+
+    .config-width-btn[data-value="def"] {
+      @apply btn-active;
+    }
+  }
+
+  html[data-config_width="lg"] {
+    --article-width: 75ch;
+
+    .config-width-btn[data-value="lg"] {
+      @apply btn-active;
+    }
+  }
+
+  html[data-config_font-size="sm"] {
+    .article-body {
+      @apply prose-sm;
+    }
+
+    .config-fontSize-btn[data-value="sm"] {
+      @apply btn-active;
+    }
+  }
+
+  html[data-config_font-size="def"] {
+    .config-fontSize-btn[data-value="def"] {
+      @apply btn-active;
+    }
+  }
+
+  html[data-config_font-size="lg"] {
+    .article-body {
+      @apply prose-lg;
+    }
+
+    .config-fontSize-btn[data-value="lg"] {
+      @apply btn-active;
+    }
+  }
+</style>

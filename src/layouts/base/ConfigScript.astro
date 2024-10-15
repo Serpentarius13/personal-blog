@@ -1,0 +1,27 @@
+---
+
+---
+
+<script is:inline>
+  const configKeys = {
+    width: "config:width",
+    fontSize: "config:fontSize",
+  };
+
+  for (const [key, localStorageKey] of Object.entries(configKeys)) {
+    const value = localStorage.getItem(localStorageKey);
+    document.documentElement.dataset[`config_${key}`] = value;
+  }
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      localStorage.setItem(configKeys.width, document.documentElement.dataset.config_width);
+      localStorage.setItem(configKeys.fontSize, document.documentElement.dataset.config_fontSize);
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-config_width", "data-config_fontSize"],
+    });
+  }
+</script>

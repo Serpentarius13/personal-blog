@@ -1,5 +1,5 @@
 ---
-import PostPage from "@/components/astro/posts/PostPage.astro";
+import { ProseConfig } from "@/components/react/prose-config/ProseConfig";
 import Layout from "@/layouts/base";
 import { getCollection } from "astro:content";
 
@@ -10,5 +10,5 @@ const post = await getCollection("posts", ({ slug }) => slug === postName).then(
 ---
 
 <Layout noIndex title="" description="">
-  <PostPage post={post} />
+  <ProseConfig client:only="preact" />
 </Layout>
