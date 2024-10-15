@@ -1,5 +1,4 @@
 ---
-import { ProseConfig } from "@/components/react/prose-config/ProseConfig";
 import Layout from "@/layouts/base";
 import { getCollection } from "astro:content";
 
@@ -9,6 +8,4 @@ const postName = "astro-blog-from-scratch";
 const post = await getCollection("posts", ({ slug }) => slug === postName).then((r) => r[0]);
 ---
 
-<Layout noIndex title="" description="">
-  <ProseConfig client:only="preact" />
-</Layout>
+<Layout noIndex title="" description="" />
