@@ -36,7 +36,6 @@ const { slug } = Astro.props;
 
   if (localStorage.getItem(`pat-cat-${slug}`)) {
     catButton.classList.add("swap-active");
-    hasPat = true;
   }
 
   const handlePlayCat = () => {
@@ -46,10 +45,6 @@ const { slug } = Astro.props;
 
   catButton.addEventListener("click", async () => {
     handlePlayCat();
-
-    if (hasPat) {
-      return;
-    }
 
     catButton.classList.add("swap-active");
     catButton.classList.add("disabled");
