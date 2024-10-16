@@ -39,10 +39,10 @@ const { slug } = Astro.props;
     hasPat = true;
   }
 
-  const handlePlayCat = debounce(() => {
+  const handlePlayCat = () => {
     const audio = new Audio(window.location.origin + "/sounds/cat.mp3");
     audio.play();
-  }, 300);
+  };
 
   catButton.addEventListener("click", async () => {
     handlePlayCat();
