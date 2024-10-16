@@ -1141,15 +1141,17 @@ With that turned out, Astro would spit `Node` scripts with web-server instead of
 
 ![Hybrid output file structure](./Node-files.png)
 
-I implemented all that, and it was working nice: API routes, Prisma, cool! But, I noticed a weird bug or maybe just a consequence of using Node builds: My app was loading all the Tailwind bundle of CSS without any treeshakes! I was wondering why my app would load 130kb of css, while Astro stated that Netflix's Tailwind website only weighs eight.
+I implemented all that, and it was working nice: API routes, Prisma, cool! But, I noticed a weird bug or maybe just a consequence of using Node builds: My app was loading so much CSS! I was wondering why my app would load 130kb of it, while Astro stated that Netflix's Tailwind website only weighs eight. 
 
-I've setup a new project and apparently with almost the same config the app was much smaller in size. And when I switched it from `static` to `hybrid`, the bundle size grew 5-fold: from 5kb to 25kb! 
+Here, I took the route of running away from the problem instead of understanding it. I outsourced trying to figure it out when I created a topic in Astro discord server and foolishly started playing around again. I really wanted to experiment with making a free separate backend! And that child spirit got the best of me. 
 
-Here, I thought it would be a fun experiment of trying out plan number two, which included a constraint of staying hosting-fee free.
+The issue was that Astro does not compress static assets while running in non-static output modes. I think that's because it is more reasonable to use hosting or reverse-proxy resources to gzip prebuilt content itself. So, in production environment my app was the same size in all modes.
+
+I will declare my journey with separate backend anyway as it is not a long one, plus includes interesting shenanigans with Prisma, Kysely and Next.js.
 
 ### Poor man's bread
 
-[`Vercel`](https://vercel.com/home) was my pick, because it is easy and free to publish any project of yours. Just host on Github, link it in dashboard and get free CI/CD, probably not the worst domain name according to your project name if its unique enough (last minute I decided to grab the current domain at [Namecheap](https://www.namecheap.com/), since it was, well, cheap), SSL is handled for you and so on. Free plan is awesome!
+I hosted it all on [`Vercel`](https://vercel.com/home), because it is easyto publish any hobby project of yours for free there. Just host on Github, link it in dashboard and get free CI/CD, probably not the worst domain name according to your project name if its unique enough (last minute I decided to grab the current domain at [Namecheap](https://www.namecheap.com/), since it was, well, cheap), SSL is handled for you and so on. Free plan is awesome!
 
 And as I found out, Vercel could host your backend as `Serverless functions`. You may make a Node.js project from their template or you can just deploy a `Next.js` app with [`Route handlers`](https://nextjs.org/docs/app/building-your-application/routing/route-handlers). These are just HTTP verbs exported from `app/api` folder in the latest Next versions and you could write them like so:
 
@@ -1168,7 +1170,45 @@ Serverless approach holds many benefits, but some disadvantages too. For one, to
 
 For that I choose [`kysely`](https://kysely.dev/) which is a very lightweight and handy to use SQL query-builder. It doesn't manage migrations, so I have setup Prisma alongside it too just for the purpose of syncing schema and client types. Gladly, [`there is a generator`](https://github.com/valtyr/prisma-kysely) for making Kysely types out of Prisma schemas.
 
-And for hosting database remotely I choose [`supabase`](https://supabase.com/) as it provides free hosting for `postgres`. I could've chosen other providers, even Vercel itself, but I didn't see any difference anyway, since all I want is just a free db for few records tops.
+Kysely queries look like this, enabling very flexible query building, even with complex joins, aggregate functions and more:
+
+```ts
+const updatePost = async (post: Updateable<Post>, postId: string) => {
+  return db
+    .updateTable("posts")
+    .set(post)
+    .where("id", "=", postId)
+    .returningAll()
+    .executeTakeFirst();
+};
+```
+
+Locally I used `docker-compose` to run `postgres` easily with one command:
+
+```yaml
+services:
+  db:
+    image: postgres:15.1
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 10
+
+volumes:
+  db_data:
+```
+
+For remote hosting I choose [`supabase`](https://supabase.com/) as it provides free hosting for `postgres`. I could've chosen other providers, even Vercel itself, but I didn't see any difference anyway, since all I want is just a free db for few records tops.
 
 To glue it all together, I also had to switch default locations of supabase and both my hosts on Vercel to one region, so there would not be a lot of latency.
 
