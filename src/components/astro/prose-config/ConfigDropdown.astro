@@ -11,7 +11,7 @@ interface Props {
 const { class: className, contentClassname } = Astro.props;
 ---
 
-<div class={cn("dropdown dropdown-bottom dropdown-left", className)}>
+<div class={cn("dropdown dropdown-bottom sm:dropdown-left", className)}>
   <div
     tabindex="0"
     role="button"
@@ -25,7 +25,7 @@ const { class: className, contentClassname } = Astro.props;
   <ul
     tabindex="0"
     class={cn(
-      "dropdown-content z-[1] w-[320px] flex flex-col gap-6 rounded-box mt-4 bg-base-100 p-3 shadow ring-2 ring-primary-content transition-all",
+      "dropdown-content z-[1] w-[320px] -sm:w-[150px] -sm:-translate-x-[80px] flex flex-col gap-6 rounded-box mt-4 bg-base-100 p-3 shadow ring-2 ring-primary-content transition-all",
       contentClassname,
     )}
   >
@@ -34,7 +34,7 @@ const { class: className, contentClassname } = Astro.props;
         ><span class="font-bold"> Text width</span>
         <Icon className="align-middle la--text-width" /></span
       >
-      <div class="flex flex-wrap items-center gap-2">
+      <div class="flex flex-wrap items-center gap-2 -sm:flex-col -sm:items-start">
         {
           Object.entries(WidthSizeLabelsMap).map(([key, label]) => (
             <button data-value={key} class={cn("config-width-btn btn btn-ghost btn-sm")}>
@@ -48,9 +48,9 @@ const { class: className, contentClassname } = Astro.props;
     <li>
       <span class="mb-2 flex items-center gap-2 text-lg"
         ><span class="font-bold"> Font size</span>
-        <Icon className="fluent--text-font-size-20-regular align-middle" />
+        <Icon className="align-middle fluent--text-font-size-20-regular" />
       </span>
-      <div class="flex flex-wrap items-center gap-2">
+      <div class="flex flex-wrap items-center gap-2 -sm:flex-col -sm:items-start">
         {
           Object.entries(FontSizeLabelsMap).map(([key, label]) => (
             <button data-value={key} class={cn("config-fontSize-btn btn btn-ghost btn-sm")}>
