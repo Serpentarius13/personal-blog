@@ -33,11 +33,8 @@ const {
         <ul class="mx-auto flex w-fit max-w-xs flex-wrap justify-center gap-1.5">
           {post.data.tags.map((tag) => {
             return (
-              <li
-                data-pagefind-filter={"Topics"}
-                class="badge badge-primary badge-outline badge-sm"
-              >
-                {tag}
+              <li data-pagefind-filter={"Topics"} class="badge badge-secondary">
+                #{tag}
               </li>
             );
           })}
