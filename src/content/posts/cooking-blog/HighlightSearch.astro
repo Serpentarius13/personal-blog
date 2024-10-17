@@ -1,13 +1,18 @@
 ---
+interface Props {
+  id?: string;
+}
 
+const { id } = Astro.props;
 ---
 
-<button id="cooking-search-highligher" class="btn btn-sm inline-block"> <slot /> </button>
+<button id={id ?? "cooking-search-highligher"} class="btn btn-sm inline-block"> <slot /> </button>
 
-<script is:inline>
+<script is:inline define:vars={{ id }}>
   function main() {
-    const searchButton = document.querySelector("#cooking-search-highligher");
+    const searchButton = document.querySelector(`#${id}`);
     searchButton?.addEventListener("click", (ev) => {
+      console.log("click happens");
       ev.stopPropagation();
 
       const trigger = document.querySelector("#search-trigger");

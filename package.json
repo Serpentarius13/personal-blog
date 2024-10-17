@@ -71,7 +71,8 @@
     "prettier-plugin-merge": "^0.7.1",
     "prettier-plugin-sh": "^0.14.0",
     "prettier-plugin-tailwindcss": "^0.6.8",
-    "prettier-plugin-vue": "^1.1.6"
+    "prettier-plugin-vue": "^1.1.6",
+    "vite-plugin-remove-console": "^2.2.0"
   },
   "overrides": {
     "react": "npm:@preact/compat@latest",

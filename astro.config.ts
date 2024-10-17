@@ -35,9 +35,16 @@ import vercel from "@astrojs/vercel/static";
 // conf
 import { CODE_THEMES, CONFIG } from "./config";
 
+// vite
+import removeConsole from "vite-plugin-remove-console";
+
 // https://astro.build/config
 export default defineConfig({
   site: CONFIG.SITE_URL,
+
+  vite : {
+    plugins: [removeConsole()]
+  },
 
   integrations: [
     expressiveCode({

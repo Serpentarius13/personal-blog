@@ -61,7 +61,6 @@
 
   const observer = new MutationObserver((records) => {
     for (const record of records) {
-      console.log(record.attributeName);
       switch (record.attributeName) {
         case "data-theme": {
           const theme = getDocumentTheme();
