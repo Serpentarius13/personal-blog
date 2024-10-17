@@ -7,28 +7,28 @@
 <script is:inline>
   function main() {
     const catHighligher = document.querySelector("#cat-highlighter");
-  catHighligher?.addEventListener("click", () => {
-    const catButton = document.querySelector("#cat-button");
+    catHighligher?.addEventListener("click", () => {
+      const catButton = document.querySelector("#cat-button");
 
-    let classes = window.matchMedia("(prefers-reduced-motion)").matches
-      ? ["ring-2", "ring-red-500"]
-      : [
-          "ring-2",
-          "ring-red-500",
-          "scale-[3]",
-          "-translate-x-[60px]",
-          "translate-y-[120px]",
-          "bg-base-100",
-        ];
+      let classes = window.matchMedia("(prefers-reduced-motion)").matches
+        ? ["ring-2", "ring-red-500"]
+        : [
+            "ring-2",
+            "ring-red-500",
+            "scale-[3]",
+            "-translate-x-[60px]",
+            "translate-y-[120px]",
+            "bg-base-100",
+          ];
 
-    catButton?.classList.add(...classes);
+      catButton?.classList.add(...classes);
 
-    const sound = new Audio("/sounds/cat.mp3");
-    sound.play();
-    setTimeout(() => {
-      catButton?.classList.remove(...classes);
-    }, 2500);
-  });
+      const sound = new Audio("/sounds/scary.wav");
+      sound.play();
+      setTimeout(() => {
+        catButton?.classList.remove(...classes);
+      }, 2500);
+    });
   }
-  main()
+  main();
 </script>

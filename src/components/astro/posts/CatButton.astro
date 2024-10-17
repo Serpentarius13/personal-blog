@@ -26,20 +26,31 @@ const { slug } = Astro.props;
 
 <script>
   import { postsApi } from "@/lib/api";
-  import { debounce } from "@/lib/utils";
+import { debounce } from "@/lib/utils";
 
   const catButton = document.querySelector("#cat-button") as HTMLDivElement;
   const notes = document.querySelector("#cat-notes")!;
   const slug = catButton.dataset.slug!;
+
+  let lastPlayedSound: string | undefined;
+  const sounds = ["angry", "attention", "little", "scary", "sweet", "purr"];
+  const getRandomSound = () => sounds[(sounds.length * Math.random()) | 0]
 
   let hasPat = false;
 
   if (localStorage.getItem(`pat-cat-${slug}`)) {
     catButton.classList.add("swap-active");
   }
+  
 
   const handlePlayCat = () => {
-    const audio = new Audio(window.location.origin + "/sounds/cat.mp3");
+    // yeah mom im a brogrammer https://stackoverflow.com/questions/5915096/get-a-random-item-from-a-javascript-array
+    let randomSound = getRandomSound()
+    while(randomSound === lastPlayedSound) {
+      randomSound = getRandomSound()
+    }
+    lastPlayedSound = randomSound
+    const audio = new Audio(window.location.origin + "/sounds/" + randomSound + ".wav");
     audio.play();
   };
 
