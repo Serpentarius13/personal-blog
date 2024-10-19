@@ -9,7 +9,6 @@ Tech choices:
 - **Code highlights**: `expressive-code`
 - **Search**: `pagefind`
 - **Utility UI-library**: `preact`
-- **Database** - `Supabase`'s `postgres` with `Prisma` ORM.
 - **Deployment** - `Vercel`
 
 Project structure:
