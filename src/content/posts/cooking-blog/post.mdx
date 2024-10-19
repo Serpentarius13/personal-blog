@@ -866,7 +866,7 @@ While React is about 100kb in prod, this tradeoff would've been minimal and less
 
 import HighlightConfig from './HighlightConfig.astro';
 
-Pushing that aside, when I was making <HighlightConfig />, I had wanted to finally use some `preact`. I heard about `nanostores`(ADDLINK) and their lightweightness, and thought why not. But in the end, I figured having to import state management into my script tags everywhere was not much of a goal as I could've perfectly used `MutationObserver` the same way I did it with theme picker. I just added a loop and switch statement to check what attribute changed:
+Pushing that aside, when I was making <HighlightConfig />, I had wanted to finally use some `preact`. I heard about [`nanostores`](https://github.com/nanostores/nanostores) and their lightweightness, and thought why not. But in the end, I figured having to import state management into my script tags everywhere was not much of a goal as I could've perfectly used `MutationObserver` the same way I did it with theme picker. I just added a loop and switch statement to check what attribute changed:
 
 ```js
 const observer = new MutationObserver((records) => {
