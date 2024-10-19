@@ -20,39 +20,59 @@ const { slug } = Astro.props;
   </div>
 
   <span id="cat-count" class="mr-1 text-sm">...</span>
-
-  <span id="cat-notes">🎶</span>
 </div>
 
 <script>
   import { postsApi } from "@/lib/api";
-import { debounce } from "@/lib/utils";
+  import { debounce } from "@/lib/utils";
 
   const catButton = document.querySelector("#cat-button") as HTMLDivElement;
-  const notes = document.querySelector("#cat-notes")!;
   const slug = catButton.dataset.slug!;
 
   let lastPlayedSound: string | undefined;
   const sounds = ["angry", "attention", "little", "scary", "sweet", "purr"];
-  const getRandomSound = () => sounds[(sounds.length * Math.random()) | 0]
+  const getRandomSound = () => sounds[(sounds.length * Math.random()) | 0];
 
   let hasPat = false;
 
   if (localStorage.getItem(`pat-cat-${slug}`)) {
     catButton.classList.add("swap-active");
   }
-  
 
   const handlePlayCat = () => {
     // yeah mom im a brogrammer https://stackoverflow.com/questions/5915096/get-a-random-item-from-a-javascript-array
-    let randomSound = getRandomSound()
-    while(randomSound === lastPlayedSound) {
-      randomSound = getRandomSound()
+    let randomSound = getRandomSound();
+    while (randomSound === lastPlayedSound) {
+      randomSound = getRandomSound();
     }
-    lastPlayedSound = randomSound
+    lastPlayedSound = randomSound;
     const audio = new Audio(window.location.origin + "/sounds/" + randomSound + ".wav");
+    audio.volume = 0.3;
     audio.play();
   };
+
+  const NOTES = "🎶";
+
+  const createCatNotes = () => {
+    const span = document.createElement("span");
+    span.classList.add("cat-notes");
+    span.textContent = NOTES;
+    const isMarginNegative = Math.random() > 0.5;
+    const marginValue = Math.random() * 30;
+    span.style.marginLeft = isMarginNegative ? `-${marginValue}px` : `${marginValue}px`;
+    catButton.appendChild(span);
+    setTimeout(() => {
+      span.remove();
+    }, 1000);
+  };
+
+  let pendingPats = 0;
+
+  const handleApplyPats = debounce(() => {
+    postsApi.likePost(slug).then(() => {
+      localStorage.setItem(`pat-cat-${slug}`, "true");
+    });
+  }, 1000);
 
   catButton.addEventListener("click", async () => {
     handlePlayCat();
@@ -60,13 +80,14 @@ import { debounce } from "@/lib/utils";
     catButton.classList.add("swap-active");
     catButton.classList.add("disabled");
 
-    notes.classList.add("active");
+    createCatNotes();
 
-    postsApi.likePost(slug).then(() => {
-      const count = document.querySelector("#cat-count") as HTMLElement;
-      localStorage.setItem(`pat-cat-${slug}`, "true");
-      count.textContent = String(Number(count.textContent) + 1);
-    });
+    pendingPats++;
+    const count = document.querySelector("#cat-count") as HTMLElement;
+    console.log(count, count.textContent);
+    count.textContent = String(Number(count.textContent) + 1);
+
+    handleApplyPats();
   });
 
   let hasShownCat = false;
@@ -89,28 +110,25 @@ import { debounce } from "@/lib/utils";
   window.addEventListener("scroll", handleScroll, { passive: true });
 </script>
 
-<style>
+<style is:global>
   #cat-button {
     &.visible {
       @apply opacity-100;
     }
   }
 
-  #cat-notes {
+  .cat-notes {
     @apply opacity-0 text-xl absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 block w-[32px] h-[32px] z-[10];
-
-    &.active {
-      animation: 3.5s animate-notes ease-out forwards;
-    }
+    animation: 1s animate-notes forwards;
   }
 
   @keyframes animate-notes {
-    10% {
-      @apply opacity-100 -translate-y-[30px];
+    70% {
+      @apply opacity-100;
     }
 
     100% {
-      @apply opacity-0 -translate-y-[30px];
+      @apply opacity-0 -translate-y-[50px];
     }
   }
 </style>
