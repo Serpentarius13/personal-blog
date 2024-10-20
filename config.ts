@@ -3,7 +3,7 @@ import type { BundledTheme } from "shiki";
 
 export const CODE_THEMES = {
   dark: "ayu-dark",
-  light: "rose-pine-dawn",
+  light: "vitesse-light",
 } as const satisfies Record<string, BundledTheme>;
 
 type DaisyThemeMap = Partial<Record<Theme, Theme>>;

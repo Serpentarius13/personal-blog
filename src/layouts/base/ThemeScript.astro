@@ -12,6 +12,11 @@
     luxury: "luxury",
   };
 
+  const codeThemes = {
+    dark: "ayu-dark",
+    light: "vitesse-light",
+  };
+
   const THEME_KEY = "theme";
   const getThemePreference = () => {
     const theme = localStorage.getItem(THEME_KEY);
@@ -24,7 +29,7 @@
   };
 
   const getCodeTheme = (theme) => {
-    const codeTheme = theme in darkThemes ? "ayu-dark" : "rose-pine-dawn";
+    const codeTheme = theme in darkThemes ? codeThemes["dark"] : codeThemes["light"];
     return codeTheme;
   };
 
