@@ -4,7 +4,7 @@ import { defineConfig } from "astro/config";
 // integrations
 import mdx from "@astrojs/mdx";
 import preact from "@astrojs/preact";
-import sitemap from "@astrojs/sitemap";
+// import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import vue from "@astrojs/vue";
 import expressiveCode from "astro-expressive-code";
@@ -55,13 +55,17 @@ export default defineConfig({
     }),
     mdx(),
     tailwind({}),
-    sitemap({
-      filter: (page) => page !== "/404" && page !== "/500" && page !== "/test",
-    }),
+    // sitemap({
+    //   filter: (page) => {
+    //     const filteredPages = ["/404/", "/500/", "/test/"];
+    //     return !!page && !filteredPages.some((loc) => page.endsWith(loc));
+    //   },
+    // }),
     vue(),
     pagefind(),
     preact({ compat: true }),
     robots({
+      sitemap: false,
       policy: [
         {
           userAgent: "*",

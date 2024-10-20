@@ -23,9 +23,6 @@ importers:
       '@astrojs/rss':
         specifier: ^4.0.7
         version: 4.0.7
-      '@astrojs/sitemap':
-        specifier: ^3.2.0
-        version: 3.2.0
       '@astrojs/tailwind':
         specifier: ^5.1.1
         version: 5.1.1(astro@4.15.12(@types/node@22.7.5)(rollup@4.24.0)(sass@1.79.4)(typescript@5.6.3))(tailwindcss@3.4.13)
@@ -272,9 +269,6 @@ packages:
 
   '@astrojs/rss@4.0.7':
     resolution: {integrity: sha512-ZEG55XFB19l+DplUvBISmz04UbjDtKliRO4Y5+ERRhAMjgCVVobEBNE6ZwWG1h6orWUocy4nfPihKXDyB73x9g==}
-
-  '@astrojs/sitemap@3.2.0':
-    resolution: {integrity: sha512-SkrOCL3Z6HxdiXreZ1+aPBWgnBMJ31EgPdcscgQeLqI2Gqk/4EKLuw9q0SqKU9MmHpcPXXtcd0odfCk4barPoA==}
 
   '@astrojs/tailwind@5.1.1':
     resolution: {integrity: sha512-LwurA10uIKcGRxQP2R81RvAnBT0WPKzBntXZBF4hrAefDgM5Uumn0nsGr6tdIjSARgYz4X+Cq/Vh78t3bql3yw==}
@@ -3932,9 +3926,6 @@ packages:
     resolution: {integrity: sha512-UhDfHmA92YAlNnCfhmq0VeNL5bDbiZGg7sZ2IvPsXubGkiNa9EC+tUTsjBRsYUAz87btI6/1wf4XoVvQ3uRnmQ==}
     engines: {node: '>=18'}
 
-  stream-replace-string@2.0.0:
-    resolution: {integrity: sha512-TlnjJ1C0QrmxRNrON00JvaFFlNh5TTG00APw23j74ET7gkQpTASi6/L2fuiav8pzK715HXtUeClpBTw2NPSn6w==}
-
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
     engines: {node: '>=8'}
@@ -4691,12 +4682,6 @@ snapshots:
     dependencies:
       fast-xml-parser: 4.5.0
       kleur: 4.1.5
-
-  '@astrojs/sitemap@3.2.0':
-    dependencies:
-      sitemap: 8.0.0
-      stream-replace-string: 2.0.0
-      zod: 3.23.8
 
   '@astrojs/tailwind@5.1.1(astro@4.15.12(@types/node@22.7.5)(rollup@4.24.0)(sass@1.79.4)(typescript@5.6.3))(tailwindcss@3.4.13)':
     dependencies:
@@ -9071,8 +9056,6 @@ snapshots:
   statuses@2.0.1: {}
 
   stdin-discarder@0.2.2: {}
-
-  stream-replace-string@2.0.0: {}
 
   string-width@4.2.3:
     dependencies:
