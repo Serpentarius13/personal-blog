@@ -23,9 +23,7 @@ export const GET: APIRoute = async ({ params }) => {
 
     return new Response(JSON.stringify({ post }), {
       headers: {
-        "Cache-Control": "no-cache, no-store, s-maxage=60",
-        "CDN-Cache-Control": "max-age=60",
-        "Vercel-CDN-Cache-Control": "max-age=60",
+        "Vercel-CDN-Cache-Control": "max-age=30",
       },
     });
   } catch (error) {
