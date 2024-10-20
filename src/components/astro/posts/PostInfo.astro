@@ -45,7 +45,6 @@ const { post, readingTime, imgUrl } = Astro.props;
 
 <script>
   import { postsApi } from "@/lib/api";
-  import { minWait } from "@/lib/utils";
 
   function main() {
     const badge = document.querySelector("#views-badge") as HTMLElement;
@@ -55,22 +54,19 @@ const { post, readingTime, imgUrl } = Astro.props;
 
     const slug = badge.dataset.slug!;
 
-    minWait(
-      postsApi
-        .getPost(slug)
-        .then(({ post }) => {
-          count.textContent = String(post.views);
+    postsApi
+      .getPost(slug)
+      .then(({ post }) => {
+        count.textContent = String(post.views);
 
-          const cat = document.getElementById("cat-count") as HTMLElement | undefined;
-          if (!cat) return;
-          cat.textContent = String(post.likes);
-        })
+        const cat = document.getElementById("cat-count") as HTMLElement | undefined;
+        if (!cat) return;
+        cat.textContent = String(post.likes);
+      })
 
-        .catch(() => {
-          count.textContent = "1337";
-        }),
-      200,
-    );
+      .catch(() => {
+        count.textContent = "1337";
+      });
   }
 
   main();
