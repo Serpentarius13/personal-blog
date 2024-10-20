@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "pnpm prisma generate && astro check && pnpm prisma migrate deploy && astro build",
     "preview": "astro preview",
     "preview:local": "IS_LOCAL=true astro build && IS_LOCAL=true astro preview",
     "astro": "astro",

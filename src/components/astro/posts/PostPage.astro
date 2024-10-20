@@ -48,9 +48,9 @@ const {
     </div>
 
     <a
-      href={Astro.url + post.data.image.src}
+      href={new URL(post.data.image.src, Astro.site).toString()}
       target="_blank"
-      class="x group h-[260px] w-[500px] hover:shadow-xl hover:shadow-base-content -lg:h-[340px] -lg:w-full -sm:hidden"
+      class="group h-[260px] w-[500px] hover:shadow-xl hover:shadow-base-content -lg:h-[340px] -lg:w-full -sm:hidden"
     >
       <Image src={post.data.image} alt={post.data.title} class="h-full w-full object-contain" />
     </a>
