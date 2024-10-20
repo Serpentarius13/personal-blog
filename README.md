@@ -41,9 +41,9 @@ I would also be grateful if you submit issues about bugs or your ideas about how
 - Extended `MDX` support with `remark` and `rehype` plugins
 - Cool themed code blocks with `expressive-code`
 - Global search via `pagefind`
-- Configuration of text width and size
+- Global `configuration` of text width and size
 - Grid view to paginate posts
-- RSS, sitemap, SEO-optimized, adaptive and performant without any unnecessary JS sent to the client
+- `RSS`, `sitemap`, `OpenGraph` images, `SEO`-optimized, adaptive and performant without any unnecessary JS sent to the client
 - Database integration via `postgres`, `supabase`, `Prisma` and `kysely`
 
 This project is licensed under the terms of the MIT license.
