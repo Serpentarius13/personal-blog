@@ -1,6 +1,8 @@
 ---
+import { Icon } from "@/components/react/Icon";
 import { formatDate } from "@/lib/date";
 import type { CollectionEntry } from "astro:content";
+import PostInfoTag from "./PostInfoTag.astro";
 
 interface Props {
   post: CollectionEntry<"posts">;
@@ -10,28 +12,19 @@ interface Props {
 const { post, readingTime } = Astro.props;
 ---
 
-<div class="mx-auto mt-4 flex min-h-6 w-fit flex-wrap items-center justify-center gap-2">
-  <div class="min-w-20">
-    <span
-      class="badge badge-accent badge-lg w-full data-[loading='true']:skeleton"
-      id="views-badge"
-      data-slug={post.slug}
-    >
-      Views: &nbsp;<span id="views-count"></span>
-    </span>
-  </div>
+<div class="mx-auto flex w-full flex-col items-start justify-center gap-2">
+  <PostInfoTag id="views-badge" data-slug={post.slug} className="fluent--eye-lines-20-regular">
+    <span id="views-count" class="text-xl font-bold"></span>
+    <span> views</span>
+  </PostInfoTag>
 
-  <div class="badge badge-primary badge-lg">{formatDate(post.data.date)}</div>
+  <PostInfoTag className="fluent--calendar-20-regular">
+    Published at: <b>{formatDate(post.data.date)}</b>
+  </PostInfoTag>
 
-  <div class="badge badge-success badge-lg">{readingTime}</div>
-
-  {
-    post.data.trackName && (
-      <div class="badge badge-info badge-lg" data-pagefind-filter="Track">
-        Track: {post.data.trackName}
-      </div>
-    )
-  }
+  <PostInfoTag id="views-badge" data-slug={post.slug} className="fluent--reading-list-20-regular">
+    Reading time: <b>{readingTime}</b>
+  </PostInfoTag>
 </div>
 
 <script>
