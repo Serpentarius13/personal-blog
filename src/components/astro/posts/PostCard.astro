@@ -21,7 +21,7 @@ const {
 <div
   class="not-prose group card relative rounded-box border transition-all ease-in-out hover:shadow-xl dark:hover:ring-4 dark:hover:ring-primary"
 >
-  <a href={`/blog/${entry.slug}`} class="card-body flex flex-col gap-4">
+  <a href={`/blog/${entry.slug}`} class="card-body flex flex-col gap-4" data-astro-prefetch>
     <Image
       src={entry.data.image}
       alt={entry.data.title}

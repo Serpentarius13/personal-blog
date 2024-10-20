@@ -13,6 +13,7 @@ const { post } = Astro.props;
 <a
   class="group card relative max-h-full min-w-[240px] flex-1 shadow-2xl transition-all hover:scale-[1.05] hover:shadow-md md:max-h-[380px] md:max-w-[320px]"
   href={`/blog/${post.slug}`}
+  data-astro-prefetch
 >
   <div
     class="badge badge-md absolute left-0 top-0 rounded-box rounded-bl-none rounded-tl-none rounded-tr-none"
