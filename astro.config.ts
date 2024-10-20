@@ -76,7 +76,7 @@ export default defineConfig({
     ],
   },
 
-  adapter: process.env.IS_LOCAL ? vercel() : node({ mode: "standalone" }),
+  adapter: process.env.IS_LOCAL ? node({ mode: "standalone" }) : vercel(),
   output: "hybrid",
 
   devToolbar: {
