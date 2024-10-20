@@ -58,7 +58,7 @@ const { slug } = Astro.props;
     span.classList.add("cat-notes");
     span.textContent = NOTES;
     const isMarginNegative = Math.random() > 0.5;
-    const marginValue = Math.random() * 30;
+    const marginValue = Math.random() * 15;
     span.style.marginLeft = isMarginNegative ? `-${marginValue}px` : `${marginValue}px`;
     catButton.appendChild(span);
     setTimeout(() => {
@@ -69,7 +69,7 @@ const { slug } = Astro.props;
   let pendingPats = 0;
 
   const handleApplyPats = debounce(() => {
-    postsApi.likePost(slug).then(() => {
+    postsApi.likePost(slug, pendingPats).then(() => {
       localStorage.setItem(`pat-cat-${slug}`, "true");
     });
   }, 1000);

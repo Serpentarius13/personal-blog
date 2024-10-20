@@ -1,12 +1,10 @@
-import { CONFIG } from "config";
 import { PostAction } from "./schemas";
 
 class Client {
-  #url = CONFIG.API_URL;
   constructor() {}
 
   #makeUrl(path: string) {
-    return `${this.#url}${path}`;
+    return `/api${path}`;
   }
 
   request(path: string, init?: RequestInit) {
@@ -24,7 +22,7 @@ type Post = {
 const client = new Client();
 
 const getPost = async (postId: string) => {
-  return client.request(`/post/${postId}`).then<{post: Post}>((res) => res.json());
+  return client.request(`/post/${postId}`).then<{ post: Post }>((res) => res.json());
 };
 
 type UpdateResponse = Post | { error: string };
@@ -53,13 +51,14 @@ const viewPost = async (postId: string) => {
     .then<UpdateResponse>((res) => res.json());
 };
 
-const likePost = async (postId: string) => {
+const likePost = async (postId: string, count = 1) => {
   return client
     .request(`/post`, {
       method: "POST",
       body: JSON.stringify({
         postId,
         action: PostAction.LIKE,
+        increment: count,
       }),
     })
     .then<UpdateResponse>((res) => res.json());

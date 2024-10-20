@@ -30,7 +30,8 @@ import rehypeAutolink from "rehype-autolink-headings";
 import { remarkReadingTime } from "./plugins/remark-reading-time";
 
 // adapter
-import vercel from "@astrojs/vercel/static";
+import node from "@astrojs/node";
+import vercel from "@astrojs/vercel/serverless";
 
 // conf
 import { CODE_THEMES, CONFIG } from "./config";
@@ -42,8 +43,8 @@ import removeConsole from "vite-plugin-remove-console";
 export default defineConfig({
   site: CONFIG.SITE_URL,
 
-  vite : {
-    plugins: [removeConsole()]
+  vite: {
+    plugins: [removeConsole()],
   },
 
   integrations: [
@@ -73,8 +74,8 @@ export default defineConfig({
     ],
   },
 
-  adapter: vercel(),
-  output: "static",
+  adapter: process.env.IS_LOCAL ? vercel() : node({ mode: "standalone" }),
+  output: "hybrid",
 
   devToolbar: {
     enabled: false,

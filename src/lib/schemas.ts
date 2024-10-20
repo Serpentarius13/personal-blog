@@ -13,4 +13,5 @@ export enum PostAction {
 export const postActionSchema = z.object({
   postId: z.string(),
   action: z.enum([PostAction.READ, PostAction.LIKE, PostAction.VIEW]),
+  increment: z.number().default(1),
 });
