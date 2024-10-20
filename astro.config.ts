@@ -9,7 +9,7 @@ import tailwind from "@astrojs/tailwind";
 import vue from "@astrojs/vue";
 import expressiveCode from "astro-expressive-code";
 import pagefind from "astro-pagefind";
-
+import robots from "astro-robots-txt";
 // expressive code
 
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
@@ -61,6 +61,16 @@ export default defineConfig({
     vue(),
     pagefind(),
     preact({ compat: true }),
+    robots({
+      policy: [
+        {
+          userAgent: "*",
+          allow: "/",
+          disallow: ["/404", "/500", "/test"],
+        },
+      ],
+      host: true,
+    }),
   ],
 
   markdown: {
