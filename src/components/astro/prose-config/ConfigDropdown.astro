@@ -112,7 +112,7 @@ const { class: className, contentClassname } = Astro.props;
 
   html[data-config_font-size="sm"] {
     .article-body {
-      @apply prose-sm;
+      @apply prose-sm prose-h2:text-2xl;
     }
 
     .config-fontSize-btn[data-value="sm"] {
@@ -121,6 +121,10 @@ const { class: className, contentClassname } = Astro.props;
   }
 
   html[data-config_font-size="def"] {
+    .article-body {
+      @apply prose-h2:text-3xl;
+    }
+
     .config-fontSize-btn[data-value="def"] {
       @apply btn-active;
     }
@@ -128,7 +132,7 @@ const { class: className, contentClassname } = Astro.props;
 
   html[data-config_font-size="lg"] {
     .article-body {
-      @apply prose-lg;
+      @apply prose-lg prose-h2:text-4xl;
     }
 
     .config-fontSize-btn[data-value="lg"] {

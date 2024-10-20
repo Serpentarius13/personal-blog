@@ -17,7 +17,11 @@ const config: Config = {
         "-lg": { max: "1023px" },
         "-md": { max: "767px" },
         "-sm": { max: "639px" },
-        "xs": {min: '440px'}
+        xs: { min: "440px" },
+      },
+      fontFamily: {
+        jetbrains: ["JetBrains Mono", "monospace"],
+        anton: ["Anton", "sans-serif"],
       },
     },
   },

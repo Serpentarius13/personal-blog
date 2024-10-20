@@ -19,6 +19,8 @@ I would also be grateful if you submit issues about bugs or your ideas about how
 
 - `/content` and `/pages` folders are reserved by Astro for content collections and serving pages.
 
+  - `/pages/api` is for serverless API routes. Currently used for retrieving and updating post data.
+
 - `/components` is a folder of folders for types of components divided by frameworks for easy search: `/astro`, `/react`. There's also `/mdx` folder which I think is okay to use for any shared interactive blocks between the articles. Inside every folder there is flat a division by entity: `/posts`, `/index`, `/navbar`
 
 - `/db` is for Database initialization: `pg` pool, `kysely` instance. In `/db/schema.ts` is a generated file by `prisma-kysely` generator so there would be no need to map Prisma and kysely types. Also there are files like `post.ts` with repositories to manipulate the database, so that API routes would not be as bloated.
@@ -27,7 +29,7 @@ I would also be grateful if you submit issues about bugs or your ideas about how
 
 - `/lib` is a folder for utilities, zod schemas, API client and so on.
 
-- `/styles` is for global styles: there is a `code.css` file specifically for styling code blocks, `components.css` for classes like `box` and `index.css` for other global styles and reexporting the other two.
+- `/styles` is for global styles: there is a `components.css` for classes like `box` and `index.css` for other global styles and reexporting the other two.
 
 `/plugins` is for any plugins, specifically for `rehype`, `remark` and `expressive-code`.
 
