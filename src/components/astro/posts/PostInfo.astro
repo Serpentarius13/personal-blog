@@ -13,7 +13,13 @@ const { post, readingTime } = Astro.props;
 ---
 
 <div class="mx-auto flex w-full flex-col items-start justify-center gap-2">
-  <PostInfoTag id="views-badge" data-slug={post.slug} className="fluent--eye-lines-20-regular">
+  <PostInfoTag
+    class="!rounded-none py-1 [&[data-loading=true]]:skeleton [&[data-loading=true]_*]:opacity-0"
+    id="views-badge"
+    data-loading="true"
+    data-slug={post.slug}
+    className="fluent--eye-lines-20-regular"
+  >
     <span id="views-count" class="text-xl font-bold"></span>
     <span> views</span>
   </PostInfoTag>
@@ -29,6 +35,7 @@ const { post, readingTime } = Astro.props;
 
 <script>
   import { postsApi } from "@/lib/api";
+  import { minWait } from "@/lib/utils";
 
   function main() {
     const badge = document.querySelector("#views-badge") as HTMLElement;
@@ -36,25 +43,26 @@ const { post, readingTime } = Astro.props;
 
     if (!count || !badge) return;
 
-    badge.dataset.loading = "true";
-
     const slug = badge.dataset.slug!;
 
-    postsApi
-      .getPost(slug)
-      .then(({ post }) => {
-        count.textContent = String(post.views);
+    minWait(
+      postsApi
+        .getPost(slug)
+        .then(({ post }) => {
+          count.textContent = String(post.views);
 
-        const cat = document.getElementById("cat-count") as HTMLElement | undefined;
-        if (!cat) return;
-        cat.textContent = String(post.likes);
-      })
-      .finally(() => {
-        badge.dataset.loading = "false";
-      })
-      .catch(() => {
-        count.textContent = "0";
-      });
+          const cat = document.getElementById("cat-count") as HTMLElement | undefined;
+          if (!cat) return;
+          cat.textContent = String(post.likes);
+        })
+        .finally(() => {
+          badge.dataset.loading = "false";
+        })
+        .catch(() => {
+          count.textContent = "0";
+        }),
+      200,
+    );
   }
 
   main();
