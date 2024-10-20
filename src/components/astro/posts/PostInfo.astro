@@ -7,9 +7,10 @@ import PostInfoTag from "./PostInfoTag.astro";
 interface Props {
   post: CollectionEntry<"posts">;
   readingTime: string;
+  imgUrl: string;
 }
 
-const { post, readingTime } = Astro.props;
+const { post, readingTime, imgUrl } = Astro.props;
 ---
 
 <div class="mx-auto flex w-full flex-col items-start justify-center gap-2">
@@ -28,8 +29,18 @@ const { post, readingTime } = Astro.props;
     Published at: <b>{formatDate(post.data.date)}</b>
   </PostInfoTag>
 
-  <PostInfoTag id="views-badge" data-slug={post.slug} className="fluent--reading-list-20-regular">
+  <PostInfoTag className="fluent--reading-list-20-regular">
     Reading time: <b>{readingTime}</b>
+  </PostInfoTag>
+
+  <PostInfoTag
+    as="a"
+    href={imgUrl}
+    class="hidden fluent--image-20-regular visited:text-base-content -sm:flex"
+    className="fluent--image-20-regular"
+    target="_blank"
+  >
+    Click here to open image in another tab
   </PostInfoTag>
 </div>
 

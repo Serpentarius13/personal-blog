@@ -15,11 +15,13 @@ const {
   headings,
   remarkPluginFrontmatter: { readingTime },
 } = await post.render();
+
+const imgUrl = new URL(post.data.image.src, Astro.site).toString();
 ---
 
 <div data-pagefind-body>
   <header
-    class="mx-auto mb-12 mt-8 flex h-[350px] w-fit items-center gap-4 -lg:h-fit -lg:flex-col-reverse -lg:items-start"
+    class="mx-auto mb-12 mt-8 flex h-[350px] w-fit items-center gap-4 -lg:h-fit -lg:flex-col-reverse -lg:items-start -sm:mb-6 -sm:mt-4"
   >
     <div class="flex max-w-[460px] flex-col gap-4 -lg:mt-8 -lg:w-full -lg:max-w-full">
       <h1 class="text-center text-4xl font-extrabold">
@@ -30,7 +32,7 @@ const {
         {post.data.description}
       </p>
 
-      <PostInfo post={post} readingTime={readingTime} />
+      <PostInfo imgUrl={imgUrl} post={post} readingTime={readingTime} />
 
       {
         post.data.tags && (
@@ -48,11 +50,13 @@ const {
     </div>
 
     <a
-      href={new URL(post.data.image.src, Astro.site).toString()}
+      href={imgUrl}
       target="_blank"
       class="group h-[260px] w-[500px] hover:shadow-xl hover:shadow-base-content -lg:h-[340px] -lg:w-full -sm:hidden"
+      aria-labelledby="post-image-label"
     >
       <Image src={post.data.image} alt={post.data.title} class="h-full w-full object-contain" />
+      <span class="sr-only" id="post-image-label"> Click to see post's image </span>
     </a>
   </header>
 

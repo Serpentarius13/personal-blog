@@ -1,16 +1,18 @@
 ---
 import { Icon } from "@/components/react/Icon";
 import { cn } from "@/lib/cn";
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes, HTMLTag } from "astro/types";
 
-interface Props extends HTMLAttributes<"span"> {
+type Props<T extends HTMLTag = "span"> = {
+  as?: T;
+  class?: string;
   className?: string;
-}
+} & HTMLAttributes<T extends 'a'? 'a' : 'span'>;
 
-const { class: wrapperClassName, className, ...props } = Astro.props;
+const { class: wrapperClassName, className, as: Tag = "span", ...props } = Astro.props;
 ---
 
-<span
+<Tag
   class={cn(
     "flex text-lg  pb-2 border-b-[0.5px] border-b-base-content rounded-none w-full items-center gap-2",
     wrapperClassName,
@@ -19,4 +21,4 @@ const { class: wrapperClassName, className, ...props } = Astro.props;
 >
   <Icon className={cn("text-3xl", className)} />
   <slot />
-</span>
+</Tag>
