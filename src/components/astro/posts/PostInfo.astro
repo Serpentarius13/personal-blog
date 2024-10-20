@@ -20,7 +20,9 @@ const { post, readingTime, imgUrl } = Astro.props;
     data-slug={post.slug}
     className="fluent--eye-lines-20-regular"
   >
-    <span id="views-count" class="font-bold"></span>
+    <span id="views-count" class="font-bold">
+      <Icon className="animate-spin text-xs fluent--spinner-ios-20-regular" />
+    </span>
     <span> views</span>
   </PostInfoTag>
 
