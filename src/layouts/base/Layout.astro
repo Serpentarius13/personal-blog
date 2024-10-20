@@ -22,6 +22,10 @@ interface Props extends LayoutProps {
 }
 
 const { mainClassname, bodyClassname, wrapperClassname, ...props } = Astro.props;
+
+// caching
+
+Astro.response.headers.set("Cache-Control", "public, must-revalidate, max-age=300, s-maxage=86400");
 ---
 
 <!doctype html>
@@ -37,7 +41,10 @@ const { mainClassname, bodyClassname, wrapperClassname, ...props } = Astro.props
     <ThemeScript />
   </Head>
   <body class={cn("", bodyClassname)}>
-    <div class={cn("flex h-full max-w-full flex-col px-3 md:px-2 lg:px-1", wrapperClassname)} id="app">
+    <div
+      class={cn("flex h-full max-w-full flex-col px-3 md:px-2 lg:px-1", wrapperClassname)}
+      id="app"
+    >
       <Navbar>
         <slot name="navbar" slot="default" />
       </Navbar>

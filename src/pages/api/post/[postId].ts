@@ -21,7 +21,13 @@ export const GET: APIRoute = async ({ params }) => {
 
     const post = await postsRepository.getPostOrDefault(postId);
 
-    return new Response(JSON.stringify({ post }));
+    return new Response(JSON.stringify({ post }), {
+      headers: {
+        "Cache-Control": "max-age=60",
+        "CDN-Cache-Control": "max-age=60",
+        "Vercel-CDN-Cache-Control": "max-age=60",
+      },
+    });
   } catch (error) {
     console.log(error);
     return new Response(JSON.stringify({ error: error.message }));
