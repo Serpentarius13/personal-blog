@@ -30,7 +30,7 @@ const decrement = () => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .fade-up-enter-active,  
  .fade-up-leave-active,
  .fade-down-enter-active,  

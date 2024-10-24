@@ -55,12 +55,7 @@ export default defineConfig({
     }),
     mdx(),
     tailwind({}),
-    // sitemap({
-    //   filter: (page) => {
-    //     const filteredPages = ["/404/", "/500/", "/test/"];
-    //     return !!page && !filteredPages.some((loc) => page.endsWith(loc));
-    //   },
-    // }),
+
     vue(),
     pagefind(),
     preact({ compat: true }),
