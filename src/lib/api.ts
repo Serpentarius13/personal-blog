@@ -29,7 +29,7 @@ type UpdateResponse = Post | { error: string };
 
 const readPost = async (postId: string) => {
   return client
-    .request(`/api/post`, {
+    .request(`/post`, {
       method: "POST",
       body: JSON.stringify({
         postId,

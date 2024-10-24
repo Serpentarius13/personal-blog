@@ -1,6 +1,6 @@
 ---
 import Pagination from "@/components/astro/Pagination.astro";
-import PostGrid from "@/components/astro/posts/PostGrid.astro";
+import PostCard from "@/components/astro/posts/PostCard.astro";
 import Layout from "@/layouts/base";
 import { getPosts } from "@/lib/posts";
 import type { PaginateFunction } from "astro";
@@ -23,6 +23,9 @@ const { page: pageInfo } = Astro.props;
   bodyClassname="h-[100svh] h-screen"
   wrapperClassname="!h-auto min-h-full"
 >
-  <PostGrid posts={pageInfo.data} />
+  <div class="box mx-auto flex min-h-full flex-wrap justify-center gap-4">
+    {pageInfo.data.map((post) => <PostCard post={post} />)}
+  </div>
+
   <Pagination page={pageInfo} baseUrl="/blog" />
 </Layout>

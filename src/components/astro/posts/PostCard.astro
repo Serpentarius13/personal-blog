@@ -1,55 +1,33 @@
 ---
 import { Icon } from "@/components/react/Icon";
 import { formatDate } from "@/lib/date";
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
-type Props = {
-  entry: CollectionEntry<"posts">;
-};
+interface Props {
+  post: CollectionEntry<"posts">;
+}
 
-const { entry } = Astro.props as {
-  entry: CollectionEntry<"posts">;
-};
+const { post } = Astro.props;
 
-const formattedDate = formatDate(entry.data.date);
+const formattedDate = formatDate(post.data.date);
 const {
   remarkPluginFrontmatter: { readingTime },
-} = await entry.render();
+} = await post.render();
 ---
 
 <div
   class="not-prose group card relative rounded-box border transition-all ease-in-out hover:shadow-xl dark:hover:ring-4 dark:hover:ring-primary"
 >
-  <a href={`/blog/${entry.slug}`} class="card-body flex flex-col gap-4" data-astro-prefetch>
-    <Image
-      src={entry.data.image}
-      alt={entry.data.title}
-      widths={[300, 600]}
-      sizes="(max-width: 768px) 300px, 600px"
-      height={300}
-      class="aspect-video w-full object-contain"
-    />
+  <a href={`/blog/${post.slug}`} class="card-body flex flex-col gap-4" data-astro-prefetch>
     <div class="flex flex-grow flex-col gap-1">
       <h3 class="text-lg">
-        {entry.data.title}
+        {post.data.title}
       </h3>
-      <p class="mb-2 pb-1 text-sm">{entry.data.description}</p>
+      <p class="mb-2 pb-1 text-sm">{post.data.description}</p>
       <div class="mb-2 flex flex-wrap items-center gap-x-2 text-sm">
         <span>{formattedDate}</span> |
         <span>{readingTime}</span>
       </div>
-      {
-        entry.data.tags && (
-          <div class="flex flex-wrap gap-2">
-            {entry.data.tags.map((tag) => (
-              <span class="badge duration-300 group-hover:bg-secondary group-hover:text-secondary-content">
-                #{tag}
-              </span>
-            ))}
-          </div>
-        )
-      }
     </div>
   </a>
 

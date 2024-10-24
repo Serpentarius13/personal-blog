@@ -7,41 +7,32 @@ import PostInfoTag from "./PostInfoTag.astro";
 interface Props {
   post: CollectionEntry<"posts">;
   readingTime: string;
-  imgUrl: string;
 }
 
-const { post, readingTime, imgUrl } = Astro.props;
+const { post, readingTime } = Astro.props;
 ---
 
-<div class="mx-auto flex w-full flex-col items-start justify-center gap-2">
+<div class="flex flex-wrap items-center gap-4">
   <PostInfoTag
     class="!rounded-none py-1"
     id="views-badge"
     data-slug={post.slug}
     className="fluent--eye-lines-20-regular"
   >
-    <span id="views-count" class="font-bold">
-      <Icon className="animate-spin text-xs fluent--spinner-ios-20-regular" />
-    </span>
-    <span> views</span>
+    <b>
+      <span id="views-count" class="font-bold">
+        <Icon className="animate-spin text-xs fluent--spinner-ios-20-regular" />
+      </span>
+      views
+    </b>
   </PostInfoTag>
 
   <PostInfoTag className="fluent--calendar-20-regular">
-    Published at: <b>{formatDate(post.data.date)}</b>
+    <b>{formatDate(post.data.date)}</b>
   </PostInfoTag>
 
   <PostInfoTag className="fluent--reading-list-20-regular">
-    Reading time: <b>{readingTime}</b>
-  </PostInfoTag>
-
-  <PostInfoTag
-    as="a"
-    href={imgUrl}
-    class="hidden fluent--image-20-regular visited:text-base-content -sm:flex"
-    className="fluent--image-20-regular"
-    target="_blank"
-  >
-    Click here to open image in another tab
+    <b>{readingTime}</b>
   </PostInfoTag>
 </div>
 

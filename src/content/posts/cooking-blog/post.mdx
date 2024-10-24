@@ -3,9 +3,6 @@ slug: "astro-blog-from-scratch"
 title: "Cooking static blog with Astro"
 description: "There's many ways to build a static site. I've gone with Astro and want to share what DX I had and what paths I took."
 date: 2024-06-10
-image: "./Preview.jpg"
-imageAlt: "A Vitruvian man with head as Astro logo and Penis as Vanilla JS script holding Tailwind, Daisy, Preact and Shiki, with legs as Lighthouse & Robots.txt logo"
-tags: ["astro", "shiki", "markdown", "seo", "tailwind", "lighthouse", "mdx"]
 draft: false
 ---
 import MdxImage from '@/components/mdx/MdxImage.astro';
@@ -467,25 +464,15 @@ const postsCollection = defineCollection({
         imageAlt: z.string(),
         tags: z.array(z.string()).optional(),
         draft: z.boolean().optional(),
-
-        trackIndex: z.number().optional(),
-        trackName: z.string().optional(),
       })
-      .superRefine((data, ctx) => {
-        if ((data.trackIndex && !data.trackName) || (!data.trackIndex && data.trackName)) {
-          return ctx.addIssue({
-            path: ["trackIndex", "trackName"],
-            code: z.ZodIssueCode.custom,
-            message: "trackIndex and trackName must be used together",
-          });
-        }
-      }),
 });
 
 export const collections = {
   posts: postsCollection,
 };
 ```
+
+Here, I give an example of using `image()` zod validator from Astro, but in the end I have decided to not have images in my blog. I think it is unnecessary for users to download some 500kb and look at blank screen outside the preview when reading technical stuff.
 
 `config.ts` uses `defineCollection` helper alongsize re-exported zod's `z` to build type-safe schemas for blog posts. Then, it is important to re-export `collections` constant for astro to notice it. When you start your project with `astro dev` or run `astro sync` directly, it would generate types for your collection to use in the project:
 

@@ -1,9 +1,11 @@
 ---
 import { Icon } from "@/components/react/Icon";
+import type { CollectionEntry } from "astro:content";
 
+type MaybePost = CollectionEntry<"posts"> | null;
 interface Props {
-  next?: string | undefined;
-  prev?: string | undefined;
+  next?: MaybePost;
+  prev?: MaybePost;
 }
 
 const { next, prev } = Astro.props;
@@ -12,36 +14,41 @@ const { next, prev } = Astro.props;
 <div class="box mt-12 flex flex-col gap-2">
   <slot name="title" />
 
-  <a href={next} class="link" rel={!next ? "nofollow" : ""}>
-    <slot name="next" />
-    <Icon className="arrow-right line-md--arrow-right" />
-  </a>
+  {
+    next && (
+      <a
+        href={`/blog/${next.slug}`}
+        class="group btn btn-outline btn-primary justify-between transition-all"
+      >
+        <span>next_article</span>
 
-  <a href={prev} class="link" rel={!prev ? "nofollow" : ""}>
-    <Icon className="arrow-left line-md--arrow-left" />
-    <slot name="prev" />
-  </a>
+        <span>
+          <b class="font-caveat text-2xl">{next.data.title}</b>
+
+          <Icon className="la--arrow-right ml-2" />
+        </span>
+      </a>
+    )
+  }
+
+  {
+    prev && (
+      <a
+        href={`/blog/${prev.slug}`}
+        class="group btn btn-outline btn-accent justify-between transition-all"
+      >
+        <span>
+          <Icon className="la--arrow-left mr-2" />
+
+          <b class="font-caveat text-2xl">{prev.data.title}</b>
+        </span>
+
+        <span>PreviousArticle</span>
+      </a>
+    )
+  }
 </div>
 
-<style lang="postcss">
-  .link {
-    @apply btn btn-md w-full btn-outline disabled:btn-ghost disabled:pointer-events-none disabled:cursor-not-allowed;
- 
-   .iconify {
-        transition: color 0.2s, transform 0.5s;
-    }
-
-    &:hover .arrow-right {
-      @apply translate-x-2;
-    }
-
-    &:hover .arrow-left {
-      @apply -translate-x-2;
-    }
-    
-
-    &:not(:link) {
-      @apply opacity-50  pointer-events-none;
-    }
-  }
-</style>
+<script>
+  console.log(localStorage.getItem("view-post-astro-blog-from-scratch"));
+</script>

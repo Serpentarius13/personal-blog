@@ -1,6 +1,5 @@
 ---
 import { cn } from "@/lib/cn";
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import PostInfo from "./PostInfo.astro";
 import TableOfContents from "./toc/TableOfContents.astro";
@@ -15,55 +14,18 @@ const {
   headings,
   remarkPluginFrontmatter: { readingTime },
 } = await post.render();
-
-const imgUrl = new URL(post.data.image.src, Astro.site).toString();
 ---
 
 <div data-pagefind-body>
-  <header
-    class="mx-auto mb-12 mt-8 flex h-[350px] w-fit items-center gap-4 -lg:h-fit -lg:flex-col-reverse -lg:items-start -sm:mb-6 -sm:mt-4"
-  >
-    <div class="flex max-w-[460px] flex-col gap-4 -lg:mt-8 -lg:w-full -lg:max-w-full">
-      <h1 class="font-caveat text-center text-4xl font-bold">
-        {post.data.title}
-      </h1>
+  <header class="mx-auto mt-8 flex w-[--article-width] max-w-full flex-col gap-4">
+    <h1 class="font-caveat text-6xl">
+      {post.data.title}
+    </h1>
 
-      <p class="max-w-lg text-[16px] font-bold italic">
-        {post.data.description}
-      </p>
-
-      <PostInfo imgUrl={imgUrl} post={post} readingTime={readingTime} />
-
-      {
-        post.data.tags && (
-          <ul class="mx-auto mt-2 flex w-fit max-w-md flex-wrap justify-center gap-1.5">
-            {post.data.tags.map((tag) => {
-              return (
-                <li data-pagefind-filter={"Topics"} class="badge badge-outline badge-lg">
-                  #{tag}
-                </li>
-              );
-            })}
-          </ul>
-        )
-      }
-    </div>
-
-    <a
-      href={imgUrl}
-      target="_blank"
-      class="group h-[260px] w-[500px] hover:shadow-xl hover:shadow-base-content -lg:h-[340px] -lg:w-full -sm:hidden"
-      aria-labelledby="post-image-label"
-    >
-      <Image
-        src={post.data.image}
-        alt={post.data.title}
-        class="h-full w-full object-contain"
-        widths={[500, 750]}
-        sizes="(max-width: 1024px) 500px, 750px"
-      />
-      <span class="sr-only" id="post-image-label"> Click to see post's image </span>
-    </a>
+    <p class="max-w-xl text-balance border-l-2 border-l-primary py-2 pl-4 text-[16px] text-xl">
+      {post.data.description}
+    </p>
+    <PostInfo post={post} readingTime={readingTime} />
   </header>
 
   <div class={"flex flex-col items-start  xl:grid xl:grid-cols-[0px_1fr] "}>

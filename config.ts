@@ -70,5 +70,4 @@ export const CONFIG = {
   SOCIAL_LINKS,
   SITE_URL,
   SEARCH_MODAL_ID: "page-search-modal",
-  ARTICLE_BODY_ID: "article-body",
 } as const;

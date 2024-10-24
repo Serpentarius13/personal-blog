@@ -7,18 +7,12 @@ type Props<T extends HTMLTag = "span"> = {
   as?: T;
   class?: string;
   className?: string;
-} & HTMLAttributes<T extends 'a'? 'a' : 'span'>;
+} & HTMLAttributes<T extends "a" ? "a" : "span">;
 
 const { class: wrapperClassName, className, as: Tag = "span", ...props } = Astro.props;
 ---
 
-<Tag
-  class={cn(
-    "flex text-lg  pb-2 border-b-[0.5px] border-b-base-content rounded-none w-full items-center gap-2",
-    wrapperClassName,
-  )}
-  {...props}
->
-  <Icon className={cn("text-3xl", className)} />
+<Tag class={cn("flex text-lg rounded-none w-fit items-center gap-1", wrapperClassName)} {...props}>
+  <Icon className={cn("text-3xl text-primary", className)} />
   <slot />
 </Tag>

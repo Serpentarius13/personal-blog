@@ -1,5 +1,4 @@
 ---
-import { Icon } from "@/components/react/Icon";
 import type { CollectionEntry } from "astro:content";
 import PostCard from "../posts/PostCard.astro";
 
@@ -11,10 +10,8 @@ const { post } = Astro.props;
 ---
 
 <section class="box mt-8 flex flex-1 flex-col gap-4 lg:mt-4">
-  <h2 class="font-caveat text-2xl">
-    Check out my latest post! <Icon className="align-middle la--arrow-down" />
-  </h2>
-  <PostCard entry={post} />
+  <h2 class="font-caveat text-4xl">Check out my latest post!</h2>
+  <PostCard post={post} />
 
   <a href="/blog" class="btn btn-outline btn-primary mx-auto w-fit">More blog posts </a>
 </section>

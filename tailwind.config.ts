@@ -18,6 +18,7 @@ const config: Config = {
         "-md": { max: "767px" },
         "-sm": { max: "639px" },
         xs: { min: "440px" },
+        "-xs": { max: "440px" },
       },
       fontFamily: {
         jetbrains: ["JetBrains Mono", "monospace"],
