@@ -19,20 +19,25 @@ const { post, readingTime } = Astro.props;
     data-slug={post.slug}
     className="fluent--eye-lines-20-regular"
   >
-    <b>
-      <span id="views-count" class="font-bold">
-        <Icon className="animate-spin text-xs fluent--spinner-ios-20-regular" />
-      </span>
-      views
-    </b>
+    <span id="views-count">
+      <Icon className="animate-spin text-xs fluent--spinner-ios-20-regular" />
+    </span>
+    views
+  </PostInfoTag>
+
+  <PostInfoTag class="!rounded-none py-1" className="fluent--book-20-regular">
+    <span id="reads-count">
+      <Icon className="animate-spin text-xs fluent--spinner-ios-20-regular" />
+    </span>
+    reads
   </PostInfoTag>
 
   <PostInfoTag className="fluent--calendar-20-regular">
-    <b>{formatDate(post.data.date)}</b>
+    {formatDate(post.data.date)}
   </PostInfoTag>
 
   <PostInfoTag className="fluent--reading-list-20-regular">
-    <b>{readingTime}</b>
+    {readingTime}
   </PostInfoTag>
 </div>
 
@@ -40,17 +45,17 @@ const { post, readingTime } = Astro.props;
   import { postsApi } from "@/lib/api";
 
   function main() {
-    const badge = document.querySelector("#views-badge") as HTMLElement;
-    const count = document.querySelector("#views-count");
-
-    if (!count || !badge) return;
+    const badge = document.querySelector("#views-badge")! as HTMLElement;
+    const viewsCount = document.querySelector("#views-count")!;
+    const readsCount = document.querySelector("#reads-count")!;
 
     const slug = badge.dataset.slug!;
 
     postsApi
       .getPost(slug)
       .then(({ post }) => {
-        count.textContent = String(post.views);
+        viewsCount.textContent = String(post.views);
+        readsCount.textContent = String(post.reads);
 
         const cat = document.getElementById("cat-count") as HTMLElement | undefined;
         if (!cat) return;
@@ -58,7 +63,8 @@ const { post, readingTime } = Astro.props;
       })
 
       .catch(() => {
-        count.textContent = "1337";
+        viewsCount.textContent = "1337";
+        readsCount.textContent = "777";
       });
   }
 
