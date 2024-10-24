@@ -29,7 +29,7 @@ const { mainClassname, bodyClassname, wrapperClassname, ...props } = Astro.props
   <Head {...props}>
     <Favicons />
     <!-- <MPATransitions /> -->
-    <OpenGraph {...props} />
+    {import.meta.env.PROD && <OpenGraph {...props} />}
     <Robots noIndex={props.noIndex} />
     <RSS />
 
