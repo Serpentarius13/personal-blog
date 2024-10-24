@@ -21,7 +21,7 @@ const config: Config = {
       },
       fontFamily: {
         jetbrains: ["JetBrains Mono", "monospace"],
-        anton: ["Anton", "sans-serif"],
+        caveat: ["Caveat Variable", "cursive"],
       },
     },
   },

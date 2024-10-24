@@ -24,7 +24,7 @@ const imgUrl = new URL(post.data.image.src, Astro.site).toString();
     class="mx-auto mb-12 mt-8 flex h-[350px] w-fit items-center gap-4 -lg:h-fit -lg:flex-col-reverse -lg:items-start -sm:mb-6 -sm:mt-4"
   >
     <div class="flex max-w-[460px] flex-col gap-4 -lg:mt-8 -lg:w-full -lg:max-w-full">
-      <h1 class="text-center text-4xl font-extrabold">
+      <h1 class="font-caveat text-center text-4xl font-bold">
         {post.data.title}
       </h1>
 
@@ -76,7 +76,7 @@ const imgUrl = new URL(post.data.image.src, Astro.site).toString();
     <div class="mx-auto max-w-full">
       <div
         class={cn(
-          "prose-code:not-prose prose prose-pre:scrollbar-thin prose-code:font-jetbrains prose-code:!text-[14px] prose-headings:font-anton prose-headings:font-normal  justify-self-center w-[--article-width] max-w-full article-body",
+          "prose-code:not-prose prose prose-pre:scrollbar-thin prose-code:font-jetbrains prose-code:!text-[14px] prose-headings:font-caveat prose-headings:font-normal  justify-self-center w-[--article-width] max-w-full article-body",
         )}
       >
         <Content />

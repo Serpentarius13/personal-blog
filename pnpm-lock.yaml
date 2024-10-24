@@ -38,12 +38,12 @@ importers:
       '@expressive-code/plugin-line-numbers':
         specifier: ^0.37.0
         version: 0.37.0
+      '@fontsource-variable/caveat':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@fontsource-variable/jetbrains-mono':
         specifier: ^5.1.1
         version: 5.1.1
-      '@fontsource/anton':
-        specifier: ^5.1.0
-        version: 5.1.0
       '@hbsnow/rehype-sectionize':
         specifier: ^1.0.7
         version: 1.0.7
@@ -647,11 +647,11 @@ packages:
   '@expressive-code/plugin-text-markers@0.37.0':
     resolution: {integrity: sha512-iDwB7iYga7hIyODR0wGVP2yo10H3Ncknif2diZvc/w9Mb/RvStEtCXRoqs3jgQlS3dhTGBXzTorFZx36vNy4rQ==}
 
+  '@fontsource-variable/caveat@5.1.0':
+    resolution: {integrity: sha512-zLBtg14o5AHlJjsq7v4fpgot1XQDqJkMi9fAmbGO4rQHr9w5nxj9Zu3da85TyVP86tZ94rhFFeGhjMNvwgfaHw==}
+
   '@fontsource-variable/jetbrains-mono@5.1.1':
     resolution: {integrity: sha512-V+1aRFRvuZ66PpO30s8l/2aADKzpV9VRsO3kSZE+rTMvi4vab3cUcPHMN2z+wAvjkYJO71Yf+g3/Y6pSMmQpVQ==}
-
-  '@fontsource/anton@5.1.0':
-    resolution: {integrity: sha512-joGHu1IQHBxPkYl2VutIZgyfdyERgzz1GWoSRnFBOcRvCz7XWT+3xnK/iGy7z4Z34HU/ZiWy1UORHJRdEFJiTA==}
 
   '@hbsnow/rehype-sectionize@1.0.7':
     resolution: {integrity: sha512-twbVxCFf4YwgTm6FIdGtHfJ14vvIHedk2fqZTpE3X6+vszEeZlMTy7tOyI9KaP/6S2DN2Jnk7zZGtZANTD+vEg==}
@@ -5109,9 +5109,9 @@ snapshots:
     dependencies:
       '@expressive-code/core': 0.37.0
 
-  '@fontsource-variable/jetbrains-mono@5.1.1': {}
+  '@fontsource-variable/caveat@5.1.0': {}
 
-  '@fontsource/anton@5.1.0': {}
+  '@fontsource-variable/jetbrains-mono@5.1.1': {}
 
   '@hbsnow/rehype-sectionize@1.0.7':
     dependencies:
