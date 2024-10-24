@@ -38,7 +38,7 @@ const {
     <div class="mx-auto max-w-full">
       <div
         class={cn(
-          "prose-code:not-prose prose prose-pre:scrollbar-thin prose-code:font-jetbrains prose-code:!text-[14px] prose-headings:font-caveat prose-headings:font-normal  justify-self-center w-[--article-width] max-w-full article-body",
+          "prose-code:not-prose  prose prose-pre:scrollbar-thin prose-code:font-jetbrains prose-code:!text-[14px] prose-headings:font-caveat prose-headings:font-normal  justify-self-center w-[--article-width] max-w-full article-body",
         )}
       >
         <Content />
@@ -46,3 +46,14 @@ const {
     </div>
   </div>
 </div>
+
+<style is:global>
+  .article-body {
+    overflow: auto;
+    hyphens: auto;
+  }
+  .article-body p code {
+    font: inherit;
+    @apply !badge-accent rounded-md badge-lg px-1 whitespace-nowrap mr-[2px] font-bold;
+  }
+</style>
