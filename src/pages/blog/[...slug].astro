@@ -60,6 +60,17 @@ const { post, nextPost, prevPost } = Astro.props;
 <script>
   import { postsApi } from "@/lib/api";
 
+  function detectBot(userAgent: string): boolean {
+    const knownBotPatterns = [/bot|crawl|spider/i, /google|bing|yandex/i];
+    return knownBotPatterns.some((pattern) => new RegExp(pattern).test(userAgent));
+  }
+
+  const isRunByBot = detectBot(navigator.userAgent);
+
+  if (!isRunByBot) {
+    main();
+  }
+
   function main() {
     const slugHolder = document.querySelector("#slug-holder") as HTMLElement | undefined;
     if (!slugHolder) return;
@@ -105,7 +116,6 @@ const { post, nextPost, prevPost } = Astro.props;
       });
     }
   }
-  main();
 </script>
 
 <style is:global>
