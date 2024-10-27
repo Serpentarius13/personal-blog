@@ -22,7 +22,6 @@ const config: Config = {
       },
       fontFamily: {
         jetbrains: ["JetBrains Mono", "monospace"],
-        caveat: ["Caveat Variable", "cursive"],
       },
     },
   },

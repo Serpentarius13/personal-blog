@@ -1,48 +1,22 @@
 ---
 import { Icon } from "@/components/react/Icon";
+import { cn } from "@/lib/cn";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"button"> {}
+
+const { class: className, ...props } = Astro.props;
 ---
 
 <button
   aria-labelledby="scroll-top-btn-label"
-  id="scroll-top-btn"
-  class="btn btn-primary fixed bottom-2 right-2 z-[10] translate-y-[120px] text-2xl opacity-0 [&.visible]:translate-y-0 [&.visible]:opacity-100"
+  class={cn(
+    "btn btn-primary fixed bottom-2 right-2 z-[10] translate-y-[120px] text-2xl opacity-0 [&.visible]:translate-y-0 [&.visible]:opacity-100",
+    className,
+  )}
+  {...props}
 >
   <span class="sr-only" id="scroll-top-btn-label"> Scroll to top </span>
   <Icon className="line-md--arrow-up" />
 </button>
 
-<script>
-  import { debounce } from "@/lib/utils";
-
-  const button = document.querySelector("#scroll-top-btn");
-
-  button?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-
-  let prevScroll = 0;
-  let distanceToTop = 0;
-
-  const handleScroll = debounce(() => {
-    if (!prevScroll) {
-      prevScroll = window.scrollY;
-      return;
-    }
-
-    if (window.scrollY > prevScroll) {
-      button?.classList.remove("visible");
-      distanceToTop = 0;
-    } else {
-      if (distanceToTop > 1000) {
-        button?.classList.add("visible");
-        distanceToTop = 0;
-      } else {
-        distanceToTop += prevScroll - window.scrollY;
-      }
-    }
-
-    prevScroll = window.scrollY;
-  }, 50);
-
-  window.addEventListener("scroll", handleScroll, { passive: true });
-</script>

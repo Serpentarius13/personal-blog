@@ -18,11 +18,11 @@ const {
 
 <div data-pagefind-body>
   <header class="mx-auto mt-8 flex w-[--article-width] max-w-full flex-col gap-4">
-    <h1 class="font-caveat text-6xl">
+    <h1 class="text-balance text-6xl font-extrabold -sm:text-4xl">
       {post.data.title}
     </h1>
 
-    <p class="max-w-xl text-balance border-l-2 border-l-primary py-2 pl-4 text-[16px] text-xl">
+    <p class="max-w-xl text-balance border-l-2 border-l-primary py-2 pl-4 text-xl -sm:text-lg">
       {post.data.description}
     </p>
     <PostInfo post={post} readingTime={readingTime} />
@@ -38,7 +38,7 @@ const {
     <div class="mx-auto max-w-full">
       <div
         class={cn(
-          "prose-code:not-prose  prose prose-pre:scrollbar-thin prose-code:font-jetbrains prose-code:!text-[14px] prose-headings:font-caveat prose-headings:font-normal  justify-self-center w-[--article-width] max-w-full article-body",
+          "prose-code:not-prose prose prose-pre:scrollbar-thin prose-code:font-jetbrains prose-code:!text-[14px] prose-headings:font-black justify-self-center w-[--article-width] max-w-full article-body",
         )}
       >
         <Content />
@@ -49,11 +49,10 @@ const {
 
 <style is:global>
   .article-body {
-    overflow: auto;
-    hyphens: auto;
+    @apply hyphens-auto;
   }
   .article-body p code {
     font: inherit !important;
-    @apply !badge-accent rounded-md badge-lg px-1 whitespace-nowrap mr-[2px] font-bold;
+    @apply !badge-accent rounded-md badge-lg px-1 mr-[2px] font-bold;
   }
 </style>

@@ -51,10 +51,67 @@ const { post, nextPost, prevPost } = Astro.props;
 
   <div class="hidden" id="slug-holder" data-slug={post.slug}></div>
 
-  <ScrollTopButton />
+  <ScrollTopButton id="scroll-top-button" />
 
   <NavbarShrink />
 </Layout>
+
+<script>
+  import { debounce } from "@/lib/utils";
+
+  const button = document.querySelector("#scroll-top-button");
+  const navbar = document.querySelector("#navbar") as HTMLElement | undefined;
+  const toc = document.querySelector("#toc") as HTMLElement | undefined;
+
+  button?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  let prevScroll = 0;
+  let distanceToTop = 0;
+  const THRESHOLD = 750;
+
+  const handleScroll = debounce(() => {
+    if (!prevScroll) {
+      prevScroll = window.scrollY;
+      return;
+    }
+
+    if (window.scrollY > prevScroll) {
+      button?.classList.remove("visible");
+      toc?.classList.add("scroll-hidden");
+      navbar?.classList.add("scroll-hidden");
+      distanceToTop = 0;
+    } else {
+      if (distanceToTop > THRESHOLD) {
+        button?.classList.add("visible");
+        toc?.classList.remove("scroll-hidden");
+        navbar?.classList.remove("scroll-hidden");
+        distanceToTop = 0;
+      } else {
+        distanceToTop += prevScroll - window.scrollY;
+      }
+    }
+
+    prevScroll = window.scrollY;
+  }, 50);
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+</script>
+
+<style is:global>
+  .scroll-hidden:not(#toc) {
+    @apply opacity-0 translate-x-[50vw];
+  }
+
+  #toc.scroll-hidden {
+    @apply opacity-0 -lg:translate-x-[50vw];
+  }
+
+  #toc {
+    @apply transition-all;
+  }
+</style>
 
 <script>
   import { postsApi } from "@/lib/api";
@@ -119,7 +176,7 @@ const { post, nextPost, prevPost } = Astro.props;
 
 <style is:global>
   :is(h1, h2, h3, h4, h5, h6) > a {
-    @apply no-underline hover:text-primary transition-all !important;
+    @apply no-underline hover:text-primary transition-all font-bold !important;
   }
 
   a[target="_blank"] {

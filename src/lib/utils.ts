@@ -38,3 +38,5 @@ export function minWait<T>(promise: Promise<T>, minDuration: number): Promise<T>
 export const getAbsoluteUrl = (url: string) => {
   return new URL(url, CONFIG.SITE_URL);
 };
+
+

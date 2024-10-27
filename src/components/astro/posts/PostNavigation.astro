@@ -23,7 +23,7 @@ const { next, prev } = Astro.props;
         <span>next_article</span>
 
         <span>
-          <b class="font-caveat text-2xl">{next.data.title}</b>
+          <b class="text-2xl">{next.data.title}</b>
 
           <Icon className="la--arrow-right ml-2" />
         </span>
@@ -40,7 +40,7 @@ const { next, prev } = Astro.props;
         <span>
           <Icon className="la--arrow-left mr-2" />
 
-          <b class="font-caveat text-2xl">{prev.data.title}</b>
+          <b class="text-2xl">{prev.data.title}</b>
         </span>
 
         <span>PreviousArticle</span>
