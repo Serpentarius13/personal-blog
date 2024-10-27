@@ -11,9 +11,9 @@ interface Props {
 const { posts, remaining} = Astro.props;
 ---
 
-<section class="box mt-8 flex flex-col gap-4 lg:mt-4">
-  <h2 class="text-xl font-bold">latestPosts =</h2>
-  <ul class="min-h-[200px]">
+<section class="box mt-8 flex flex-col  lg:mt-4">
+  <h2 class="text-xl font-bold">const latestPosts = <span class="text-3xl">[</span></h2>
+  <ul class="min-h-[150px] flex flex-col gap-1 py-3">
     {
       posts.map((post) => (
         <li>
@@ -21,6 +21,9 @@ const { posts, remaining} = Astro.props;
         </li>
       ))
     }
+    <li class="text-3xl font-bold">
+      ]
+    </li>
   </ul>
 
   {remaining > 0 && <a href="/blog" class="btn btn-outline btn-primary mx-auto w-fit"
