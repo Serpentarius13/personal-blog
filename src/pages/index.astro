@@ -1,12 +1,11 @@
 ---
 import IndexHeader from "@/components/astro/index/IndexHeader.astro";
-import IndexLatestPost from "@/components/astro/index/IndexLatestPost.astro";
+import IndexLatestPosts from "@/components/astro/index/IndexLatestPosts.astro";
 import Layout from "@/layouts/base";
 import { getPosts } from "@/lib/posts";
 
 const posts = await getPosts();
 posts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
-const latestPost = posts[0];
 ---
 
 <Layout
@@ -17,5 +16,5 @@ const latestPost = posts[0];
   image="/thumbnail.png"
 >
   <IndexHeader />
-  <IndexLatestPost post={latestPost} />
+  <IndexLatestPosts posts={posts.slice(0, 5)} remaining={posts.length - 5} />
 </Layout>

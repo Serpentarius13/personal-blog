@@ -1,0 +1,29 @@
+---
+import { Icon } from "@/components/react/Icon";
+import type { CollectionEntry } from "astro:content";
+import PostCard from "../posts/PostCard.astro";
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+  remaining: number;
+}
+
+const { posts, remaining} = Astro.props;
+---
+
+<section class="box mt-8 flex flex-col gap-4 lg:mt-4">
+  <h2 class="text-xl font-bold">latestPosts =</h2>
+  <ul class="min-h-[200px]">
+    {
+      posts.map((post) => (
+        <li>
+          <PostCard post={post} />
+        </li>
+      ))
+    }
+  </ul>
+
+  {remaining > 0 && <a href="/blog" class="btn btn-outline btn-primary mx-auto w-fit"
+  ><Icon className="text-xl la--book-open" /> morePosts({remaining}) {}
+</a>}
+</section>

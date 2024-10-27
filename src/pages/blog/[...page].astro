@@ -23,7 +23,7 @@ const { page: pageInfo } = Astro.props;
   bodyClassname="h-[100svh] h-screen"
   wrapperClassname="!h-auto min-h-full"
 >
-  <div class="box mx-auto flex min-h-full flex-wrap justify-center gap-4">
+  <div class="box flex min-h-full w-full flex-wrap justify-center gap-4">
     {pageInfo.data.map((post) => <PostCard post={post} />)}
   </div>
 
