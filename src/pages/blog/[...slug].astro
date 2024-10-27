@@ -77,14 +77,21 @@ const { post, nextPost, prevPost } = Astro.props;
       return;
     }
 
+    if (window.scrollY < 1000) {
+      toc?.classList.remove("scroll-hidden");
+      navbar?.classList.remove("scroll-hidden");
+      return;
+    }
+
     if (window.scrollY > prevScroll) {
       button?.classList.remove("visible");
-      toc?.classList.add("scroll-hidden");
-      navbar?.classList.add("scroll-hidden");
       distanceToTop = 0;
+
+      toc?.classList.toggle("scroll-hidden", true);
+      navbar?.classList.toggle("scroll-hidden", true);
     } else {
       if (distanceToTop > THRESHOLD) {
-        button?.classList.add("visible");
+        button?.classList.toggle("visible", true);
         toc?.classList.remove("scroll-hidden");
         navbar?.classList.remove("scroll-hidden");
         distanceToTop = 0;
