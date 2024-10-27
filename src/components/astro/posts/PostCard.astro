@@ -40,6 +40,10 @@ const {
     &:before {
       @apply content-[""] bg-[--color] w-full transition-all h-full absolute left-0 top-0 rounded-btn blur-xl -z-[1];
       animation: hoveer 5s infinite forwards;
+      @media (prefers-reduced-motion) {
+        animation: none;
+        @apply scale-[1.05];
+      }
     }
   }
   @keyframes hoveer {
