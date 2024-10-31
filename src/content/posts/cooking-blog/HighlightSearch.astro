@@ -1,4 +1,6 @@
 ---
+import Highlighter from "./Highlighter.astro";
+
 interface Props {
   id?: string;
 }
@@ -6,33 +8,11 @@ interface Props {
 const { id } = Astro.props;
 ---
 
-<button id={id ?? "cooking-search-highligher"} class="btn btn-sm inline-block"> <slot /> </button>
-
-<script is:inline define:vars={{ id }}>
-  function main() {
-    const searchButton = document.querySelector(`#${id}`);
-    searchButton?.addEventListener("click", (ev) => {
-      console.log("click happens");
-      ev.stopPropagation();
-
-      const trigger = document.querySelector("#search-trigger");
-
-      if (window.matchMedia("(prefers-reduced-motion)").matches) {
-        const classes = ["ring-2", "ring-red-500"];
-        trigger?.classList.add(...classes);
-        setTimeout(() => {
-          trigger?.classList.remove(...classes);
-        }, 2500);
-        return;
-      }
-
-      const classes = ["ring-2", "ring-red-500", "scale-[2]", "bg-base-100", "z-[20]"];
-      trigger?.classList.add(...classes);
-
-      setTimeout(() => {
-        trigger?.classList.remove(...classes);
-      }, 2500);
-    });
-  }
-  main();
-</script>
+<Highlighter
+  id={id ?? "cooking-search-highligher"}
+  targetId="search-trigger"
+  activeClassname="ring-2 ring-red-500 scale-[2] bg-base-100 z-[20]"
+  reducedClassname="ring-2 ring-red-500"
+>
+  <slot />
+</Highlighter>
