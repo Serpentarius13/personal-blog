@@ -57,6 +57,7 @@ const { post, nextPost, prevPost } = Astro.props;
 </Layout>
 
 <script>
+  import { HIDE_UI_SERVICE } from "@/lib/config";
   import { debounce } from "@/lib/utils";
 
   const button = document.querySelector("#scroll-top-button");
@@ -87,8 +88,10 @@ const { post, nextPost, prevPost } = Astro.props;
       button?.classList.remove("visible");
       distanceToTop = 0;
 
-      toc?.classList.toggle("scroll-hidden", true);
-      navbar?.classList.toggle("scroll-hidden", true);
+      if (HIDE_UI_SERVICE.getIsHideUi()) {
+        toc?.classList.toggle("scroll-hidden", true);
+        navbar?.classList.toggle("scroll-hidden", true);
+      }
     } else {
       if (distanceToTop > THRESHOLD) {
         button?.classList.toggle("visible", true);
