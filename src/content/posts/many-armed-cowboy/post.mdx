@@ -1,0 +1,140 @@
+---
+slug: "many-armed-cowboy"
+title: "Many Armed Banditism"
+description: "Some people would tell you to learn one technology deeply.
+Some would insinuate that T-shape is a better skill to have. I want to share how I view both sides."
+date: 2024-01-11
+draft: false
+---
+
+import MdxImage from '@/components/mdx/MdxImage.astro';
+
+## Many enemies are approaching
+
+When looking for a first job, you may become hopeless. Truly, software development hiring field in 2024 is a pure mess: you could be asked for 5 years of experience in React, and then you would also need to have similar experience in completely unrelated .NET for a front-end position, be able to handle Kubernetes clusters and perform in three frontend frameworks well.
+
+Entry-level jobs are somewhat the same: you need to know everything, even things that you won't need at your job, to pass an interview, of course. There's a bunch of tools that you must somehow master, and then use them every day. 
+
+After getting hired, this toolset may increase, especially if the startup you've gotten into is short-handed. You will be receiving tickets about doing backend, even when you don't know what a database is, and you're expected to learn quickly and perform masterfully in that environment. At least, that's been the path for me. 
+
+In this article, I want to describe my thoughts about the jacks of all trades, and whether they are truly masters of none. Of course, it is a personal opinion, and is made more like a healing potion for me and my issues, but I want to share it anyway, maybe it'll point someone out to their issue they never knew they had, who knows?
+
+## Why grab many guns?
+
+When I was retrospecting on the way I approach trying to learn new technologies, I always wanted to take on something new. I think there's few reasons for this, and I will peruse them as little paragraphs below. After those, I will try to conclude about the state of many-armed bandits.
+
+### The job required me to have many skills.
+
+This one is actually most valid one, because it allowed me to grow. Since I was able to apply everything that I set out to learn, it was easy for me to reinforce my knowledge. For example, I started learning Vue in December 2022, and right at that time I applied at intern-level position for Vue. They accepted me, even though I just read a very small part of documentation, and I was able to use it in my daily life. I learned a lot of Vue there, if you ask me. I've seen many mistakes other developers make, and figured out ways to create stuff that couldn't be learned through snacking tutorials.
+
+So, when there's an opportunity to use a new tool in your job, I would say, you should grab it in 99% of cases. The 1% left is a case when you're not solid in your position yet, and need to learn something else. I've came to a conclusion that learning many things at once is never a great idea, unless they play together well, so your neurons would bind together. Even then, you would not be able to go deep into each one, so that might be a problem. This state is described well in [this **Russian**! article](https://www.rozhkov.me/resume-driven-development/) about Resume-driven development, if you can read. After having professional production experience with one tech, you may wave with it pridefully to your future employers.
+
+### The job postings required me to have even more skills than I had.
+
+This reason is the most awful. I think many recruiters assume right away that you could not learn their respective stack. For example, if they see someone with `zustand` in their resume, but you only know `redux`, then you probably will be overshadowed by that person, even though learning `zustand` is nowhere near as hard as getting a hand of `redux`. So, you would either need to watch 15-minutes Youtube tutorials and scribble the tech from them onto your resume, or actually use the stuff.
+
+But it is a gruesome path, really. Even if you handle to learn something theoretically, you must have a practical application for this knowledge, which may be squeezed out of nothing. You may make a project unrelated to you, that you wouldn't feel for, some todo app, that you don't care about. I don't think that's a great ground for learning. 
+
+However, if your interest coincides with the posting, that is all fine and dandy: you would apply it well. That is not to say you wouldn't otherwise, but I feel there's a better chance to.
+
+### I was interested in another technology.
+
+That is a nice reason to get your hands on something. At least, your interest would keep you long enough to stay and keep exploring. But, as I said twice already, you must practice. And here, interest itself may not be able to help you. There's always a learning curve, and as much as you want to learn OCaml because of the [happy person below](https://www.youtube.com/c/theprimeagen):
+
+import Primeagen from './Happy-Primeagen.jpg';
+
+<MdxImage src={Primeagen} alt="Happy Primeagen with Ocaml logo"/>
+
+...you would never actually "learn" it, if you don't apply yourself.
+
+Think about it: would you stay on doing something if you're not really forced into it by external factors? Maybe. But maybe home-sweet-home React abstraction that you know 99% of already would seem a better choice to spend your evening instead of those gruesome Monads. So, you must be serious here, if you don't just want to find things you already know in a new wrapper.
+
+I've been hopping from one tech to another and doing exactly that: I would learn how to do a for loop, how to do modules, how to make functions or classes or something, which I already knew, and they I would abandon it after the free dopamine dose expired. It is not a way to learn something for sure, more like a path to poverty 🫅
+
+### I could never go deep
+
+One other reason for hopping onto new technologies is inability to persevere through a steep learning curve. For example, you are using Rust, and then lifetimes suddenly come. You must do some thread synchronization, but compiler won't let you pass like a Gandalf. 
+
+Then, you would get more and more angry and disappointed with each attempt to make it work. If you don't stop and leave it be for a few hours, or even days, for your mind to get a hang on things, and would want a result here and now, then you would throw it all away, because it is "too hard for you".
+
+Or, maybe, the API for your technology is so complicated and documented with gross technical language, you could never learn it. If you're a newbie, you may think that you're unskilled and would not get it right forever, and that may stop you from even starting. Here, its important to remember, that nobody knows everything about JavaScript, even seniors and their seniors. If they do, they're probably never gonna get out of their room!
+
+### I was bored and fulfilled
+
+Maybe, the technology by itself is not really fascinating, and you would get bored. Say, you get ins and outs of Vue, and you feel immortal, knowing what `onServerPrefetch` is and how to build your own SSR framework. But, you can also be mistaken.
+
+import Knowns from './Knowns.png';
+
+There's a thing called Known-Unknowns matrix:
+
+<MdxImage src={Knowns} alt="Known-Unknowns Image"/>
+
+which states that you may not even know that you don't know. In such case, an exploration of your weak and blind points could be helpful: read through the documentation, try to challenge yourself by handling esoteric use cases, read the source code of your tool, understand implementations of abstractions. This way, you could go deep for real, and probably would never feel bored, even when learning HTML!
+
+----
+
+As you can see, there's a lot of reasons why one may want to jump onto another tech. There's upsides and downsides to being many-armed. Upsides may include:
+
+- Being able to handle many things just by yourself. For example, being a full-stack engineer, who doesn't know any field with much depth (unless having spent years at doing his craft), but may build a complete application all alone.
+
+- Knowing what other side of the moon is and could be doing. By having an understanding of backend technologies, frontend developer may structure his code better, for example he could craft type-safe contracts for his API calling services, or understand on what level caching is implemented in his system, or how his project even appears on the internet by the means of free Vercel plan.
+
+- It would be probably easier to change jobs or take on another team's project, without being astounded by a new technology. Say, you know Vue, and your Vue developer just left the team. Even though you probably won't be able to write a Vue project from scratch, you will be able to build upon what he built, maybe even taking over the project as you are basically prepared to do so in time.
+
+But, there would be of course lack of expertise if you only go deep. Also, if you tell everyone you know many things and do not prioritise one of them, then you will look inexperienced: a mature developer may sniff you out on being a frameworkista!
+
+## One skilled gunman
+
+There are also another kind of people, that you may spot in the wild, successfully doing what they do. They have very few technologies on their stack, and would easily use any of them on an expert level on their projects. When they are told their tech is obsolete and they should use the new frontend framework, they would laugh and make you run in terror from how secure and sure in themselves they are. 
+
+You may take them as fools, but they are actually doing what they need to do to be experts. In their field, there's not a lot of competition, because not many people would have 8 years of experience working with React, and I mean, like, real experience, class-based and React 0.10 experience. 
+
+One time I've stumbled on an article about doing SSR in React from Yandex. It was a revelation to me then as a newbie: they wrote an SSR implementation in Node.js at their company, without using any kind of framework. It was posted in 2015, and then probably not many people heard of Next.js, and SSR being needed at all in React apps!
+
+So, a person who takes many technologies to his pocket, may not be able to write his own complex implementation, because he is human, and limited by time and his experience. It would be impossible to proficiently know everything. But this one skilled gunman could. In his world, he is a master of everything, just like a jujutsu sorcerer in his domain: everything is at his will there.
+
+But, considering "this economy" as many people on Reddit would say, and the time and skill limitations, how does one actually become this person, when there's so much tools that you must know how to use? And do you actually need to have spent 69 years with React to know it at an expert level?
+
+## How does one know his gun?
+
+One important piece here is that you could probably never know how to rate a tv show without watching hundreds of them. Of course, you may place a star rating on it, you may write a review, you may even make it coherent enough for people to applaud you for your sincerity and thoughtfulness. But how do you really write a review? How do you know what to write, what is important, and what is not?
+
+People who have learned many foreign languages mostly get it much easier that those who learn their first or second one. It is because they know what to look for: where to get learning resources, how the learning works, what verbs and nouns are at all. Most importantly, they would probably implicitly compare it to their language. If they're similar enough, the process may be very easy! 
+
+But, of course, keeping this knowledge in good shape becomes increasingly hard as the number of your pocket impression techniques grow. So, you would should be wary of your brain: it decimates every bit of information it knows as time goes by, if you don't use it. If you have used it enough, though, it may stick for much longer. Here's a little scientific diagram:
+
+import ForgettingCurve from './Forgetting-Curve.png';
+
+<MdxImage src={ForgettingCurve} alt="Forgetting curve diagram signifying how repeated learning helps solidifying memories" />
+
+It's called "Forgetting Curve", coined by german psychologist [Herman Ebbinghaus](https://en.wikipedia.org/wiki/Hermann_Ebbinghaus). On it, there's multiple sliding graphical lines, which come from points of repeatedly using or reading about some topic. With first perusal, the memory would almost fade out after (for example) 10 days, with second, it would last an interval a bit larger than the first, and so on, increasing the retention interval width. So, if you use something for large periods of time, it may even stick for years and you would be able to retrieve your React knowledge after a year-long sabbatical! But that is, if you really apply it.
+
+Coming back to the ease of learning! In software, there's many things that are similar between technologies. In frontend, there's a lot of things similar in frameworks: components, reactivity, state-management, routing. But, if you look deep enough, `react-router-dom` is a bit different from `vue-router`. For example, you could use components to build routes, unlike Vue, where you always use objects, and so on. `vue-router` may have features that `react-router` does not, and your hand-written router may lack them all!
+
+Knowing how these are built and how they differ is fundamental to develop taste, which is one the most important things to have to become an expert. You would probably consider every new thing shiny thrown towards you at Twitter, unless you know 10 other things like it, and then you would be much at ease having heard about the new JavaScript backend runtime being released!
+
+I once tried to use Bun, and as it happened, because it was missing some `Node-API` implementation, I could not use it with a docker-run database. Perhaps, it was a mistake of mine, but on Github nobody helped me and I surrendered as a newbie. One other case was when I was trying out `TCP sockets` in Node, and I tried to switch to Bun for a second: It was almost two times slower transporting the messages that I sent!
+
+Those experience may be a little skewed, but they taught me this taste kind of opinion: old and battle-tested things, built over a huge length of time, are much better to learn and use, rather than the new and shiny one. Bun would mature and in time they would implement all `napi` functionality, but Node would stand strong anyway, or so I think.
+
+By learning `Functional Programming` concepts you could understand why `Object-Oriented paradigm` is good, and the times where it may be gruesome, and in reversed. Later on, your knowledge of `SOLID` principles would not be reinforced by fear of hearing a recruiter's question about it, but your own understanding of each principle. It happened to me too: I learned about the merits of SOLID from my own experience, having implemented `Inversion of Control` in form of `Dependency Injection` into my application, which made it much more testable and extensible, or having learned that I was using `Liskov substitution` in my `Typescript` code when I passing types that were subtypes of defined type, because Typescript is structured.
+
+What then, to make of it all?
+
+## My conclusion
+
+When writing this article (which is an explorative deed on its own), I came to an end: as for the future endeavors in handling anything new, my motto would probably sound like that:
+
+> Learn few things deep enough to consider yourself an expert in those, and have a look at others just to know they exist and why is that so.
+
+That means, when getting started, you must choose a technology and stick to it. Mine was JavaScript, and I would never change that. At first, I was switching infinitely between some data-science courses, ML and other things, but I set out to stick with Web, as it seemed profound and fun enough for me. Having made this decision, I learned and I learned, on the job, and at home, and became a little more knowledgeable and closer to expert-level, than if I switched to learn a new C replacement every month.
+
+Having set yourself in stone, it would be probably very hard to consider yourself an expert without knowing about other things that pass you by: you may even turn into a PHP-evangelist, hating all those shiny JavaScript frameworks, and never learn about how interactive and fun they make the web. Learning about other people's creations, even a bit, helps you to become less biased, and grows a hair or two on your graying beard. 
+
+I recently asked about this dilemma on Reddit. My question was about how to stick with one thing and go deep into it, as I was assuring myself that I'm doing something wrong when trying to learn about many things, I thought "experts" don't do that and stick with out. But as many people answered, my perspective changed, and now I understand, that expert is not the one ignorant of anything other than their stack, but rather one who have chosen their stack, and knows why it is so cool 😎
+
+As for 8 year requirements, I just view them as bollocks. I could never for the life of me grasp of years with the technology make you a better developer. Perhaps, it works on a scale of 3 or 4 years, but after that, I think it's just an HR mind-game. I believe if the company's IT department is well and healthy, the hiring manager would not lock you into having experience in many fields at once. If you're a professional with many years of experience in just one stack, I think people would be okay with you writing in another.But, of course, its just me yapping here 🗣️
+
+So, try out all the guns! Maybe you will find the one that would keep you shooting for your eternity 🔫
+
+Thanks for reading!

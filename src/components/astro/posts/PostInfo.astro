@@ -36,6 +36,10 @@ const { post, readingTime } = Astro.props;
     {formatDate(post.data.date)}
   </PostInfoTag>
 
+  {post.data.updatedDate && <PostInfoTag className="fluent--calendar-edit-20-regular">
+    {formatDate(post.data.updatedDate)}
+  </PostInfoTag>}
+
   <PostInfoTag className="fluent--reading-list-20-regular">
     {readingTime}
   </PostInfoTag>
