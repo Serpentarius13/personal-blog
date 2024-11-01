@@ -11,7 +11,7 @@ interface Props {
 const { class: className, contentClassname } = Astro.props;
 ---
 
-<div class={cn("dropdown dropdown-bottom dropdown-left", className)}>
+<div class={cn("dropdown dropdown-bottom dropdown-left ", className)}>
   <div
     tabindex="0"
     role="button"
@@ -25,7 +25,7 @@ const { class: className, contentClassname } = Astro.props;
   <ul
     tabindex="0"
     class={cn(
-      "dropdown-content z-[1] w-[320px] -sm:w-[300px]  flex flex-col gap-6 rounded-box mt-6 bg-base-100 p-3 shadow ring-2 ring-primary-content transition-all",
+      "dropdown-content z-[1] w-[320px] -sm:w-[180px] -xs:translate-x-[40px]  flex flex-col gap-6 rounded-box mt-6 bg-base-100 p-3 shadow ring-2 ring-primary-content transition-all",
       contentClassname,
     )}
   >
