@@ -6,23 +6,33 @@ interface Props {
   reducedClassname: string;
   timeout?: number;
   children?: any;
+  addDataset?: boolean;
 }
 
-const { id, targetId, activeClassname, reducedClassname, timeout = 2500 } = Astro.props;
+const { id, targetId, activeClassname, reducedClassname, timeout = 2500, addDataset } = Astro.props;
 ---
 
 <button id={id} class="btn btn-sm inline-block"> <slot /> </button>
 
-<script define:vars={{ id, activeClassname, reducedClassname, targetId, timeout }} is:inline>
+<script
+  define:vars={{ id, activeClassname, reducedClassname, targetId, timeout, addDataset }}
+  is:inline
+>
   function main() {
     const button = document.querySelector(`#${id}`);
 
-    button?.addEventListener("click", () => {
+    button?.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+
       const target = document.querySelector(`#${targetId}`);
 
       const scrollHiddenElements = document.querySelectorAll(".scroll-hidden");
       for (const el of scrollHiddenElements) {
         el.classList.remove("scroll-hidden");
+      }
+
+      if (addDataset) {
+        target.dataset.open = "true";
       }
 
       let classes = window.matchMedia("(prefers-reduced-motion)").matches
@@ -33,6 +43,10 @@ const { id, targetId, activeClassname, reducedClassname, timeout = 2500 } = Astr
 
       setTimeout(() => {
         target?.classList.remove(...classes);
+
+        if (addDataset) {
+          target.dataset.open = "false";
+        }
       }, timeout);
     });
   }

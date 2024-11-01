@@ -1,27 +1,13 @@
 ---
-
+import Highlighter from "./Highlighter.astro";
 ---
 
-<button id="cooking-toc-highligher" class="btn btn-sm inline-block"> this fella </button>
-
-<script is:inline>
-  function main() {
-    const button = document.querySelector("#cooking-toc-highligher");
-    button?.addEventListener("click", (ev) => {
-      ev.stopPropagation();
-
-      const toc = document.querySelector("#toc-inner");
-
-      toc.dataset.open = "true";
-
-      const classes = ["ring-2", "ring-red-500"];
-      toc?.classList.add(...classes);
-
-      setTimeout(() => {
-        toc?.classList.remove(...classes);
-        toc.dataset.open = "false";
-      }, 2500);
-    });
-  }
-  main();
-</script>
+<Highlighter
+  id="cooking-toc-highligher"
+  targetId="toc-inner"
+  reducedClassname="ring-2 ring-red-500"
+  activeClassname="ring-2 ring-red-500"
+  addDataset={true}
+>
+  this fella
+</Highlighter>

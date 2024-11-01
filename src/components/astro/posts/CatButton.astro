@@ -84,7 +84,6 @@ const { slug } = Astro.props;
 
     pendingPats++;
     const count = document.querySelector("#cat-count") as HTMLElement;
-    console.log(count, count.textContent);
     count.textContent = String(Number(count.textContent) + 1);
 
     handleApplyPats();

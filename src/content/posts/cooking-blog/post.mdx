@@ -781,9 +781,7 @@ As most frontend people are obsessed now with the problem of JavaScript bundle s
 
 One the most complex interactions was <HighlightToc/> I could've probably built it much faster using any UI library, and all the roundtrips to dom with `querySelector`, `getAttribute` and others were a bit lost in my head.
 
-It took me some time to research on the needed plugins to make headings and links to render
-and also to tweak everything in a `<script>` tag. Some of that was from unnecessary complexity I made up as I tried to make several different implementations (as in highlight just one
-or several headings, what styles to add and so on), and in the end I went the simplest route:
+It took me some time to research on the needed plugins to make headings and links to render and also to tweak everything in a `<script>` tag. Some of that was from unnecessary complexity I made up as I tried to make several different implementations (as in highlight just one or several headings, what styles to add and so on), and in the end I went the simplest route:
 
 - Highlight every `section` (provided wrapper by `rehype-sectionize`) even remotely on the screen with `IntersectionObserver`
 while account for headings margin like so:
@@ -1021,7 +1019,7 @@ And then I've screwed some css variables and have gotten pretty simple solution.
 
 So, when choosing a technology, don't bother much (unless explicitly very much required) with all the intricacies of bundle size, because you must make it simple and get it working first. And when you're done, you can optimize it anyways.
 
-### Golden tickets made out of chocolate
+### Golden tickets out of chocolate
 
 Let's talk about something else..
 

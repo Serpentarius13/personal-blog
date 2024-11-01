@@ -1,34 +1,12 @@
 ---
-
+import Highlighter from "./Highlighter.astro";
 ---
 
-<button id="cat-highlighter" class="btn btn-sm inline-block"> Click here </button>
-
-<script is:inline>
-  function main() {
-    const catHighligher = document.querySelector("#cat-highlighter");
-    catHighligher?.addEventListener("click", () => {
-      const catButton = document.querySelector("#cat-button");
-
-      let classes = window.matchMedia("(prefers-reduced-motion)").matches
-        ? ["ring-2", "ring-red-500"]
-        : [
-            "ring-2",
-            "ring-red-500",
-            "scale-[3]",
-            "-translate-x-[60px]",
-            "translate-y-[120px]",
-            "bg-base-100",
-          ];
-
-      catButton?.classList.add(...classes);
-
-      const sound = new Audio("/sounds/scary.wav");
-      sound.play();
-      setTimeout(() => {
-        catButton?.classList.remove(...classes);
-      }, 2500);
-    });
-  }
-  main();
-</script>
+<Highlighter
+  id="cat-highlighter"
+  targetId="cat-button"
+  reducedClassname="ring-2 ring-red-500"
+  activeClassname="ring-2 ring-red-500 scale-[3] -translate-x-[60px] translate-y-[120px] bg-base-100"
+>
+  Click here
+</Highlighter>
