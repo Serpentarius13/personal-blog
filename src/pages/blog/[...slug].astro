@@ -4,6 +4,7 @@ import NavbarShrink from "@/components/astro/navbar/NavbarShrink.astro";
 import CatButton from "@/components/astro/posts/CatButton.astro";
 import PostNavigation from "@/components/astro/posts/PostNavigation.astro";
 import PostPage from "@/components/astro/posts/PostPage.astro";
+import TableOfContents from "@/components/astro/posts/toc/TableOfContents.astro";
 import Layout from "@/layouts/base";
 import { getPosts } from "@/lib/posts";
 import "@fontsource-variable/jetbrains-mono";
@@ -45,6 +46,12 @@ const structuredData = {
 if (post.data.updatedDate) {
   structuredData.dateModified = post.data.updatedDate.toISOString();
 }
+
+const {
+  Content,
+  headings,
+  remarkPluginFrontmatter: { readingTime },
+} = await post.render();
 ---
 
 <Layout title={post.data.title} description={post.data.description}>
@@ -55,10 +62,16 @@ if (post.data.updatedDate) {
   </Fragment>
 
   <Fragment slot="navbar">
-    <CatButton slug={post.slug} />
+    <Fragment>
+      <CatButton slug={post.slug} />
+
+      <TableOfContents headings={headings} data-pagefind-ignore="all" />
+    </Fragment>
   </Fragment>
 
-  <PostPage post={post} />
+  <PostPage post={post} readingTime={readingTime}>
+    <Content />
+  </PostPage>
 
   <PostNavigation prev={prevPost} next={nextPost} />
 

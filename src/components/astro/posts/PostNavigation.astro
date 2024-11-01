@@ -23,9 +23,9 @@ const { next, prev } = Astro.props;
         <span>next_article</span>
 
         <span>
-          <b class="text-2xl">{next.data.title}</b>
+          <b class="text-2xl -sm:text-sm">{next.data.title}</b>
 
-          <Icon className="la--arrow-right ml-2" />
+          <Icon className="la--arrow-right ml-2 align-middle" />
         </span>
       </a>
     )
@@ -38,9 +38,9 @@ const { next, prev } = Astro.props;
         class="group btn btn-outline btn-accent justify-between transition-all"
       >
         <span>
-          <Icon className="la--arrow-left mr-2" />
+          <Icon className="la--arrow-left mr-2 align-middle" />
 
-          <b class="text-2xl">{prev.data.title}</b>
+          <b class="text-2xl -sm:text-sm">{prev.data.title}</b>
         </span>
 
         <span>PreviousArticle</span>
@@ -48,4 +48,3 @@ const { next, prev } = Astro.props;
     )
   }
 </div>
-

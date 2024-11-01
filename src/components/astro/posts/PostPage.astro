@@ -2,18 +2,13 @@
 import { cn } from "@/lib/cn";
 import type { CollectionEntry } from "astro:content";
 import PostInfo from "./PostInfo.astro";
-import TableOfContents from "./toc/TableOfContents.astro";
 
 interface Props {
+  readingTime: string;
   post: CollectionEntry<"posts">;
 }
 
-const { post } = Astro.props;
-const {
-  Content,
-  headings,
-  remarkPluginFrontmatter: { readingTime },
-} = await post.render();
+const { readingTime, post } = Astro.props;
 ---
 
 <div data-pagefind-body>
@@ -28,23 +23,13 @@ const {
     <PostInfo post={post} readingTime={readingTime} />
   </header>
 
-  <div class={"flex flex-col items-start  xl:grid xl:grid-cols-[0px_1fr] "}>
-    <TableOfContents
-      headings={headings}
-      data-pagefind-ignore="all"
-      class="fixed right-6 top-20 mx-auto lg:sticky lg:left-0 lg:top-24 lg:mx-0"
-    />
-
-    <div class="mx-auto max-w-full">
-      <article
-        class={cn(
-          "prose-code:not-prose prose prose-pre:scrollbar-thin prose-code:font-jetbrains prose-code:!text-[14px] prose-headings:font-black justify-self-center w-[--article-width] max-w-full article-body",
-        )}
-      >
-        <Content />
-      </article>
-    </div>
-  </div>
+  <article
+    class={cn(
+      "prose-code:not-prose mx-auto prose prose-pre:scrollbar-thin prose-code:font-jetbrains prose-code:!text-[14px] prose-headings:font-black justify-self-center w-[--article-width] max-w-full article-body",
+    )}
+  >
+    <slot />
+  </article>
 </div>
 
 <style is:global>

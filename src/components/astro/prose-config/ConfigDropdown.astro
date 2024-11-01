@@ -11,11 +11,11 @@ interface Props {
 const { class: className, contentClassname } = Astro.props;
 ---
 
-<div class={cn("dropdown dropdown-bottom sm:dropdown-left", className)}>
+<div class={cn("dropdown dropdown-bottom dropdown-left", className)}>
   <div
     tabindex="0"
     role="button"
-    class="btn btn-ghost btn-sm"
+    class="btn btn-ghost btn-sm px-2"
     aria-labelledby="prose-config-label"
     id="prose-config-button"
   >
@@ -25,7 +25,7 @@ const { class: className, contentClassname } = Astro.props;
   <ul
     tabindex="0"
     class={cn(
-      "dropdown-content z-[1] w-[320px] -sm:w-[180px] -sm:-translate-x-[80px] flex flex-col gap-6 rounded-box mt-4 bg-base-100 p-3 shadow ring-2 ring-primary-content transition-all",
+      "dropdown-content z-[1] w-[320px] -sm:w-[300px]  flex flex-col gap-6 rounded-box mt-6 bg-base-100 p-3 shadow ring-2 ring-primary-content transition-all",
       contentClassname,
     )}
   >

@@ -9,9 +9,9 @@ import logo from "./logo.svg?raw";
 
 <header
   id="navbar"
-  class="group navbar sticky top-2 z-50 mx-auto mb-6 mt-4 max-w-5xl rounded-box bg-base-100 bg-base-100/30 px-2 shadow-md backdrop-blur-lg transition-all md:px-4 -md:mt-0.5 -md:p-0 -md:px-2"
+  class="group navbar sticky top-2 z-50 mx-auto mb-6 mt-4 max-w-5xl justify-between rounded-box bg-base-100 bg-base-100/30 px-2 shadow-md backdrop-blur-lg transition-all md:px-4 -md:mt-0.5 -md:p-0 -md:px-2 -sm:top-0 -sm:mt-0 -sm:w-screen -sm:rounded-t-none"
 >
-  <div class="navbar-start">
+  <div class="navbar-start mr-3 !w-fit">
     <a class="flex items-center gap-1" href="/" id="page-title" aria-labelledby="navbar-link-label">
       <Fragment set:html={logo} src={logo} is:raw class="red" />
       <span class="ml-2 text-xl transition-all hover:underline -sm:hidden">
@@ -20,7 +20,7 @@ import logo from "./logo.svg?raw";
       <span class="sr-only" id="navbar-link-label"> Go to the home page </span>
     </a>
   </div>
-  <div class="ml-auto w-fit">
+  <div class="w-fit">
     <ul class="menu menu-horizontal hidden px-1 md:flex">
       {
         CONFIG.NAV_LINKS.map((link) => {
@@ -33,7 +33,7 @@ import logo from "./logo.svg?raw";
       }
     </ul>
 
-    <div class="flex items-center gap-2 -md:gap-1 -sm:gap-0.5">
+    <div class="flex items-center gap-2 -md:gap-1">
       <slot />
       <ConfigDropdown />
 

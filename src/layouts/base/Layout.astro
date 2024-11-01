@@ -37,15 +37,12 @@ const { mainClassname, bodyClassname, wrapperClassname, ...props } = Astro.props
     <ThemeScript />
   </Head>
   <body class={cn("font-sans", bodyClassname)}>
-    <div
-      class={cn("flex h-full max-w-full flex-col px-3 md:px-2 lg:px-1", wrapperClassname)}
-      id="app"
-    >
+    <div class={cn("flex h-full max-w-full flex-col", wrapperClassname)} id="app">
       <Navbar>
         <slot name="navbar" slot="default" />
       </Navbar>
 
-      <main class={cn("h-0 flex-1", mainClassname)}>
+      <main class={cn("h-0 flex-1   px-3 md:px-2 lg:px-1", mainClassname)}>
         <slot />
       </main>
       <Footer />
