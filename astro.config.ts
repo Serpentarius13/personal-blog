@@ -70,7 +70,6 @@ export default defineConfig({
       ],
       host: true,
     }),
-    
   ],
 
   markdown: {

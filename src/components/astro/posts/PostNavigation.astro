@@ -17,6 +17,7 @@ const { next, prev } = Astro.props;
   {
     next && (
       <a
+        data-astro-prefetch
         href={`/blog/${next.slug}`}
         class="group btn btn-outline btn-primary justify-between transition-all"
       >
@@ -34,6 +35,7 @@ const { next, prev } = Astro.props;
   {
     prev && (
       <a
+        data-astro-prefetch
         href={`/blog/${prev.slug}`}
         class="group btn btn-outline btn-accent justify-between transition-all"
       >
