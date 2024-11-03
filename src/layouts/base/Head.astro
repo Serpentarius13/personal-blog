@@ -12,8 +12,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="generator" content={Astro.generator} />
   <title>{title}</title>
-  <meta name="description" content={description} />
-  <link rel="canonical" href={canonicalURL} />
+  <slot name="script" />
+  {
+    import.meta.env.PROD && (
+      <Fragment>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalURL} />
 
-  <slot />
+        <slot />
+      </Fragment>
+    )
+  }
 </head>

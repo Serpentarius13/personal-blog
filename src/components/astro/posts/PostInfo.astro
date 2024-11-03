@@ -13,6 +13,21 @@ const { post, readingTime } = Astro.props;
 ---
 
 <div class="flex flex-wrap items-center gap-4">
+  <PostInfoTag className="fluent--calendar-20-regular">
+    <b>{formatDate(post.data.date)}</b>
+  </PostInfoTag>
+
+  {
+    post.data.updatedDate && (
+      <PostInfoTag className="fluent--calendar-edit-20-regular">
+        Updated <b>{formatDate(post.data.updatedDate)}</b>
+      </PostInfoTag>
+    )
+  }
+
+  <PostInfoTag className="fluent--reading-list-20-regular">
+    {readingTime}
+  </PostInfoTag>
   <PostInfoTag
     class="!rounded-none py-1"
     id="views-badge"
@@ -30,22 +45,6 @@ const { post, readingTime } = Astro.props;
       <Icon className="animate-spin text-xs fluent--spinner-ios-20-regular" />
     </span>
     reads
-  </PostInfoTag>
-
-  <PostInfoTag className="fluent--calendar-20-regular">
-    <b>{formatDate(post.data.date)}</b>
-  </PostInfoTag>
-
-  {
-    post.data.updatedDate && (
-      <PostInfoTag className="fluent--calendar-edit-20-regular">
-        Updated <b>{formatDate(post.data.updatedDate)}</b>
-      </PostInfoTag>
-    )
-  }
-
-  <PostInfoTag className="fluent--reading-list-20-regular">
-    {readingTime}
   </PostInfoTag>
 </div>
 
