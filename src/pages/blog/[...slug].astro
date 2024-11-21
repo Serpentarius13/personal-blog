@@ -54,7 +54,7 @@ const {
 } = await post.render();
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout title={post.data.title} description={post.data.description} image={post.data.image?.src}>
   <Fragment slot="head">
     <meta property="og:type" content="article" />
 
