@@ -9,7 +9,7 @@ services:
     ports:
       - 6666:5432
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/postgresql/data
 
 volumes:
   db_data:
