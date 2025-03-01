@@ -12,7 +12,7 @@ interface Props {
 const { post, readingTime } = Astro.props;
 ---
 
-<div class="flex flex-wrap items-center gap-4">
+<div class="mb-8 flex flex-wrap items-center gap-4">
   <PostInfoTag className="fluent--calendar-20-regular">
     <b>{formatDate(post.data.date)}</b>
   </PostInfoTag>

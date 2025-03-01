@@ -8,4 +8,10 @@ interface Props {
 const { src, alt } = Astro.props;
 ---
 
-<Image src={src} alt={alt} widths={[500, 850]} sizes="(max-width: 1024px) 500px, 850px" />
+<Image
+  src={src}
+  class="justify-self-center"
+  alt={alt}
+  widths={[500, 850]}
+  sizes="(max-width: 1024px) 500px, 850px"
+/>
