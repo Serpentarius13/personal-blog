@@ -15,12 +15,12 @@ const postsCollection = defineCollection({
       draft: z.boolean().optional(),
 
       image: image()
-        .refine(
-          (img) => {
-            return img?.height === 630 && img.width === 1200;
-          },
-          { message: "Image must be 1200x630 for open graph" },
-        )
+        // .refine(
+        //   (img) => {
+        //     return img?.height === 630 && img.width === 1200;
+        //   },
+        //   { message: "Image must be 1200x630 for open graph" },
+        // )
         .optional(),
     }),
 });
