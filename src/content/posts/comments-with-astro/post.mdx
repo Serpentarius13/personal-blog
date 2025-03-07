@@ -135,6 +135,72 @@ import { UTTERANCES_CONFIG } from "config";
 
 ```
 
+Here's a simplified version for you to copy and paste:
+
+```html
+---
+
+---
+
+<script is:inline>
+  const UTTERANCES_CONFIG = {
+    repo: "GITHUB_NAME/GITHUB_REPO",
+    label: "blog",
+    ["issue-term"]: "title",
+  };
+
+  const darkThemes = {
+    night: "night",
+    luxury: "luxury",
+  };
+
+  const load = () => {
+    const container = document.getElementById("utterances-container");
+    if (!container) {
+      console.log("no utterances container found");
+      return;
+    }
+    if (container.innerHTML !== "") {
+      container.innerHTML = "";
+    }
+    const theme = document.documentElement.dataset.theme || "";
+    const script = document.createElement("script");
+
+    const attributes = {
+      theme: theme in darkThemes ? "gruvbox-dark" : "boxy-light",
+      ...UTTERANCES_CONFIG,
+    };
+
+    for (const [key, value] of Object.entries(attributes)) {
+      script.setAttribute(key, value);
+    }
+
+    script.src = "https://utteranc.es/client.js";
+    script.crossOrigin = "anonymous";
+    script.async = true;
+
+    script.onerror = (e) => console.log("error loading utterances:", e);
+    script.onload = () => console.log("utterances loaded");
+    container.append(script);
+  };
+
+  const observer = new MutationObserver((records) => {
+    for (const record of records) {
+      if (record.attributeName !== "data-theme") return;
+
+      load();
+    }
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+
+  load();
+</script>
+```
+
 Since my blog also uses `Pagefind`, the container code has `data-pagefind-ignore="all"` attribute on it, to not index anything:
 
 ```html
