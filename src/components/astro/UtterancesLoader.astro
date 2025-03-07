@@ -1,8 +1,8 @@
 ---
-
+const githubRepo = import.meta.env.PUBLIC_GITHUB_REPO;
 ---
 
-<script is:inline>
+<script is:inline define:vars={{ githubRepo }}>
   const darkThemes = {
     night: "night",
     luxury: "luxury",
@@ -21,7 +21,7 @@
     const script = document.createElement("script");
 
     const attributes = {
-      repo: import.meta.env.PUBLIC_GITHUB_REPO,
+      repo: githubRepo,
       label: "blog",
       theme: theme in darkThemes ? "gruvbox-dark" : "boxy-light",
       ["issue-term"]: "title",
