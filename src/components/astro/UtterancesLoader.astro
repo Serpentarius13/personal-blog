@@ -1,0 +1,58 @@
+---
+
+---
+
+<script>
+  const darkThemes = {
+    night: "night",
+    luxury: "luxury",
+  };
+
+  const load = () => {
+    const container = document.getElementById("utterances-container");
+    if (!container) {
+      console.log("no utterances container found");
+      return;
+    }
+    if (container.innerHTML !== "") {
+      container.innerHTML = "";
+    }
+    const theme = document.documentElement.dataset.theme || "";
+    const script = document.createElement("script");
+
+    const attributes = {
+      repo: import.meta.env.PUBLIC_GITHUB_REPO!,
+      label: "blog",
+      theme: theme in darkThemes ? "gruvbox-dark" : "boxy-light",
+      ["issue-term"]: "title",
+    };
+
+    for (const [key, value] of Object.entries(attributes)) {
+      script.setAttribute(key, value);
+    }
+
+    script.src = "https://utteranc.es/client.js";
+
+    script.crossOrigin = "anonymous";
+    script.async = true;
+
+    script.onerror = (e) => console.log("error loading utterances:", e);
+    script.onload = () => console.log("utterances loaded");
+    container.append(script);
+  };
+
+  const observer = new MutationObserver((records) => {
+    for (const record of records) {
+      if (record.attributeName !== "data-theme") return;
+
+      load();
+    }
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+
+  load();
+</script>

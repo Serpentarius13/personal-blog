@@ -47,5 +47,6 @@ I would also be grateful if you submit issues about bugs or your ideas about how
 - Grid view to paginate posts
 - `RSS`, `sitemap`, `OpenGraph` images, `SEO`-optimized, adaptive and performant without any unnecessary JS sent to the client
 - Database integration via `postgres`, `supabase`, `Prisma` and `kysely`
+- `utterances` for comments
 
 This project is licensed under the terms of the MIT license.

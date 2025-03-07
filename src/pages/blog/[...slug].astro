@@ -1,5 +1,6 @@
 ---
 import ScrollTopButton from "@/components/astro/ScrollTopButton.astro";
+import UtterancesLoader from "@/components/astro/UtterancesLoader.astro";
 import NavbarShrink from "@/components/astro/navbar/NavbarShrink.astro";
 import CatButton from "@/components/astro/posts/CatButton.astro";
 import PostNavigation from "@/components/astro/posts/PostNavigation.astro";
@@ -78,6 +79,8 @@ const {
   <div class="hidden" id="slug-holder" data-slug={post.slug}></div>
 
   <ScrollTopButton id="scroll-top-button" />
+
+  <UtterancesLoader />
 
   <NavbarShrink />
 </Layout>
