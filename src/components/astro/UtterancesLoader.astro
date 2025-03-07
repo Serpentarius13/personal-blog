@@ -2,7 +2,7 @@
 
 ---
 
-<script>
+<script is:inline>
   const darkThemes = {
     night: "night",
     luxury: "luxury",
@@ -21,7 +21,7 @@
     const script = document.createElement("script");
 
     const attributes = {
-      repo: import.meta.env.PUBLIC_GITHUB_REPO!,
+      repo: import.meta.env.PUBLIC_GITHUB_REPO,
       label: "blog",
       theme: theme in darkThemes ? "gruvbox-dark" : "boxy-light",
       ["issue-term"]: "title",
