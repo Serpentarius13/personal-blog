@@ -28,6 +28,12 @@ export interface NavLink {
   href: string;
 }
 
+export const UTTERANCES_CONFIG = {
+  repo: "Serpentarius13/personal-blog",
+  label: "blog",
+  ["issue-term"]: "title",
+};
+
 const NAV_LINKS: NavLink[] = [
   // {
   //   title: "About me",

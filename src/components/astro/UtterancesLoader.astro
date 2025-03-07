@@ -1,8 +1,8 @@
 ---
-const githubRepo = import.meta.env.PUBLIC_GITHUB_REPO;
+import { UTTERANCES_CONFIG } from "config";
 ---
 
-<script is:inline define:vars={{ githubRepo }}>
+<script is:inline define:vars={{ UTTERANCES_CONFIG }}>
   const darkThemes = {
     night: "night",
     luxury: "luxury",
@@ -21,10 +21,8 @@ const githubRepo = import.meta.env.PUBLIC_GITHUB_REPO;
     const script = document.createElement("script");
 
     const attributes = {
-      repo: githubRepo,
-      label: "blog",
       theme: theme in darkThemes ? "gruvbox-dark" : "boxy-light",
-      ["issue-term"]: "title",
+      ...UTTERANCES_CONFIG,
     };
 
     for (const [key, value] of Object.entries(attributes)) {
@@ -32,7 +30,6 @@ const githubRepo = import.meta.env.PUBLIC_GITHUB_REPO;
     }
 
     script.src = "https://utteranc.es/client.js";
-
     script.crossOrigin = "anonymous";
     script.async = true;
 

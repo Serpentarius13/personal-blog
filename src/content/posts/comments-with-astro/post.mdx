@@ -1,0 +1,152 @@
+---
+slug: "comments-with-astro"
+title: "Comments with Astro"
+description: "Comments are very helpful to gather
+feedback and criticism on your blog, but they're
+really hard to make. With 'utterances', they aren't"
+date: 2024-03-08
+draft: false
+---
+
+import MdxImage from '@/components/mdx/MdxImage.astro';
+
+I've been feeling blind when writing on my own website after things like Medium because I haven't added a comments functionality. They are quite useful when blogging, you can have feedback, better or worse, points on which to improve, and just see that your blog is alive.
+
+However, working with comments is certainly not an easy task - you must design and code a complete full-blown feature, including reactions, replies, and most importantly moderation. I could've added a simple textarea with a button and some challenge to comment, but it is easily crackable in the age of AI.
+
+I've already seen a well-designed comment functionality in [Tk Todo's blog](https://tkdodo.eu/blog/all), and I remembered that it was something GitHub-powered. I did a fast google search and found out about [utterances](https://utteranc.es/), which is a very simple to implement `<script>` tag that works based on your public GitHub repo.
+
+It works by utilizing issues (which is creates automatically, if needed) on which the users can chat, reply to each other, react with emoji, add code block and report someone malicious if they'd like. It also gates commenting behind `GitHub OAuth`, which should eliminate spam completely. It even features multiple themes, two of which I've employed on my blog.
+
+To set it up, we can pass through a simple form on their website, or just configure everything ourselves. There's no huge documentation, so the builder was helpful for me to get started easily. I've chosen `issue-term` (determinator of issue to be linked with a script block to comment in) to be title of my blog's page (which I will probably change later as it is not really a constant variable), although there's a vast majority of options, including even `og:meta` parsing.
+
+You can also create issues manually and link them by either issue number or a word in the title. It is sad that it's not possible to link issues by tags, but that's quite a rough functionality to implement, because you can add multiple of the same tags on many issues. Here's my final script from the builder:
+
+```html
+<script src="https://utteranc.es/client.js"
+        repo="[ENTER REPO HERE]"
+        issue-term="title"
+        label="blog"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+```
+
+As my blog is a "template" for others to fork too (although not a big one!), I've added a global `UTTERANCES_CONFIG`, which you can omit and use the object straight up later. Here, I've chosen a label `blog` to mark all auto-created issues with it, and, as mentioned previously, `issue-term` is `title`. `repo` is in `owner/repoName` format, which I've also included directly without the use of environment variables, but you can do whatever.
+
+```ts
+export const UTTERANCES_CONFIG = {
+  repo: "Serpentarius13/personal-blog",
+  label: "blog",
+  ["issue-term"]: "title",
+};
+```
+
+It was important for me to apply appropriate theme colors based on one of four themes that my blog offers, so I couldn't just add a static script element to HTML somewhere in my Astro blog page. I've decided to create an `UtterancesScript.astro` file, which is a simple Astro component, to separate the some logic away.
+
+It appends the `<script>` tag dynamically to a specified container, where `utterances` inserts its `<iframe>` when loading.
+The script is quite simple - a `load` update function that is constructing the `script` tag and appending it to container I've placed below my blog post, and a `MutationObserver` that calls it when theme changes. It is also called when script runs initially to render comments the first time even if theme won't be updated.
+
+Here's a full version this component.
+
+```html
+---
+import { UTTERANCES_CONFIG } from "config";
+---
+
+<script is:inline define:vars={{ UTTERANCES_CONFIG }}>
+// mark script as is:inline to not be processed by Astro
+// pass UTTERANCES_CONFIG with define:vars
+// you can specify options right inside this script if you
+// don't want to move them out
+
+// my darkThemes map object to check whether current theme's dark
+  const darkThemes = {
+    night: "night",
+    luxury: "luxury",
+  };
+
+// loader function to reuse twice
+  const load = () => {
+	// I've added a div with id of utterances-container right
+	// below my post's content. You can put it anywhere
+    const container = document.getElementById("utterances-container");
+    if (!container) {
+      console.log("no utterances container found");
+      return;
+    }
+    // remove current contents of the div to reload the section
+    if (container.innerHTML !== "") {
+      container.innerHTML = "";
+    }
+    // extract theme
+    const theme = document.documentElement.dataset.theme || "";
+
+	// create script and map over attributes.
+	// it is important to use "setAttribute" instead
+	// of assigning because assigning won't work
+	// on html elements
+    const script = document.createElement("script");
+
+    const attributes = {
+	  // based on current theme's "darkness", choose dark or light theme
+      theme: theme in darkThemes ? "gruvbox-dark" : "boxy-light",
+      ...UTTERANCES_CONFIG,
+    };
+
+    for (const [key, value] of Object.entries(attributes)) {
+      script.setAttribute(key, value);
+    }
+
+	// passing constant parameters
+    script.src = "https://utteranc.es/client.js";
+    script.crossOrigin = "anonymous";
+    script.async = true;
+
+	// add a little bit of logging
+    script.onerror = (e) => console.log("error loading utterances:", e);
+    script.onload = () => console.log("utterances loaded");
+
+	// append a script to container to be ran
+    container.append(script);
+  };
+
+	// here I use MutationObserver to reload comment section
+	// when theme changes to apply appropriate one
+	// it is quite handy
+  const observer = new MutationObserver((records) => {
+    for (const record of records) {
+      if (record.attributeName !== "data-theme") return;
+
+      load();
+    }
+  });
+
+  // do not forget to observe
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+
+  // and to initialize it first time
+  load();
+</script>
+
+```
+
+Since my blog also uses `Pagefind`, the container code has `data-pagefind-ignore="all"` attribute on it, to not index anything:
+
+```html
+<div id="utterances-container" data-pagefind-ignore="all"></div>
+```
+
+As `utterances` creates issues with a template that I didn't like (a title with a url to follow in contents - yes I wanted a link with a name), I've also decided to create issues for my four blog posts myself in this manner:
+
+import githubIssue from './github-issue.png';
+
+<MdxImage src={githubIssue} alt="A GitHub issue with post name as title and 'Post' hyperlink leading to the post's page"/>
+
+If you have a lot of articles, you can use `GitHub API` to do this automatically on a large dataset retrieved from your database or `Content Collections`. You can run it every time your application deploys to ensure that every article has its issue to comment.
+
+That's all! Thanks for reading!
