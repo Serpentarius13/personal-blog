@@ -44,10 +44,9 @@ export const UTTERANCES_CONFIG = {
 };
 ```
 
-It was important for me to apply appropriate theme colors based on one of four themes that my blog offers, so I couldn't just add a static script element to HTML somewhere in my Astro blog page. I've decided to create an `UtterancesScript.astro` file, which is a simple Astro component, to separate the some logic away.
+The functionality I needed was pretty dynamic, so I have decided to not add a static script element to HTML somewhere in my Astro blog page. Instead I've created an `UtterancesScript.astro` file, which is a simple Astro component, to incapsulate the whole logic in there.
 
-It appends the `<script>` tag dynamically to a specified container, where `utterances` inserts its `<iframe>` when loading.
-The script is quite simple - a `load` update function that is constructing the `script` tag and appending it to container I've placed below my blog post, and a `MutationObserver` that calls it when theme changes. It is also called when script runs initially to render comments the first time even if theme won't be updated.
+It first appends HTML markup stored in `loader` variable to render a little loader before comments appear, and then prepares a `script` element to be attached to `utterances-container`. I'm attaching listener with `addEventListener` (which I hadn't even know you could use like that!) to check for an event that `utterances` sends when it loads and I set the `isLoaded` flag to `true`. A `MutationObserver` later syncs the theme based on the theme set on website's `documentElement` now, next theme is retrieved with `getNextTheme` function, and `swapTheme` sends a message to `utterances`'s `client.js` script.
 
 Here's a full version this component.
 
@@ -68,31 +67,56 @@ import { UTTERANCES_CONFIG } from "config";
     luxury: "luxury",
   };
 
+// loader markup
+const loader = `
+  <div class="flex p-2 rounded-xl border border-primary items-center gap-2 mx-auto w-fit mt-4" id="utterances-spinner">
+    <span class="loading loading-infinity loading-xl">
+    </span>
+    <span class="text-xl">
+      Loading comments...
+    </span>
+  </div>`;
+
+// utterances url for reuse
+  const UTTERANCES_URL = "https://utteranc.es";
+
+  let isLoaded = false;
+// gets next comments theme based on current website theme
+  const getNextTheme = () => {
+    const theme = document.documentElement.dataset.theme || "";
+    return theme in darkThemes ? "gruvbox-dark" : "boxy-light";
+  };
+
 // loader function to reuse twice
   const load = () => {
-	// I've added a div with id of utterances-container right
-	// below my post's content. You can put it anywhere
+    // I've added a div with id of utterances-container right
+    // below my post's content. You can put it anywhere
     const container = document.getElementById("utterances-container");
+    const loaderWrapper = document.getElementById("utterances-loader");
+    // check everything is loaded
     if (!container) {
       console.log("no utterances container found");
       return;
     }
-    // remove current contents of the div to reload the section
-    if (container.innerHTML !== "") {
-      container.innerHTML = "";
+    if (!loaderWrapper) {
+      console.log("no utterances loaderWrapper found");
+      return;
     }
+    
+    // toggle loader
+    loaderWrapper.innerHTML = loader;
+
     // extract theme
     const theme = document.documentElement.dataset.theme || "";
 
-	// create script and map over attributes.
-	// it is important to use "setAttribute" instead
-	// of assigning because assigning won't work
-	// on html elements
+    // create script and map over attributes.
+    // it is important to use "setAttribute" instead
+    // of assigning because assigning won't work
+    // on html elements
     const script = document.createElement("script");
 
     const attributes = {
-	  // based on current theme's "darkness", choose dark or light theme
-      theme: theme in darkThemes ? "gruvbox-dark" : "boxy-light",
+      theme: getNextTheme(),
       ...UTTERANCES_CONFIG,
     };
 
@@ -100,37 +124,53 @@ import { UTTERANCES_CONFIG } from "config";
       script.setAttribute(key, value);
     }
 
-	// passing constant parameters
-    script.src = "https://utteranc.es/client.js";
+	  // passing constant parameters
+    script.src = `${UTTERANCES_URL}/client.js`;
     script.crossOrigin = "anonymous";
     script.async = true;
 
-	// add a little bit of logging
-    script.onerror = (e) => console.log("error loading utterances:", e);
-    script.onload = () => console.log("utterances loaded");
+	  script.onerror = (e) => console.log("error loading utterances:", e);
 
-	// append a script to container to be ran
+    // check for load
+    addEventListener("message", (event) => {
+      if (event.origin !== UTTERANCES_URL) return;
+      isLoaded = true;
+      loaderWrapper.innerHTML = "";
+    });
+
+	  // append a script to container to be ran
     container.append(script);
   };
 
-	// here I use MutationObserver to reload comment section
-	// when theme changes to apply appropriate one
-	// it is quite handy
+  // we retrieve iframe's contentWindow
+  // to postMessage there a "set-theme" event
+	const swapTheme = () => {
+    const message = {
+      type: "set-theme",
+      theme: getNextTheme(),
+    };
+    const utterances = document
+      .getElementById("utterances-container")
+      ?.querySelector("iframe")?.contentWindow;
+    utterances?.postMessage(message, UTTERANCES_URL);
+  };
+
   const observer = new MutationObserver((records) => {
+    if (!isLoaded) return;
+
     for (const record of records) {
       if (record.attributeName !== "data-theme") return;
 
-      load();
+      swapTheme();
     }
   });
 
-  // do not forget to observe
   observer.observe(document.documentElement, {
     attributes: true,
     attributeFilter: ["data-theme"],
   });
 
-  // and to initialize it first time
+  // load once on running the script
   load();
 </script>
 
@@ -144,31 +184,36 @@ Here's a simplified version for you to copy and paste:
 ---
 
 <script is:inline>
-  const UTTERANCES_CONFIG = {
-    repo: "GITHUB_NAME/GITHUB_REPO",
-    label: "blog",
-    ["issue-term"]: "title",
-  };
-
   const darkThemes = {
     night: "night",
     luxury: "luxury",
   };
+  const UTTERANCES_URL = "https://utteranc.es";
+
+  let isLoaded = false;
+  const getNextTheme = () => {
+    const theme = document.documentElement.dataset.theme || "";
+    return theme in darkThemes ? "gruvbox-dark" : "boxy-light";
+  };
 
   const load = () => {
     const container = document.getElementById("utterances-container");
+    const loaderWrapper = document.getElementById("utterances-loader");
     if (!container) {
       console.log("no utterances container found");
       return;
     }
-    if (container.innerHTML !== "") {
-      container.innerHTML = "";
+    if (!loaderWrapper) {
+      console.log("no utterances loaderWrapper found");
+      return;
     }
-    const theme = document.documentElement.dataset.theme || "";
+
+    loaderWrapper.innerHTML = loader;
+
     const script = document.createElement("script");
 
     const attributes = {
-      theme: theme in darkThemes ? "gruvbox-dark" : "boxy-light",
+      theme: getNextTheme(),
       ...UTTERANCES_CONFIG,
     };
 
@@ -176,20 +221,39 @@ Here's a simplified version for you to copy and paste:
       script.setAttribute(key, value);
     }
 
-    script.src = "https://utteranc.es/client.js";
+    script.src = `${UTTERANCES_URL}/client.js`;
     script.crossOrigin = "anonymous";
     script.async = true;
 
     script.onerror = (e) => console.log("error loading utterances:", e);
-    script.onload = () => console.log("utterances loaded");
+
+    addEventListener("message", (event) => {
+      if (event.origin !== UTTERANCES_URL) return;
+      isLoaded = true;
+      loaderWrapper.innerHTML = "";
+    });
+
     container.append(script);
   };
 
+  const swapTheme = () => {
+    const message = {
+      type: "set-theme",
+      theme: getNextTheme(),
+    };
+    const utterances = document
+      .getElementById("utterances-container")
+      ?.querySelector("iframe")?.contentWindow;
+    utterances?.postMessage(message, UTTERANCES_URL);
+  };
+
   const observer = new MutationObserver((records) => {
+    if (!isLoaded) return;
+
     for (const record of records) {
       if (record.attributeName !== "data-theme") return;
 
-      load();
+      swapTheme();
     }
   });
 
@@ -202,10 +266,13 @@ Here's a simplified version for you to copy and paste:
 </script>
 ```
 
-Since my blog also uses `Pagefind`, the container code has `data-pagefind-ignore="all"` attribute on it, to not index anything:
+Markup below the post looks like this:
 
 ```html
-<div id="utterances-container" data-pagefind-ignore="all"></div>
+<div>
+    <div id="utterances-loader"></div>
+    <div id="utterances-container"></div>
+</div>
 ```
 
 As `utterances` creates issues with a template that I didn't like (a title with a url to follow in contents - yes I wanted a link with a name), I've also decided to create issues for my four blog posts myself in this manner:

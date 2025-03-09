@@ -3,25 +3,45 @@ import { UTTERANCES_CONFIG } from "config";
 ---
 
 <script is:inline define:vars={{ UTTERANCES_CONFIG }}>
+  const loader = `
+  <div class="flex p-2 rounded-xl border border-primary items-center gap-2 mx-auto w-fit mt-4" id="utterances-spinner">
+    <span class="loading loading-infinity loading-xl">
+    </span>
+    <span class="text-xl">
+      Loading comments...
+    </span>
+  </div>`;
+
   const darkThemes = {
     night: "night",
     luxury: "luxury",
   };
+  const UTTERANCES_URL = "https://utteranc.es";
+
+  let isLoaded = false;
+  const getNextTheme = () => {
+    const theme = document.documentElement.dataset.theme || "";
+    return theme in darkThemes ? "gruvbox-dark" : "boxy-light";
+  };
 
   const load = () => {
     const container = document.getElementById("utterances-container");
+    const loaderWrapper = document.getElementById("utterances-loader");
     if (!container) {
       console.log("no utterances container found");
       return;
     }
-    if (container.innerHTML !== "") {
-      container.innerHTML = "";
+    if (!loaderWrapper) {
+      console.log("no utterances loaderWrapper found");
+      return;
     }
-    const theme = document.documentElement.dataset.theme || "";
+
+    loaderWrapper.innerHTML = loader;
+
     const script = document.createElement("script");
 
     const attributes = {
-      theme: theme in darkThemes ? "gruvbox-dark" : "boxy-light",
+      theme: getNextTheme(),
       ...UTTERANCES_CONFIG,
     };
 
@@ -29,21 +49,39 @@ import { UTTERANCES_CONFIG } from "config";
       script.setAttribute(key, value);
     }
 
-    script.src = "https://utteranc.es/client.js";
-
+    script.src = `${UTTERANCES_URL}/client.js`;
     script.crossOrigin = "anonymous";
     script.async = true;
 
     script.onerror = (e) => console.log("error loading utterances:", e);
-    script.onload = () => console.log("utterances loaded");
+
+    addEventListener("message", (event) => {
+      if (event.origin !== UTTERANCES_URL) return;
+      isLoaded = true;
+      loaderWrapper.innerHTML = "";
+    });
+
     container.append(script);
   };
 
+  const swapTheme = () => {
+    const message = {
+      type: "set-theme",
+      theme: getNextTheme(),
+    };
+    const utterances = document
+      .getElementById("utterances-container")
+      ?.querySelector("iframe")?.contentWindow;
+    utterances?.postMessage(message, UTTERANCES_URL);
+  };
+
   const observer = new MutationObserver((records) => {
+    if (!isLoaded) return;
+
     for (const record of records) {
       if (record.attributeName !== "data-theme") return;
 
-      load();
+      swapTheme();
     }
   });
 
