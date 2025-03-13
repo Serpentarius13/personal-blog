@@ -66,7 +66,7 @@ const {
     <Fragment>
       <CatButton slug={post.slug} />
 
-      <TableOfContents headings={headings} data-pagefind-ignore="all" />
+      {headings.length > 0 && <TableOfContents headings={headings} data-pagefind-ignore="all" />}
     </Fragment>
   </Fragment>
 
