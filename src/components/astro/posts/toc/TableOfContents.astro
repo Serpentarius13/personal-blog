@@ -103,6 +103,11 @@ const toc = buildToc(headings.filter((h) => h.depth !== 1));
     const toc = document.querySelector("#toc-inner")! as HTMLElement;
     const tocPapa = document.querySelector("#toc")! as HTMLElement;
 
+    if (!toc || !closeButton) {
+      console.log("toc disabled");
+      return;
+    }
+
     toc.addEventListener("focusout", function (event) {
       if (
         // We are still inside the dialog so don't close
