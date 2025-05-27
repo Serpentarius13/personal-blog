@@ -19,12 +19,12 @@ const { next, prev } = Astro.props;
       <a
         data-astro-prefetch
         href={`/blog/${next.slug}`}
-        class="group btn btn-outline btn-primary justify-between transition-all"
+        class="group btn btn-outline btn-primary flex items-center justify-between transition-all"
       >
         <span>next_article</span>
 
-        <span>
-          <b class="text-2xl -sm:text-sm">{next.data.title}</b>
+        <span class="flex items-center">
+          <b class="block text-2xl -sm:text-xs">{next.data.title}</b>
 
           <Icon className="la--arrow-right ml-2 align-middle" />
         </span>
@@ -39,10 +39,10 @@ const { next, prev } = Astro.props;
         href={`/blog/${prev.slug}`}
         class="group btn btn-outline btn-accent justify-between transition-all"
       >
-        <span>
+        <span class="flex items-center">
           <Icon className="la--arrow-left mr-2 align-middle" />
 
-          <b class="text-2xl -sm:text-sm">{prev.data.title}</b>
+          <b class="text-2xl -sm:text-xs">{prev.data.title}</b>
         </span>
 
         <span>PreviousArticle</span>
